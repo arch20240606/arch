@@ -1,0 +1,11 @@
+* text=auto
+*.blade.php diff=html
+*.css diff=css
+*.html diff=html
+*.md diff=markdown
+*.php diff=php
+/.github export-ignore
+CHANGELOG.md export-ignore
+storage/app/userfiles/passports/Ktv1Kz9UTVy1NFpFafaLXuXl0GuaQbWnjh1Jla7J.xlsx filter=lfs diff=lfs merge=lfs -text
+storage/app/userfiles/passports/rWm1eOzANt1dZoCXKVZMWjcNZijxAh6chbTeA9rW.7z filter=lfs diff=lfs merge=lfs -text
+storage/logs/laravel.log filter=lfs diff=lfs merge=lfs -text
