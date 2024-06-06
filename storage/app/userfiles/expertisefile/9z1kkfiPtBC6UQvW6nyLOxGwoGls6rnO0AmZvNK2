@@ -1,0 +1,22 @@
+<?php
+if (app()->getLocale() == "ru") {
+  $names = 'name_ru';
+} elseif (app()->getLocale() == "en") {
+  $names = 'name_en';
+} else {
+  $names = 'name_kz';
+}
+
+
+if ( $expertise->type_project == "1" ) {
+  $type_project_name = "Запрос государственного органа на автоматизацию деятельности государственного органа в уполномоченный орган и сервисному интегратору (СМИ)";
+} elseif ( $expertise->type_project == "2" ) {
+  $type_project_name = "Инвестиционное предложение";
+} elseif ( $expertise->type_project == "3" ) {
+  $type_project_name = "Технико-экономическое обоснование";
+} elseif ( $expertise->type_project == "4" ) {
+  $type_project_name = "Техническое задание";
+} else {
+  $type_project_name = "Не определен";
+}
+?>

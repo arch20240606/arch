@@ -1,0 +1,509 @@
+<!doctype html>
+<html lang="kz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,500&family=Roboto+Flex:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/libs/swiper-bundle.min.css">
+  <link rel="stylesheet" href="assets/css/style.min.css">
+</head>
+<body class="has-sidebar">
+<div class="body-wrapper">
+
+    <header class="header">
+    <div class="container container_large">
+        <div class="header__inner">
+            <div class="header__column header__column_left">
+                <nav class="header__menu">
+                    <ul class="header__menu-list">
+                        <li class="header__menu-item">
+                            <a class="header__menu-link" href="#">Мои запросы</a>
+                        </li>
+                        <li class="header__menu-item">
+                            <a class="header__menu-link" href="#">Помощь</a>
+                        </li>
+                        <li class="header__menu-item">
+                            <a class="header__menu-link header__menu-link_download" href="#" download>Скачать Шаблон тех.задания</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <a class="header__logo logo" href="/">
+    <svg class="logo__icon"><use xlink:href="assets/images/sprite.svg#logo"></use></svg>
+    <p class="logo__name"><b>Архитектурный</b> портал</p>
+</a>
+            <div class="header__column header__column_right">
+                <div class="header__actions">
+                    <a class="header__search header__action popupOpen" href="#search-popup">
+                        <svg><use xlink:href="assets/images/sprite.svg#search"></use></svg>
+                    </a>
+                    <div class="header__notifications">
+                        <div class="header__action">
+                            <svg><use xlink:href="assets/images/sprite.svg#bell"></use></svg>
+                        </div>
+                        <div class="header__notifications-block">
+                            <div class="header__notifications-header">
+                                Уведомления
+                                <button class="header__notifications-clear">
+                                    <svg><use xlink:href="assets/images/sprite.svg#trash"></use></svg>
+                                </button>
+                            </div>
+                            <a class="header__notifications-item header__notifications-item_new" href="#">
+                                <div class="header__action">
+                                    <svg><use xlink:href="assets/images/sprite.svg#bell"></use></svg>
+                                </div>
+                                <span class="header__notifications-item-title">Уведомление 1</span>
+                                <span class="header__notifications-item-date">2ч. назад</span>
+                            </a>
+                            <a class="header__notifications-item" href="#">
+                                <div class="header__action">
+                                    <svg><use xlink:href="assets/images/sprite.svg#bell"></use></svg>
+                                </div>
+                                <span class="header__notifications-item-title">Уведомление 2</span>
+                                <span class="header__notifications-item-date">19 д. назад</span>
+                            </a>
+                            <a class="header__notifications-all" href="#">Все уведомления</a>
+                        </div>
+                    </div>
+                    <div class="header__user">
+                        <div class="header__action">
+                            <svg><use xlink:href="assets/images/sprite.svg#user"></use></svg>
+                        </div>
+                        Имя Фамилия Отчество
+                        <div class="header__user-menu">
+                            <a class="header__user-link" href="#">
+                                <svg><use xlink:href="assets/images/sprite.svg#admin"></use></svg>
+                                Администратор
+                            </a>
+                            <a class="header__user-link" href="#">
+                                <svg><use xlink:href="assets/images/sprite.svg#exit"></use></svg>
+                                Выход
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="header__lang lang">
+    <div class="lang__current">KZ</div>
+    <div class="lang__list">
+        <a class="lang__item" href="#">KZ</a>
+        <a class="lang__item" href="#">RU</a>
+        <a class="lang__item" href="#">EN</a>
+    </div>
+</div>
+            </div>
+        </div>
+    </div>
+</header>
+    <aside class="sidebar">
+    <nav class="sidebar__menu">
+        <ul class="sidebar__list">
+            <li class="sidebar__item sidebar__item_active">
+                <a class="sidebar__link" href="#" title="Главная">
+                    <svg><use xlink:href="assets/images/sprite.svg#house"></use></svg>
+                    <span>Главная</span>
+                </a>
+            </li>
+            <li class="sidebar__item sidebar__item_has-submenu">
+                <a class="sidebar__link" href="#" title="Учет сведений">
+                    <svg><use xlink:href="assets/images/sprite.svg#folder"></use></svg>
+                    <span>Учет сведений</span>
+                </a>
+                <ul class="sidebar__submenu">
+                    <li class="sidebar__submenu-item sidebar__submenu-item_active"><a class="sidebar__submenu-link" href="./accounting-information.html">Учёт сведений</a></li>
+                    <li class="sidebar__submenu-item"><a class="sidebar__submenu-link" href="#">Опубликованные информационные системы</a></li>
+                    <li class="sidebar__submenu-item"><a class="sidebar__submenu-link" href="#">Информационные системы</a></li>
+                    <li class="sidebar__submenu-item"><a class="sidebar__submenu-link" href="#">Архивные объекты</a></li>
+                    <li class="sidebar__submenu-item"><a class="sidebar__submenu-link" href="#">Архивные информационные системы</a></li>
+                    <li class="sidebar__submenu-item"><a class="sidebar__submenu-link" href="#">Архивные интернет-ресурсы</a></li>
+                    <li class="sidebar__submenu-item"><a class="sidebar__submenu-link" href="#">Интернет-ресурсы</a></li>
+                    <li class="sidebar__submenu-item"><a class="sidebar__submenu-link" href="#">ИК-услуги</a></li>
+                    <li class="sidebar__submenu-item"><a class="sidebar__submenu-link" href="#">Договора</a></li>
+                    <li class="sidebar__submenu-item"><a class="sidebar__submenu-link" href="#">Интеграции ИС</a></li>
+                    <li class="sidebar__submenu-item"><a class="sidebar__submenu-link" href="#">ИКТ-проекты</a></li>
+                    <li class="sidebar__submenu-item"><a class="sidebar__submenu-link" href="#">Оборудование</a></li>
+                    <li class="sidebar__submenu-item"><a class="sidebar__submenu-link" href="#">Программное обеспечение</a></li>
+                    <li class="sidebar__submenu-item"><a class="sidebar__submenu-link" href="#">Информационные ресурсы</a></li>
+                    <li class="sidebar__submenu-item"><a class="sidebar__submenu-link" href="#">Объекты данных</a></li>
+                    <li class="sidebar__submenu-item"><a class="sidebar__submenu-link" href="#">Запросы на добавление</a></li>
+                </ul>
+            </li>
+            <li class="sidebar__item">
+                <a class="sidebar__link" href="./budget.html" title="Бюджетные заявки">
+                    <svg><use xlink:href="assets/images/sprite.svg#credit-card"></use></svg>
+                    <span>Бюджетные заявки</span>
+                </a>
+            </li>
+            <li class="sidebar__item">
+                <a class="sidebar__link" href="#" title="Экспертиза НТД">
+                    <svg><use xlink:href="assets/images/sprite.svg#check-square"></use></svg>
+                    <span>Экспертиза НТД</span>
+                </a>
+            </li>
+            <li class="sidebar__item">
+                <a class="sidebar__link" href="#" title="Поиск по файлам">
+                    <svg><use xlink:href="assets/images/sprite.svg#search"></use></svg>
+                    <span>Поиск по файлам</span>
+                </a>
+            </li>
+            <li class="sidebar__item">
+                <a class="sidebar__link" href="#" title="Классификатор">
+                    <svg><use xlink:href="assets/images/sprite.svg#calc"></use></svg>
+                    <span>Классификатор</span>
+                </a>
+                <ul class="sidebar__submenu">
+                    <li class="sidebar__submenu-item sidebar__submenu-item_active"><a class="sidebar__submenu-link" href="./accounting-information.html">Учёт сведений</a></li>
+                    <li class="sidebar__submenu-item"><a class="sidebar__submenu-link" href="#">Опубликованные информационные системы</a></li>
+                    <li class="sidebar__submenu-item"><a class="sidebar__submenu-link" href="#">Информационные системы</a></li>
+                    <li class="sidebar__submenu-item"><a class="sidebar__submenu-link" href="#">Архивные объекты</a></li>
+                    <li class="sidebar__submenu-item"><a class="sidebar__submenu-link" href="#">Архивные информационные системы</a></li>
+                    <li class="sidebar__submenu-item"><a class="sidebar__submenu-link" href="#">Архивные интернет-ресурсы</a></li>
+                    <li class="sidebar__submenu-item"><a class="sidebar__submenu-link" href="#">Интернет-ресурсы</a></li>
+                    <li class="sidebar__submenu-item"><a class="sidebar__submenu-link" href="#">ИК-услуги</a></li>
+                    <li class="sidebar__submenu-item"><a class="sidebar__submenu-link" href="#">Договора</a></li>
+                    <li class="sidebar__submenu-item"><a class="sidebar__submenu-link" href="#">Интеграции ИС</a></li>
+                    <li class="sidebar__submenu-item"><a class="sidebar__submenu-link" href="#">ИКТ-проекты</a></li>
+                    <li class="sidebar__submenu-item"><a class="sidebar__submenu-link" href="#">Оборудование</a></li>
+                    <li class="sidebar__submenu-item"><a class="sidebar__submenu-link" href="#">Программное обеспечение</a></li>
+                    <li class="sidebar__submenu-item"><a class="sidebar__submenu-link" href="#">Информационные ресурсы</a></li>
+                    <li class="sidebar__submenu-item"><a class="sidebar__submenu-link" href="#">Объекты данных</a></li>
+                    <li class="sidebar__submenu-item"><a class="sidebar__submenu-link" href="#">Запросы на добавление</a></li>
+                </ul>
+            </li>
+            <li class="sidebar__item">
+                <a class="sidebar__link" href="#" title="Стэк руководство">
+                    <svg><use xlink:href="assets/images/sprite.svg#pazzle"></use></svg>
+                    <span>Стэк руководство</span>
+                </a>
+            </li>
+            <li class="sidebar__item">
+                <a class="sidebar__link" href="#" title="Гос. справочники">
+                    <svg><use xlink:href="assets/images/sprite.svg#book-bookmark"></use></svg>
+                    <span>Гос. справочники</span>
+                </a>
+            </li>
+            <li class="sidebar__item">
+                <a class="sidebar__link" href="#" title="Архитектура ГО">
+                    <svg><use xlink:href="assets/images/sprite.svg#file"></use></svg>
+                    <span>Архитектура ГО</span>
+                </a>
+            </li>
+            <li class="sidebar__item">
+                <a class="sidebar__link" href="#" title="Хранилище документов">
+                    <svg><use xlink:href="assets/images/sprite.svg#archive"></use></svg>
+                    <span>Хранилище документов</span>
+                </a>
+            </li>
+            <li class="sidebar__item">
+                <a class="sidebar__link" href="#" title="Оценка деятельности ГО">
+                    <svg><use xlink:href="assets/images/sprite.svg#star"></use></svg>
+                    <span>Оценка деятельности ГО</span>
+                </a>
+            </li>
+            <li class="sidebar__item">
+                <a class="sidebar__link" href="#" title="Компоненты деятельности">
+                    <svg><use xlink:href="assets/images/sprite.svg#shuffle-angular"></use></svg>
+                    <span>Компоненты деятельности</span>
+                </a>
+            </li>
+            <li class="sidebar__item">
+                <a class="sidebar__link" href="#" title="Субъекты информатизации">
+                    <svg><use xlink:href="assets/images/sprite.svg#bank"></use></svg>
+                    <span>Субъекты информатизации</span>
+                </a>
+            </li>
+            <li class="sidebar__item">
+                <a class="sidebar__link" href="#" title="Управление справочниками">
+                    <svg><use xlink:href="assets/images/sprite.svg#book-open"></use></svg>
+                    <span>Управление справочниками</span>
+                </a>
+            </li>
+            <li class="sidebar__item">
+                <a class="sidebar__link" href="#" title="Отчеты">
+                    <svg><use xlink:href="assets/images/sprite.svg#clipboard"></use></svg>
+                    <span>Отчеты</span>
+                </a>
+            </li>
+            <li class="sidebar__item">
+                <a class="sidebar__link" href="#" title="Новости">
+                    <svg><use xlink:href="assets/images/sprite.svg#newspaper"></use></svg>
+                    <span>Новости</span>
+                </a>
+            </li>
+            <li class="sidebar__item">
+                <a class="sidebar__link" href="#" title="Разработка архитектуры">
+                    <svg><use xlink:href="assets/images/sprite.svg#git-branch"></use></svg>
+                    <span>Разработка архитектуры</span>
+                </a>
+            </li>
+            <li class="sidebar__item">
+                <a class="sidebar__link" href="#" title="Запрос исходного кода">
+                    <svg><use xlink:href="assets/images/sprite.svg#code"></use></svg>
+                    <span>Запрос исходного кода</span>
+                </a>
+            </li>
+            <li class="sidebar__item">
+                <a class="sidebar__link" href="#" title="Пользователи">
+                    <svg><use xlink:href="assets/images/sprite.svg#users"></use></svg>
+                    <span>Пользователи</span>
+                </a>
+            </li>
+            <li class="sidebar__item">
+                <a class="sidebar__link sidebar__toggle" href="#" title="Показать" data-title-alt="Скрыть">
+                    <svg><use xlink:href="assets/images/sprite.svg#caret-circle-right"></use></svg>
+                    <span>Скрыть</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</aside>
+
+    <main class="content questions">
+
+        <div class="questions__bg">
+            <picture>
+                <source srcset="assets/images/questions-bg.avif" type="image/avif">
+                <source srcset="assets/images/questions-bg.webp" type="image/webp">
+                <img src="assets/images/questions-bg.jpg" alt="Background">
+            </picture>
+        </div>
+
+        <div class="container container_medium">
+
+            <div class="breadcrumbs breadcrumbs_white">
+                <a class="breadcrumbs__home" href="/">
+                    <svg>
+                        <use xlink:href="assets/images/sprite.svg#house"></use>
+                    </svg>
+                </a>
+                /
+                <span>Вопросы</span>
+            </div>
+
+            <div class="questions__wrapper">
+
+                <div class="questions__list">
+                    <div class="questions__list-header">
+                        <h1 class="questions__title page-title">Вопросы</h1>
+                        <a class="questions__list-btn btn btn_icon" href="#">
+                            <svg><use xlink:href="assets/images/sprite.svg#plus"></use></svg>
+                            Задать вопрос
+                        </a>
+                    </div>
+                    <div class="questions__list-heading questions__list-row">
+                        <div>Модуль</div>
+                        <div>Вопросов</div>
+                        <div>Ответов</div>
+                    </div>
+                    <div class="questions__list-item questions__list-row">
+                        <div>
+                            <h3 class="questions__list-item-title">
+                                <a href="#">Общие вопросы</a>
+                            </h3>
+                            <p class="questions__list-item-description">
+                                Общие вопросы
+                            </p>
+                        </div>
+                        <div>120</div>
+                        <div>120</div>
+                    </div>
+                    <div class="questions__list-item questions__list-row">
+                        <div>
+                            <h3 class="questions__list-item-title">
+                                <a href="#">Учет сведений</a>
+                            </h3>
+                            <p class="questions__list-item-description">
+                                Учёт сведений об объектах информатизации
+                            </p>
+                        </div>
+                        <div>120</div>
+                        <div>120</div>
+                    </div>
+                    <div class="questions__list-item questions__list-row">
+                        <div>
+                            <h3 class="questions__list-item-title">
+                                <a href="#">Бюджетные заявки</a>
+                            </h3>
+                            <p class="questions__list-item-description">
+                                Формирование бюджетных заявок
+                            </p>
+                        </div>
+                        <div>259</div>
+                        <div>120</div>
+                    </div>
+                    <div class="questions__list-item questions__list-row">
+                        <div>
+                            <h3 class="questions__list-item-title">
+                                <a href="#">Экспертиза нормативно-технической документации</a>
+                            </h3>
+                            <p class="questions__list-item-description">
+                                Экспертиза инвестиционных предложений, технико-экономического обоснования и технических заданий
+                            </p>
+                        </div>
+                        <div>120</div>
+                        <div>120</div>
+                    </div>
+                </div>
+
+                <div class="questions__last">
+                    <h2 class="questions__last-title">Последние отвеченные вопросы</h2>
+                    <div class="questions__last-list">
+                        <a class="questions__last-item" href="#">
+                        <span class="questions__last-item-img">
+                            <img src="assets/images/question-avatar.svg" alt="Асель Едильбаевна Рахметова">
+                        </span>
+                            <h3 class="questions__last-item-title">ТЗ завис в статусе "на подписи", не уходит
+                                дальше</h3>
+                            <span class="questions__last-item-name">Асель Едильбаевна Рахметова</span>
+                            <span
+                                class="questions__last-item-topic">Экспертиза нормативно-технической документации</span>
+                            <span class="questions__last-item-date">19 д. назад</span>
+                        </a>
+                        <a class="questions__last-item" href="#">
+                        <span class="questions__last-item-img">
+                            <img src="assets/images/question-avatar.svg" alt="Асель Едильбаевна Рахметова">
+                        </span>
+                            <h3 class="questions__last-item-title">Как прикрепить ТЗ на ИС для проверки его в УО.</h3>
+                            <span class="questions__last-item-name">Иван Петрович Максимов</span>
+                            <span
+                                class="questions__last-item-topic">Экспертиза нормативно-технической документации</span>
+                            <span class="questions__last-item-date">19 д. назад</span>
+                        </a>
+                        <a class="questions__last-item" href="#">
+                        <span class="questions__last-item-img">
+                            <img src="assets/images/question-avatar.svg" alt="Асель Едильбаевна Рахметова">
+                        </span>
+                            <h3 class="questions__last-item-title">Нет в списке нашей компании АО ИАЦНГ</h3>
+                            <span class="questions__last-item-name">Еркебұлан Өмірзақ</span>
+                            <span
+                                class="questions__last-item-topic">Экспертиза нормативно-технической документации</span>
+                            <span class="questions__last-item-date">19 д. назад</span>
+                        </a>
+                        <a class="questions__last-item" href="#">
+                        <span class="questions__last-item-img">
+                            <img src="assets/images/question-avatar.svg" alt="Асель Едильбаевна Рахметова">
+                        </span>
+                            <h3 class="questions__last-item-title">На оф. письме как указать шапку адресат?</h3>
+                            <span class="questions__last-item-name">Руслан Масқауұлы Нокрабеков</span>
+                            <span
+                                class="questions__last-item-topic">Экспертиза нормативно-технической документации</span>
+                            <span class="questions__last-item-date">19 д. назад</span>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <footer class="footer">
+    <div class="container">
+        <a class="footer__logo logo" href="/">
+    <svg class="logo__icon"><use xlink:href="assets/images/sprite.svg#logo"></use></svg>
+    <p class="logo__name"><b>Архитектурный</b> портал</p>
+</a>
+        <nav class="footer__menu">
+            <ul class="footer__list">
+                <li class="footer__item">
+                    <a class="footer__link" href="./accounting-information.html">Учет сведений</a>
+                </li>
+                <li class="footer__item">
+                    <a class="footer__link" href="./budget.html">Бюджет</a>
+                </li>
+                <li class="footer__item">
+                    <a class="footer__link" href="#">Экспертиза</a>
+                </li>
+                <li class="footer__item">
+                    <a class="footer__link" href="#">Публичные обсуждения</a>
+                </li>
+                <li class="footer__item">
+                    <a class="footer__link" href="#">Архитектура ЭП</a>
+                </li>
+                <li class="footer__item">
+                    <a class="footer__link" href="#">Калькулятор</a>
+                </li>
+                <li class="footer__item">
+                    <a class="footer__link footer__link_download" href="#" download="download">Скачать Шаблон
+                        тех.задания</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</footer>
+
+</div> <!-- /.body-wrapper -->
+
+<div class="right-buttons">
+    <button class="scroll-up btn btn_white btn_icon" style="display: none;">
+        <svg>
+            <use xlink:href="assets/images/sprite.svg#icon-arrow-top"></use>
+        </svg>
+    </button>
+</div>
+
+<div id="login-popup" class="popup">
+    <div class="popup__block">
+        <div class="popup__col popup__col_left">
+            <a class="popup__logo logo" href="/">
+    <svg class="logo__icon"><use xlink:href="assets/images/sprite.svg#logo"></use></svg>
+    <p class="logo__name"><b>Архитектурный</b> портал</p>
+</a>
+            <div class="popup__caption"><span>Добро</span> пожаловать</div>
+        </div>
+        <div class="popup__col popup__col_right">
+            <button class="popup__close"></button>
+
+            <div class="popup__logo">
+                <svg><use xlink:href="assets/images/sprite.svg#logo"></use></svg>
+            </div>
+
+            <div class="popup__title">Вход</div>
+
+            <form class="popup__form form">
+                <div class="form__field">
+                    <label class="form__label" for="auth-login">Имя пользователя или E-Mail</label>
+                    <input type="text" name="auth-login" id="auth-login" placeholder="Ваше Имя" required>
+                </div>
+                <div class="form__field">
+                    <label class="form__label" for="auth-password">Пароль</label>
+                    <input type="password" name="auth-password" id="auth-password" placeholder="*************" required>
+                </div>
+                <a class="form__forgot-password" href="#">Забыли пароль?</a>
+                <button class="form__submit" type="submit">Вход</button>
+            </form>
+
+            <div class="popup__warning warning_success warning">
+    <div class="warning__title"></div>
+    <div class="warning__text">
+        По всем вопросам, в том числе для создания новой учётной записи писать на адрес: <a href="mailto:arch@govtec.kz">arch@govtec.kz</a>
+    </div>
+</div>
+        </div>
+    </div>
+</div>
+<div id="search-popup" class="popup">
+    <form class="popup__search popup__block">
+        <div class="popup__search-icon header__action">
+            <svg><use xlink:href="assets/images/sprite.svg#search"></use></svg>
+        </div>
+        <div class="container container_large">
+            <input type="text" name="search" placeholder="Поиск по всему Архитектурному порталу. Введите текст и нажмите ВВОД">
+            <input type="submit" hidden>
+        </div>
+        <button class="popup__close"></button>
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+<script src="assets/js/libs/jquery.validate.min.js"></script>
+<script src="assets/js/libs/autosize.min.js"></script>
+<script src="assets/js/main.min.js"></script>
+
+</body>
+</html>

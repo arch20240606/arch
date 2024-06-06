@@ -1,0 +1,220 @@
+elseif( $request->has('create_and_send_to_dana') ) {
+
+            $selectedApproverId1 = $request->input('approver_id1');
+            $selectedApproverId2 = $request->input('approver_id2');
+            $selectedApproverId3 = $request->input('approver_id3');
+            $selectedSignerId = $request->input('signer_id');
+
+            // dd($selectedApproverId, $selectedSignerId);
+
+            $expertiseId = Expertise::latest()->first()->id;
+
+            // Создание записи в таблице ExpertiseStatus для согласующего
+            $expertiseStatusApprover1 = ExpertiseStatus::create([
+                'user_id' => $selectedApproverId1,
+                'expertise_id' => $expertiseId,
+                'approve' => ($selectedApproverId1 != null),
+            ]);
+            $expertiseStatusApprover2 = ExpertiseStatus::create([
+                'user_id' => $selectedApproverId2,
+                'expertise_id' => $expertiseId,
+                'approve' => ($selectedApproverId2 != null),
+            ]);
+            $expertiseStatusApprover3 = ExpertiseStatus::create([
+                'user_id' => $selectedApproverId3,
+                'expertise_id' => $expertiseId,
+                'approve' => ($selectedApproverId3 != null),
+            ]);
+
+            // Создание записи в таблице ExpertiseStatus для подписанта
+            $expertiseStatusSigner = ExpertiseStatus::create([
+                'user_id' => $selectedSignerId,
+                'expertise_id' => $expertiseId,
+                'signing' => ($selectedSignerId != null)
+            ]);
+
+
+            /* ШАГ 1. Записываем данные технического задания */
+            $chectTechnicalTask = TechnicalTask::
+                where('government_id', Auth::user()->government_id)->
+                where('user_id', Auth::user()->id)->
+                where('it_project_id', $request->it_project_id)->
+                where('type_project', $request->type_project)->
+                where('expertise_id', $request->expertise_id)->
+                count();
+                
+            if ( $chectTechnicalTask == 0 ) {
+
+                $addTechnicalTask = TechnicalTask::create([
+                    'user_id' => Auth::user()->id,
+                    'government_id' => Auth::user()->government_id,
+                    'it_project_id' => $request->it_project_id,
+                    'type_project' => $request->type_project,
+                    'expertise_id' => $request->expertise_id,
+                    'version' => '1',
+                    'part_1' => $request->editor_1,
+                    'part_2' => $request->editor_2,
+                    'part_3' => $request->editor_3,
+                    'part_4' => $request->editor_4,
+                    'part_5' => $request->editor_5,
+                    'part_6' => $request->editor_6,
+                    'part_7' => $request->editor_7,
+                    'part_8' => $request->editor_8,
+                    'part_9' => $request->editor_9,
+                    'part_10' => $request->editor_10,
+                    'part_11' => $request->editor_11,
+                    'part_12' => $request->editor_12
+                ]);
+                
+                $ID_TechnicalTask = $addTechnicalTask->id;
+            
+            } else {
+                $updateTechnicalTask =  TechnicalTask::find($request->tz_id);
+                $updateTechnicalTask->update([
+                    'version' => '2',
+                    'part_1' => $request->editor_1,
+                    'part_2' => $request->editor_2,
+                    'part_3' => $request->editor_3,
+                    'part_4' => $request->editor_4,
+                    'part_5' => $request->editor_5,
+                    'part_6' => $request->editor_6,
+                    'part_7' => $request->editor_7,
+                    'part_8' => $request->editor_8,
+                    'part_9' => $request->editor_9,
+                    'part_10' => $request->editor_10,
+                    'part_11' => $request->editor_11,
+                    'part_12' => $request->editor_12
+                ]);
+                $ID_TechnicalTask = $request->tz_id;
+            }
+            /* Конец ШАГА 1. */
+
+
+            /* ШАГ 2. Обновление или загрузка файла */
+            $uploadedFile = $request->file('doc_file');
+            if (!empty($uploadedFile)) {
+
+                $file_upload = $uploadedFile->store('userfiles/expertisefile');
+                $file_name = $request->file('doc_file')->getClientOriginalName();
+                $file_type = $uploadedFile->getMimeType();
+                $file_size = $uploadedFile->getSize();
+
+                $addFile = ExpertiseDocument::create([
+                    'user_id' => Auth::user()->id,
+                    'government_id' => Auth::user()->government_id,
+                    'it_project_id' => $request->it_project_id,
+                    'type_project' => $request->type_project,
+                    'expertise_id' => $request->expertise_id,
+                    
+                    'doc_status' => $request->doc_status,
+                    'doc_lang' => $request->doc_lang,
+                    'doc_type' => $request->doc_type,
+                    'doc_version' => $request->doc_version,
+                    'doc_year' => $request->doc_year,
+                    'doc_name' => $request->doc_name,
+                    
+                    'file_name' => $file_name,
+                    'file_name_upload' => $file_upload,
+                    'file_type' => $file_type,
+                    'file_size' => $file_size
+                ]);   
+                $ID_File = $addFile->id;
+            } else {
+                $ID_File = NULL;
+            }
+
+
+            if ( isset($request->document_id)) {
+
+                $uploadedFile = $request->file('doc_file');
+                if (!empty($uploadedFile)) {
+
+                    $file_upload = $uploadedFile->store('userfiles/expertisefile');
+                    $file_name = $request->file('doc_file')->getClientOriginalName();
+                    $file_type = $uploadedFile->getMimeType();
+                    $file_size = $uploadedFile->getSize();
+    
+                    $updateFile = ExpertiseDocument::find($request->document_id);
+                    $updateFile->update([
+                        'user_id' => Auth::user()->id,
+                        'government_id' => Auth::user()->government_id,
+                        'it_project_id' => $request->it_project_id,
+                        'type_project' => $request->type_project,
+                        'expertise_id' => $request->expertise_id,
+                        
+                        'doc_status' => $request->doc_status,
+                        'doc_lang' => $request->doc_lang,
+                        'doc_type' => $request->doc_type,
+                        'doc_version' => $request->doc_version,
+                        'doc_year' => $request->doc_year,
+                        'doc_name' => $request->doc_name,
+                        
+                        'file_name' => $file_name,
+                        'file_name_upload' => $file_upload,
+                        'file_type' => $file_type,
+                        'file_size' => $file_size
+                    ]);   
+                    
+                } else {
+                    $updateFile = ExpertiseDocument::find($request->document_id);
+                    $updateFile->update([
+                        'user_id' => Auth::user()->id,
+                        'government_id' => Auth::user()->government_id,
+                        'it_project_id' => $request->it_project_id,
+                        'type_project' => $request->type_project,
+                        'expertise_id' => $request->expertise_id,
+                        
+                        'doc_status' => $request->doc_status,
+                        'doc_lang' => $request->doc_lang,
+                        'doc_type' => $request->doc_type,
+                        'doc_version' => $request->doc_version,
+                        'doc_year' => $request->doc_year,
+                        'doc_name' => $request->doc_name,
+                    ]); 
+                }
+
+                $ID_File = $updateFile->id;
+                
+            }
+            /* Конец ШАГА 2. */
+
+
+            /* ШАГ 3. запись данных в таблицу экспертизы */
+            $updateExpertise = Expertise::find($request->expertise_id);
+            $updateExpertise->update([
+                'abbr' => $request->abbr,
+                'num_poject' => $request->num_poject,
+                'company' => $request->company,
+                'address' => $request->address,
+                'сustomer' => $request->сustomer,
+                'address_customer' => $request->address_customer,
+                'list_docs' => $request->list_docs,
+                'dates_start_end' => $request->dates_start_end,
+                'finanсes' => $request->finanсes,
+                'is_appointment' => $request->is_appointment,
+                'is_target' => $request->is_target,
+                'type_ntd' => $request->type_ntd,
+                'basis_development' => $request->basis_development,
+                'links' => $request->links,
+                'build_year' => $request->build_year,
+                'gosproject' => $request->gosproject,
+                'sostav' => $request->sostav,
+                'modules' => $request->modules,
+                'po' => $request->po,
+                'hosting' => $request->hosting,
+                'selected_is_for_change' => $request->selected_is_for_change,
+                'selected_is_for_exit' => $request->selected_is_for_exit,
+                'paln_integrations' => $request->paln_integrations,
+                'documents_list' => json_encode($ID_File),
+                'draft' => '0',
+                'send' => '1',
+                'comment_accept' => $request->comment
+            ]);
+            
+            /* Конец ШАГА 3. */
+
+
+            $projects = It_Project::where('goverment_id', Auth::user()->government_id)->get();
+            return View::make('expertise.create', [
+                'projects' => $projects
+            ])->with('successMsg', 'Запрос на экспертизу был успешно создан и отправлен на согласование');

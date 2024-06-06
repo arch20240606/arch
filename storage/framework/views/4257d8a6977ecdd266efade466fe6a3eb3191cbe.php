@@ -1,0 +1,1 @@
+с авторизацией<?php /**PATH /var/www/govarch.kz/docs/resources/views/datacatalog/index_auth.blade.php ENDPATH**/ ?>

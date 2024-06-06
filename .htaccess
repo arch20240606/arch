@@ -1,0 +1,18 @@
+<IfModule mod_rewrite.c>
+    SetEnv APP_ENV production
+
+    RewriteEngine On
+    RewriteBase /
+
+    RewriteRule ^(.*)/public/index.php/(.*)$ /$2 [L,R=301]
+
+    RewriteRule ^(.*)$ public/$1 [L]
+
+</IfModule>
+
+<Limit GET POST PUT DELETE OPTIONS>
+    Require all granted
+</Limit>
+<LimitExcept GET POST DELETE PUT OPTIONS>
+    Require all denied
+</LimitExcept>

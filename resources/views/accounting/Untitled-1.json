@@ -1,0 +1,161 @@
+{
+	"_id" : "56d6a4b887fb41f02b34671e",
+	"app_software_type" : "informsystem",
+	"AppArchitecture" : "Разнородная",
+	"AppClass" : "Малоприоритетное прикладное программное обеспечение",
+	"appComplexity" : 1.15,
+	"AppDataStorageArchitecture" : "Распределенная",
+	"AppDescription" : "Основным назначением АС МПРК является внедрение в законотворческий процесс Парламента комплекса стандартных сервисных программ и специализированных подсистем для создания условий по проведению мони¬торинга законопроектов и законов.",
+	"AppNodeArchitecture" : "Тонкий клиент",
+	"apprelationTypes" : [
+		"5815c701b236750ab8834011"
+	],
+	"apprelationTypesInfo_filledPercentage" : "33",
+	"AppShortName" : "АС «Мониторинг Парламента РК»",
+	"AppTasks" : [
+		"Обеспечение эффективного управления за счет представления внутренней и сбора внешней информации касательно законотворческой деятельности Парламента.",
+		"Автоматизация технологических процессов подготовки, регистрации, структурирования, хранения, архивации, поиска и обработки данных, авторизации доступа к ним.",
+		"Выпуск и рассылка информации, извлечение информации из документов и поддержка принятия решений."
+	],
+	"AppType" : "Гибридное решение",
+	"archInfo_filledPercentage" : "100",
+	"automationDegree" : "Частичная",
+	"available_on_the_LAN" : "true",
+	"bpStatus" : "published",
+	"capacity" : "Средняя",
+	"classVerified" : "false",
+	"complexity" : {
+		"score" : 2.9000000000000004,
+		"textValue" : "HIGH"
+	},
+	"containerTypes" : [
+		"582c2f40ec00e927a40d57b9"
+	],
+	"containerTypesInfo_filledPercentage" : "100",
+	"coverage" : {
+		"score" : 0.975,
+		"textValue" : "LOW"
+	},
+	"criticality" : {
+		"score" : 2.15,
+		"textValue" : "MEDIUM"
+	},
+	"dataStreamsSignificance" : "Повышенная",
+	"detailedInfo_filledPercentage" : "100",
+	"documentInfo_filledPercentage" : "100",
+	"DocumentTypes" : [
+		{
+			"entityName" : "operation",
+			"portalTypeDoc" : "597979f5e75aad1aac7886ee"
+		},
+		{
+			"entityName" : "informsystem",
+			"portalTypeDoc" : "597977d4e75aad1aac7886c0"
+		},
+		{
+			"entityName" : "informsystem",
+			"portalTypeDoc" : "597977d4e75aad1aac788695"
+		},
+		{
+			"entityName" : "informsystem",
+			"portalTypeDoc" : "597977d4e75aad1aac7886bb"
+		},
+		{
+			"entityName" : "informsystem",
+			"portalTypeDoc" : "597977d4e75aad1aac7886a6"
+		},
+		{
+			"entityName" : "operation",
+			"portalTypeDoc" : "597979f5e75aad1aac7886ea"
+		},
+		{
+			"entityName" : "operation",
+			"portalTypeDoc" : "597979f5e75aad1aac7886e9"
+		},
+		{
+			"entityName" : "operation",
+			"portalTypeDoc" : "5a3103e5e8912820edd26b8c"
+		},
+		{
+			"entityName" : "operation",
+			"portalTypeDoc" : "597979f5e75aad1aac7886eb"
+		},
+		{
+			"entityName" : "operation",
+			"portalTypeDoc" : "59fd86dfe891284ffa6b4a4b"
+		},
+		{
+			"entityName" : "operation",
+			"portalTypeDoc" : "597979f5e75aad1aac7886f0"
+		},
+		{
+			"entityName" : "operation",
+			"portalTypeDoc" : "5a31043fe8912820edd26b8f"
+		},
+		{
+			"entityName" : "informsystem",
+			"portalTypeDoc" : "597977d4e75aad1aac788698"
+		},
+		{
+			"entityName" : "informsystem",
+			"portalTypeDoc" : "597977d4e75aad1aac7886aa"
+		},
+		{
+			"entityName" : "informsystem",
+			"portalTypeDoc" : "597977d4e75aad1aac7886c2"
+		},
+		{
+			"entityName" : "operation",
+			"portalTypeDoc" : "5ad9bdf9e89128297f03580c"
+		},
+		{
+			"entityName" : "operation",
+			"portalTypeDoc" : "5e5f719838148a0e03c28421"
+		}
+	],
+	"editDate" : "1598419362518",
+	"endVersionDate" : "4102423200000",
+	"endVersionDateTime" : "2100-01-01T00:00:00.000+06:00",
+	"entityName" : "informsystem",
+	"externalUsers" : "Отсутствует",
+	"filledPercentage" : "94",
+	"forBudget" : "yes",
+	"functionalCoverageComplexity" : "Средний",
+	"functionalCoverageCriticality" : "Отраслевое решение",
+	"id" : "56d6a4b887fb41f02b34671e",
+	"informationSeverity" : "Умеренная",
+	"internalUsers" : "Локальный",
+	"name" : "Автоматизированная система \"Мониторинг Парламента Республики Казахстан\"",
+	"objCreateDate" : "1452275863980",
+	"objCreateDateString" : "08.01.2016 23:57:43 ALMT",
+	"onlyApproved" : "Подтверждено",
+	"operationTypes" : [
+		"58120d01be35a5429827b7a9",
+		"58120d11be35a5429827b7aa",
+		"58120d3bbe35a5429827b7ab",
+		"59fd869fe891284ffa6b4a4a",
+		"58120d56be35a5429827b7ac",
+		"58120cc4be35a5429827b7a6",
+		"5e5f722238148a0e03c28433"
+	],
+	"operationTypesInfo_filledPercentage" : "100",
+	"outDataStreams" : "Крайне низкая",
+	"ownerId" : "56ce9927c100e17f8f3f73ce",
+	"regNumber" : "KZ-П-14-0000014",
+	"resultImportance" : "Комплексные выгоды",
+	"sensitivity" : "Важный",
+	"startVersionDate" : "1598504633923",
+	"startVersionDateTime" : "2020-08-27T11:03:53.923+06:00",
+	"status" : "5cf4c175e8912824cdc2cb6f",
+	"useCasesVolume" : "Повышенное",
+	"useFrequency" : "Часто",
+	"userRolesVolume" : "Повышенное",
+	"valuation" : {
+		"score" : 2.8,
+		"textValue" : "HIGH"
+	},
+	"version" : "1",
+	"version_id" : "9fc0c2bd-f31a9d1-997f135a",
+	"versionGuid" : "9fc0c2bd-f31a9d1-997f135a",
+	"wholeClass" : "LOW_PRIORITY_APPLICATION_SOFTWARE"
+},
