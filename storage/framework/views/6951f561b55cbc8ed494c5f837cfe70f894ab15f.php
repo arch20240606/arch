@@ -80,12 +80,12 @@
                 <tr>
                     <td class="table__name">
                         <?php if(auth()->check() && auth()->user()->hasRole('ROLE_GO_EXPERTISE_EDITOR')): ?>
-                            <a href="<?php echo e(route('expertise.edit', ['expertise' => $expertise->id, 'version' => $versionTwo->version_number])); ?>">
+                            <a href="<?php echo e(route('expertise.edit', ['expertise' => $expertise->expertise_id, 'version' => $versionTwo->version_number])); ?>">
                                 Версия <?php echo e($versionTwo->version_number); ?>
 
                             </a>
                         <?php else: ?>
-                            <a href="<?php echo e(route('expertise.approve.info', ['id' => $expertise->id, 'version_id' => $versionTwo->version_number])); ?>">
+                            <a href="<?php echo e(route('expertise.approve.info', ['id' => $expertise->expertise_id, 'version_id' => $versionTwo->version_number])); ?>">
                                 Версия <?php echo e($versionTwo->version_number); ?>
 
                             </a>
@@ -100,12 +100,12 @@
                     <tr>
                         <td class="table__name">
                             <?php if(auth()->check() && auth()->user()->hasRole('ROLE_GO_EXPERTISE_EDITOR')): ?>
-                                <a href="<?php echo e(route('expertise.edit', ['expertise' => $expertise->id, 'version' => $version->version_expertise])); ?>">
+                                <a href="<?php echo e(route('expertise.edit', ['expertise' => $expertise->expertise_id, 'version' => $version->version_expertise])); ?>">
                                     Версия <?php echo e($version->version_expertise); ?>
 
                                 </a>
                             <?php else: ?>
-                                <a href="<?php echo e(route('expertise.approve.info', ['id' => $expertise->id, 'version_id' => $version->version_expertise])); ?>">
+                                <a href="<?php echo e(route('expertise.approve.info', ['id' => $expertise->expertise_id, 'version_id' => $version->version_expertise])); ?>">
                                     Версия <?php echo e($version->version_expertise); ?>
 
                                 </a>

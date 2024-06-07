@@ -13,13 +13,18 @@ class Expertise extends Model
     protected $table = 'expertise';
 
     protected static function boot()
-    {
-        parent::boot();
+{
+    parent::boot();
 
-        static::creating(function ($expertise) {
-            $expertise->expertise_id = mt_rand(100000, 999999); // Генерация случайного expertise_id
-        });
-    }
+    static::created(function ($expertise) {
+        if (is_null($expertise->expertise_id)) {
+            $expertise->expertise_id = $expertise->id;
+            $expertise->save();
+        }
+    });
+}
+
+
 
     public function it_project() {
         return $this->belongsTo(It_Project::class, 'it_project_id');

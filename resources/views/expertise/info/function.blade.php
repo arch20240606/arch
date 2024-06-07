@@ -1,6 +1,6 @@
 <h2 class="is-content-title" style="padding-left: 15px; font-size: 15px; color: #0075ff;">Информационные системы</h2>
 
-{{-- @if($version->version_number>1) --}}
+@if(isset($version) && $version->version_number > 1)
   <div class="is-menu-content" data-id="1" style="display: block;">
     <table class="is-table">
 
@@ -40,7 +40,7 @@
       </tr>
     </table>
   </div>
-{{-- @else
+@else 
 <div class="is-menu-content" data-id="1" style="display: block;">
   <table class="is-table">
 
@@ -76,8 +76,8 @@
     <tr>
       <td style="width: 35%;">Планируемые интеграции для создания</td>
       <td></td>
-      <td style="padding: 12px 20px 12px 20px; color: #000000; font-size: 16px; width: 65%">{{ $expertise->paln_integrations }}</td>
+      <td style="padding: 12px 20px 12px 20px; color: #000000; font-size: 16px; width: 65%">{{ $version->paln_integrations }}</td>
     </tr>
   </table>
 </div>  
-@endif --}}
+@endif 

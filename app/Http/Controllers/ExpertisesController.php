@@ -132,35 +132,6 @@ class ExpertisesController extends Controller
                     'version_expertise' => '0'
                 ]);
 
-                // $addVersion = ExpertiseVersion::create([
-                //     'expertise_id' => $addExpertise->id,
-                //     'version_number' => 1,
-                //     'abbr' => $request->abbr,
-                //     'num_poject' => $request->num_poject,
-                //     'company' => $request->company,
-                //     'address' => $request->address,
-                //     'customer' => $request->customer,
-                //     'address_customer' => $request->address_customer,
-                //     'list_docs' => $request->list_docs,
-                //     'dates_start_end' => $request->dates_start_end,
-                //     'finances' => $request->finances,
-                //     'is_appointment' => $request->is_appointment,
-                //     'is_target' => $request->is_target,
-                //     'type_ntd' => $request->type_ntd,
-                //     'basis_development' => $request->basis_development,
-                //     'links' => $request->links,
-                //     'build_year' => $request->build_year,
-                //     'gosproject' => $request->gosproject,
-                //     'sostav' => $request->sostav,
-                //     'modules' => $request->modules,
-                //     'po' => $request->po,
-                //     'hosting' => $request->hosting,
-                //     'selected_is_for_change' => $request->selected_is_for_change,
-                //     'selected_is_for_exit' => $request->selected_is_for_exit,
-                //     'plan_integrations' => $request->plan_integrations,
-                //     'documents_list' => json_encode($request->documents_list)
-                // ]);
-
                 // $addExpertise->id  -  это ID последней записи в базу, добавленной запросом выше
 
                 $expertise = Expertise::where('id', $addExpertise->id)->first();
@@ -400,19 +371,22 @@ class ExpertisesController extends Controller
             $selectedSignerId = $request->input('signer_id');
 
 
-            $expertiseId = Expertise::latest()->first()->id;
+            // $expertiseId = Expertise::latest()->first()->id;
+            $expertise = Expertise::latest()->first();
+            // $expertiseId = $expertise->expertise_id;
+
 
             // Создание записи в таблице ExpertiseRoleStatus для согласующего
             $expertiseRoleStatusApprover1 = ExpertiseRoleStatus::create([
                 'user_id' => isset($selectedApproverId1) ? $selectedApproverId1 : 0,
-                'expertise_id' => $expertiseId,
+                'expertise_id' => $request->expertise_id,
                 'approve' => ($selectedApproverId1 != null),
             ]);
 
             // Создание Roleзаписи в таблице ExpeRolertiseRoleStatus для подписанта
             $expertiseRoleStatusSigner = ExpertiseRoleStatus::create([
                 'user_id' => $selectedSignerId,
-                'expertise_id' => $expertiseId,
+                'expertise_id' => $request->expertise_id,
                 'signing' => ($selectedSignerId != null)
             ]);
 
@@ -424,6 +398,7 @@ class ExpertisesController extends Controller
                 where('it_project_id', $request->it_project_id)->
                 where('type_project', $request->type_project)->
                 where('expertise_id', $request->expertise_id)->
+                // where('expertise_id', $expertiseId)->
                 count();
 
                 // dd($chectTechnicalTask);
@@ -436,6 +411,7 @@ class ExpertisesController extends Controller
                     'it_project_id' => $request->it_project_id,
                     'type_project' => $request->type_project,
                     'expertise_id' => $request->expertise_id,
+                    // 'expertise_id' => $expertiseId,
                     'version' => 1,
                     'part_1' => $request->editor_1,
                     'part_2' => $request->editor_2,
@@ -483,6 +459,7 @@ class ExpertisesController extends Controller
                         'it_project_id' => $request->it_project_id,
                         'type_project' => $request->type_project,
                         'expertise_id' => $request->expertise_id,
+                        // 'expertise_id' => $expertiseId,
                         'version' => $lastVersionNumber + 1,
                         'part_1' => $request->editor_1,
                         'part_2' => $request->editor_2,
@@ -518,6 +495,7 @@ class ExpertisesController extends Controller
                     'it_project_id' => $request->it_project_id,
                     'type_project' => $request->type_project,
                     'expertise_id' => $request->expertise_id,
+                    // 'expertise_id' => $expertiseId,
                     'version' => $lastVersionNumber + 1,
                     
                     'doc_status' => $request->doc_status,
@@ -544,6 +522,7 @@ class ExpertisesController extends Controller
                     'it_project_id' => $request->it_project_id,
                     'type_project' => $request->type_project,
                     'expertise_id' => $request->expertise_id,
+                    // 'expertise_id' => $expertiseId,
                     'version' => 1,
                     
                     'doc_status' => $request->doc_status,
@@ -623,49 +602,12 @@ class ExpertisesController extends Controller
 
 
             /* ШАГ 3. запись данных в таблицу экспертизы */
-            $VersionNumber = (int) Expertise::where('id', $request->expertise_id)->max('version_expertise');
-            // //dd($VersionNumber);//1
-            // // dd($VersionNumber);
-            // $lastVersionNumber = ExpertiseVersion::where('expertise_id', $request->expertise_id)->max('version_number');
-            // // dd($VersionNumber,$lastVersionNumber);
-            // if($VersionNumber >= $lastVersionNumber){
-            
-            //     $newVersion = ExpertiseVersion::create([
-            //         'expertise_id' => $request->expertise_id,
-            //         'version_number' => $lastVersionNumber + 1,
-            //         'abbr' => $request->abbr,
-            //         'num_poject' => $request->num_poject,
-            //         'company' => $request->company,
-            //         'address' => $request->address,
-            //         'сustomer' => $request->сustomer,
-            //         'address_customer' => $request->address_customer,
-            //         'list_docs' => $request->list_docs,
-            //         'dates_start_end' => $request->dates_start_end,
-            //         'finanсes' => $request->finanсes,
-            //         'is_appointment' => $request->is_appointment,
-            //         'is_target' => $request->is_target,
-            //         'type_ntd' => $request->type_ntd,
-            //         'basis_development' => $request->basis_development,
-            //         'links' => $request->links,
-            //         'build_year' => $request->build_year,
-            //         'gosproject' => $request->gosproject,
-            //         'sostav' => $request->sostav,
-            //         'modules' => $request->modules,
-            //         'po' => $request->po,
-            //         'hosting' => $request->hosting,
-            //         'selected_is_for_change' => $request->selected_is_for_change,
-            //         'selected_is_for_exit' => $request->selected_is_for_exit,
-            //         'paln_integrations' => $request->paln_integrations,
-            //         'documents_list' => json_encode($ID_File),
-            //     ]);
-            // }else{
+                $VersionNumber = (int) Expertise::where('id', $request->expertise_id)->max('version_expertise');
                 if($VersionNumber >= 1){
                     $VersionNumber = $VersionNumber + 1;
-                }
-                else{
+                }else{
                     $VersionNumber = 1;
                 }
-                // dd($VersionNumber);
                 $updateExpertise = Expertise::find($request->expertise_id);
                 $updateExpertise->update([
                     'abbr' => $request->abbr,
@@ -1663,6 +1605,7 @@ public function createVersion($expertiseId)
 {
     $expertise = Expertise::find($expertiseId);
     $expertises = $expertise -> expertise_id;
+    
     // dd($expertises);
     // $expertise_id = $expertiseId->expertise_id;
     if (!$expertise) {
@@ -1671,12 +1614,13 @@ public function createVersion($expertiseId)
 
     // Получаем последующие версии из модели ExpertiseVersion
     // $versions = ExpertiseVersion::where('expertise_id', $expertiseId)->get();
-    $versions = Expertise::where('expertise_id', $expertises)->get();
+    $versions = Expertise::where('id', $expertiseId)->get();
     $versionsTwo = ExpertiseVersion::where('expertise_id', $expertiseId)->get();
+    // dd($versionsTwo, $versions);
     // $versionsTwo = ExpertiseVersion::where('expertise_id', $expertiseId)->get();
     // dd($versions,$versionsTwo);
     
-    return view('expertise.create_version', compact('expertise', 'versions', 'versionsTwo'));
+    return view('expertise.create_version', compact('expertise', 'versions','versionsTwo'));
 }
 
 
@@ -1721,13 +1665,13 @@ public function createVersion($expertiseId)
                 'num_poject' => $expertise->num_poject,
                 'company' => $expertise->company,
                 'address' => $expertise->address,
-                'customer' => $expertise->customer,
+                'customer' => $expertise->сustomer,
                 'address_customer' => $expertise->address_customer,
                 'list_docs' => $expertise->list_docs,
                 'dates_start_end' => $expertise->dates_start_end,
                 'finances' => $expertise->finances,
-                'is_appointment' => $expertise->is_appointment, // Преобразуем к целому типу
-                'is_target' => $expertise->is_target, // Преобразуем к целому типу
+                'is_appointment' => $expertise->is_appointment, 
+                'is_target' => $expertise->is_target, 
                 'type_ntd' => $expertise->type_ntd,
                 'basis_development' => $expertise->basis_development,
                 'links' => $expertise->links,
@@ -1737,8 +1681,8 @@ public function createVersion($expertiseId)
                 'modules' => $expertise->modules,
                 'po' => $expertise->po,
                 'hosting' => $expertise->hosting,
-                'selected_is_for_change' => $expertise->selected_is_for_change, // Преобразуем к целому типу
-                'selected_is_for_exit' => $expertise->selected_is_for_exit, // Преобразуем к целому типу
+                'selected_is_for_change' => $expertise->selected_is_for_change, 
+                'selected_is_for_exit' => $expertise->selected_is_for_exit, 
                 'plan_integrations' => $expertise->plan_integrations,
                 'documents_list' => $expertise->documents_list
             ]);
@@ -1799,97 +1743,26 @@ public function createVersion($expertiseId)
     }
 
     
-
     // public function createNewVersion($id)
     // {
     //     $expertise = Expertise::findOrFail($id);
-
-    //     DB::transaction(function () use ($expertise) {
-    //         // Получаем текущую последнюю версию
-    //         $lastVersionNumber = ExpertiseVersion::where('expertise_id', $expertise->id)->max('version_number');
-
-    //         // Создаем новую версию в таблице expertise_versions
-    //         $newVersion = ExpertiseVersion::create([
-    //             'expertise_id' => $expertise->id,
-    //             'version_number' => $lastVersionNumber + 1,
-    //             'abbr' => $expertise->abbr,
-    //             'num_poject' => $expertise->num_poject,
-    //             'company' => $expertise->company,
-    //             'address' => $expertise->address,
-    //             'customer' => $expertise->customer,
-    //             'address_customer' => $expertise->address_customer,
-    //             'list_docs' => $expertise->list_docs,
-    //             'dates_start_end' => $expertise->dates_start_end,
-    //             'finances' => $expertise->finances,
-    //             'is_appointment' => (int) $expertise->is_appointment,
-    //             'is_target' => (int) $expertise->is_target,
-    //             'type_ntd' => $expertise->type_ntd,
-    //             'basis_development' => $expertise->basis_development,
-    //             'links' => $expertise->links,
-    //             'build_year' => $expertise->build_year,
-    //             'gosproject' => $expertise->gosproject,
-    //             'sostav' => $expertise->sostav,
-    //             'modules' => $expertise->modules,
-    //             'po' => $expertise->po,
-    //             'hosting' => $expertise->hosting,
-    //             'selected_is_for_change' => (int) $expertise->selected_is_for_change,
-    //             'selected_is_for_exit' => (int) $expertise->selected_is_for_exit,
-    //             'plan_integrations' => $expertise->plan_integrations,
-    //             'documents_list' => $expertise->documents_list
-    //         ]);
-
-    //         // Создаем новую версию в таблице technical_tasks
-    //         $technicalTasks = TechnicalTask::where('expertise_id', $expertise->id)->get();
-    //         foreach ($technicalTasks as $task) {
-    //             TechnicalTask::create([
-    //                 'user_id' => $task->user_id,
-    //                 'government_id' => $task->government_id,
-    //                 'it_project_id' => $task->it_project_id,
-    //                 'type_project' => $task->type_project,
-    //                 'expertise_id' => $task->expertise_id,
-    //                 'version' => $lastVersionNumber + 1,
-    //                 'part_1' => $task->part_1,
-    //                 'part_2' => $task->part_2,
-    //                 'part_3' => $task->part_3,
-    //                 'part_4' => $task->part_4,
-    //                 'part_5' => $task->part_5,
-    //                 'part_6' => $task->part_6,
-    //                 'part_7' => $task->part_7,
-    //                 'part_8' => $task->part_8,
-    //                 'part_9' => $task->part_9,
-    //                 'part_10' => $task->part_10,
-    //                 'part_11' => $task->part_11,
-    //                 'part_12' => $task->part_12
-    //             ]);
-    //         }
-
-    //         // Создаем новую версию в таблице expertise_documents
-    //         $expertiseDocuments = ExpertiseDocument::where('expertise_id', $expertise->id)->get();
-    //         foreach ($expertiseDocuments as $document) {
-    //             ExpertiseDocument::create([
-    //                 'user_id' => $document->user_id,
-    //                 'government_id' => $document->government_id,
-    //                 'it_project_id' => $document->it_project_id,
-    //                 'type_project' => $document->type_project,
-    //                 'expertise_id' => $document->expertise_id,
-    //                 'doc_status' => $document->doc_status,
-    //                 'doc_lang' => $document->doc_lang,
-    //                 'doc_type' => $document->doc_type,
-    //                 'doc_version' => $document->doc_version,
-    //                 'doc_year' => $document->doc_year,
-    //                 'doc_name' => $document->doc_name,
-    //                 'file_name' => $document->file_name,
-    //                 'file_name_upload' => $document->file_name_upload,
-    //                 'file_type' => $document->file_type,
-    //                 'file_size' => $document->file_size,
-    //                 'version' => $lastVersionNumber + 1
-    //             ]);
-    //         }
-    //     });
-
+    
+    //     // Создание новой версии на основе текущей
+    //     $newVersion = $expertise->replicate();
+    //     $newVersion->expertise_id = $expertise->expertise_id; // Явно устанавливаем значение expertise_id
+    //     $newVersion->version_expertise = Expertise::where('it_project_id', $expertise->it_project_id)
+    //                                               ->where('type_project', $expertise->type_project)
+    //                                               ->where('expertise_id', $expertise->expertise_id)
+    //                                               ->max('version_expertise') + 1;
+    //     $newVersion->save();
+    
+    //     // return redirect()->route('expertise.edit', ['expertise' => $newVersion->id])
+    //     //     ->with('success', 'Новая версия успешно создана');
     //     return redirect()->route('expertise.edit', ['expertise' => $expertise->id])
-    //         ->with('success', 'Новая версия успешно создана');
+    //          ->with('success', 'Новая версия успешно создана');
     // }
+    
+    
 
 
 
@@ -2217,20 +2090,22 @@ public function approve_info($id, $version_id = null)
         // $version = ExpertiseVersion::where('expertise_id', $expertise_id)->where('version_number', $version_id)->firstOrFail();
     } else {
         // Выборка только из модели Expertise, если версия равна 1
-        $version = Expertise::where('expertise_id', $expertise_id)->where('version_expertise', $version_id)->firstOrFail();
+        $version = ExpertiseVersion::where('expertise_id', $expertise_id)->where('version_number', $version_id)->firstOrFail();
     }
 
-    if ($version_id) {
-        $tz = TechnicalTask::where('expertise_id', $id)->where('version', $version_id)->first();
-    } else {
-        $tz = TechnicalTask::where('expertise_id', $id)->first();
-    }
+    // if ($version_id ) {
+    //     $tz = TechnicalTask::where('expertise_id', $id)->where('version', $version_id)->first();
+    // } else {
+    //     $tz = TechnicalTask::where('expertise_id', $id)->where('version', $version_id)->first();
+    // }
+    $tz = TechnicalTask::where('expertise_id', $id)->where('version', $version_id)->first();
 
-    if ($version_id) {
-        $document = ExpertiseDocument::where('expertise_id', $id)->where('version', $version_id)->first();
-    } else {
-        $document = ExpertiseDocument::where('expertise_id', $id)->first();
-    }
+    // if ($version_id > 1) {
+    //     $document = ExpertiseDocument::where('expertise_id', $id)->where('version', $version_id)->first();
+    // } else {
+    //     $document = ExpertiseDocument::where('expertise_id', $id)->where('version', $version_id)->first();
+    // }
+    $document = ExpertiseDocument::where('expertise_id', $id)->where('version', $version_id)->first();
 
     return view('expertise.info.index', [
         'expertise' => $expertise,

@@ -43,4 +43,9 @@ class ExpertiseVersion extends Model
     {
         return $this->belongsTo(Expertise::class);
     }
+
+    public function getISS($id) {
+        $iss = InformationSystem::where('id', $id)->first();
+        return $iss;
+    }
 }

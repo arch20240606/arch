@@ -383,6 +383,6 @@
         </td>
       </tr>
     </table>
-  </div>
+  </div> 
   </div>
 <?php endif; ?><?php /**PATH C:\Users\user\Documents\НОВЫЙ ПОРТАЛ\www\resources\views/expertise/info/passport.blade.php ENDPATH**/ ?>
