@@ -76,6 +76,7 @@
                 </tr>
             </thead>
             <tbody>
+            <?php if(isset($versionsTwo) && $versionsTwo->isNotEmpty()): ?>
                 <?php $__currentLoopData = $versionsTwo; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $versionTwo): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <tr>
                     <td class="table__name">
@@ -96,16 +97,19 @@
                     <td class="table__status">Черновик</td>
                 </tr>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            <?php else: ?>
+            <p>Нет данных для отображения</p>
+            <?php endif; ?>    
                 <?php $__currentLoopData = $versions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $version): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <tr>
                         <td class="table__name">
                             <?php if(auth()->check() && auth()->user()->hasRole('ROLE_GO_EXPERTISE_EDITOR')): ?>
-                                <a href="<?php echo e(route('expertise.edit', ['expertise' => $expertise->expertise_id, 'version' => $version->version_expertise])); ?>">
+                                <a href="<?php echo e(route('expertise.edit', ['expertise' => $expertise->id, 'version' => $version->version_expertise])); ?>">
                                     Версия <?php echo e($version->version_expertise); ?>
 
                                 </a>
                             <?php else: ?>
-                                <a href="<?php echo e(route('expertise.approve.info', ['id' => $expertise->expertise_id, 'version_id' => $version->version_expertise])); ?>">
+                                <a href="<?php echo e(route('expertise.approve.info', ['id' => $expertise->id, 'version_id' => $version->version_expertise])); ?>">
                                     Версия <?php echo e($version->version_expertise); ?>
 
                                 </a>
@@ -121,6 +125,7 @@
     </div>
 </main>
 <?php $__env->stopSection(); ?>
+
 
 
 

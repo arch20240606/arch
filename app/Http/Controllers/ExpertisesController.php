@@ -1647,7 +1647,7 @@ public function createVersion($expertiseId)
 
         $newVersion = null;
 
-        DB::transaction(function () use ($expertise, &$newVersion) {
+        // DB::transaction(function () use ($expertise, &$newVersion) {
                 // Получаем текущую последнюю версию
                 $lastVersionNumber = Expertise::where('id', $expertise->id)->max('version_expertise');
                 // if($lastVersionNumber > 1){
@@ -1736,7 +1736,7 @@ public function createVersion($expertiseId)
             //         'version' => $lastVersionDoc + 1
             //     ]);
             // }
-        });
+        // });
 
         return redirect()->route('expertise.edit', ['expertise' => $expertise->id, 'version' => $newVersion->id])
             ->with('success', 'Новая версия успешно создана');
@@ -2073,39 +2073,23 @@ public function approve_confirmers(){
 public function approve_info($id, $version_id = null)
 {
     $expertise = Expertise::findOrFail($id);
-    $expertise_id = $expertise -> expertise_id;
+    $current_version = $expertise -> version_expertise;
+    // dd((int) $current_version, (int) $version_id);
+    // $ef = (int) $current_version > (int) $version_id;
+    // dd($ef);
 
-    // Получить нужную версию или самую последнюю, если не указана
-    //  if ($version_id) {
-    //     // $version = Expertise::where('expertise_id', $id)->where('version_expertise', $version_id)->firstOrFail();
-    //     $version = Expertise::where('expertise_id', $expertise_id)->where('version_expertise', $version_id)->firstOrFail();
-    //     } else {
-    //         // $version = ExpertiseVersion::where('expertise_id', $id)->orderBy('version_expertise', 'desc')->first();
-    //     $version = ExpertiseVersion::where('expertise_id', $id)->where('version_number', $version_id)->firstOrFail();
-    //     }
-    // dd($version_id);
-    if ($version_id > 1) {
+    if ((int) $current_version > (int) $version_id) {
         // Выборка из обеих моделей, если версия больше предыдущей
-        $version = Expertise::where('expertise_id', $expertise_id)->where('version_expertise', $version_id)->firstOrFail();
-        // $version = ExpertiseVersion::where('expertise_id', $expertise_id)->where('version_number', $version_id)->firstOrFail();
+        $version = ExpertiseVersion::where('expertise_id', $id)->where('version_number', $version_id)->firstOrFail();
     } else {
+        $version = Expertise::where('id', $id)->where('version_expertise', $version_id)->firstOrFail();
         // Выборка только из модели Expertise, если версия равна 1
-        $version = ExpertiseVersion::where('expertise_id', $expertise_id)->where('version_number', $version_id)->firstOrFail();
     }
 
-    // if ($version_id ) {
-    //     $tz = TechnicalTask::where('expertise_id', $id)->where('version', $version_id)->first();
-    // } else {
-    //     $tz = TechnicalTask::where('expertise_id', $id)->where('version', $version_id)->first();
-    // }
+   
     $tz = TechnicalTask::where('expertise_id', $id)->where('version', $version_id)->first();
-
-    // if ($version_id > 1) {
-    //     $document = ExpertiseDocument::where('expertise_id', $id)->where('version', $version_id)->first();
-    // } else {
-    //     $document = ExpertiseDocument::where('expertise_id', $id)->where('version', $version_id)->first();
-    // }
     $document = ExpertiseDocument::where('expertise_id', $id)->where('version', $version_id)->first();
+    // dd($tz,$document);
 
     return view('expertise.info.index', [
         'expertise' => $expertise,

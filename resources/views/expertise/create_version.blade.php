@@ -485,6 +485,7 @@
                 </tr>
             </thead>
             <tbody>
+            @if(isset($versionsTwo) && $versionsTwo->isNotEmpty())
                 @foreach($versionsTwo as $versionTwo)
                 <tr>
                     <td class="table__name">
@@ -494,7 +495,7 @@
                             </a>
                         @else
                             <a href="{{ route('expertise.approve.info', ['id' => $expertise->expertise_id, 'version_id' => $versionTwo->version_number]) }}">
-                                Версия {{ $versionTwo->version_number}}
+                                Версия {{ $versionTwo->version_number }}
                             </a>
                         @endif
                     </td>
@@ -503,15 +504,18 @@
                     <td class="table__status">Черновик</td>
                 </tr>
                 @endforeach
+            @else
+            <p>Нет данных для отображения</p>
+            @endif    
                 @foreach($versions as $version)
                     <tr>
                         <td class="table__name">
                             @if(auth()->check() && auth()->user()->hasRole('ROLE_GO_EXPERTISE_EDITOR'))
-                                <a href="{{ route('expertise.edit', ['expertise' => $expertise->expertise_id, 'version' => $version->version_expertise]) }}">
+                                <a href="{{ route('expertise.edit', ['expertise' => $expertise->id, 'version' => $version->version_expertise]) }}">
                                     Версия {{ $version->version_expertise }}
                                 </a>
                             @else
-                                <a href="{{ route('expertise.approve.info', ['id' => $expertise->expertise_id, 'version_id' => $version->version_expertise]) }}">
+                                <a href="{{ route('expertise.approve.info', ['id' => $expertise->id, 'version_id' => $version->version_expertise]) }}">
                                     Версия {{ $version->version_expertise }}
                                 </a>
                             @endif
@@ -526,6 +530,7 @@
     </div>
 </main>
 @endsection
+
 
 
 
