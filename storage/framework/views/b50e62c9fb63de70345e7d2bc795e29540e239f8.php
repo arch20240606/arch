@@ -80,8 +80,9 @@ if (app()->getLocale() == "ru") {
             <tr>
               <td class="table__status"><?php echo e($expertise->id); ?></td>
               <td class="table__status"><?php echo e($type_project_name); ?></td>
-              <td class="table__name"><a href="<?php echo e(route ('expertise.approve.info', ['id' => $expertise->id])); ?>"><?php echo e($expertise->it_project->$names); ?></a></td>
-              <td class="table__name"><?php echo e($expertise->goverment_id); ?></td>
+              
+              <td class="table__name"><a href="<?php echo e(route('expertise.create_version', ['expertise' => $expertise->id])); ?>"><?php echo e($expertise->it_project->$names); ?></a></td>
+              <td class="table__name"><?php echo e($expertise->gosorg->name_ru); ?></td>
               <td class="table__status"><?php echo e($expertise->version); ?></td>
               <?php if(auth()->check() && (auth()->user()->hasRole('ROLE_GO_EXPERTISE_EDITOR'))): ?>
                 <?php if($expertise->send_to_uo_si == 1): ?>

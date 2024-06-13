@@ -145,6 +145,8 @@ Route::group([ 'prefix' => LaravelLocalization::setLocale(), 'middleware' => [ '
     Route::get('expertise/outbox', [App\Http\Controllers\ExpertisesController::class, 'outbox'])->name('expertise.outbox');
     // Route::get('expertise/approve/info/{id}', [App\Http\Controllers\ExpertisesController::class, 'approve_info'])->name('expertise.approve.info');
     Route::get('expertise/approve/info/{id}/{version_id?}', [App\Http\Controllers\ExpertisesController::class, 'approve_info'])->name('expertise.approve.info');
+    // Route::get('/export-passport', [App\Http\Controllers\ExpertisesController::class, 'exportPassport'])->name('export.passport');
+
 
     // Route::get('expertise/approve/info/{id}/{version_id}', [App\Http\Controllers\ExpertisesController::class, 'approve_info'])->name('expertise.approve.info');
 
@@ -180,6 +182,7 @@ Route::group([ 'prefix' => LaravelLocalization::setLocale(), 'middleware' => [ '
     Route::get('expertise/create_it_project', [App\Http\Controllers\ExpertisesController::class, 'create_it_project'])->name('expertise.create_it_project');
     Route::get('/expertise/create_version/{expertise}', [App\Http\Controllers\ExpertisesController::class, 'createVersion'])->name('expertise.create_version');
     Route::get('/expertise/create_new_version/{expertise}', [App\Http\Controllers\ExpertisesController::class, 'createNewVersion'])->name('expertise.create_new_version');
+    Route::get('/export-expertise/{type}', [App\Http\Controllers\ExpertisesController::class, 'exportExpertise'])->name('export.expertise');
     
 
     Route::resource('expertise', App\Http\Controllers\ExpertisesController::class);

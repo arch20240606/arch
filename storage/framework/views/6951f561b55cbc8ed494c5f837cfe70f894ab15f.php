@@ -56,7 +56,7 @@
         <h1 class="page-title"><?php echo e(trans('app.m_expert')); ?></h1>
 
         <?php echo $__env->make('expertise.menu', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-        <div class="filter-title">Запросы на экспертизу / Техническое задание</div>
+        <div class="filter-title">Запросы на экспертизу</div>
 
         <div class="actions">
             <?php if(auth()->check() && auth()->user()->hasRole('ROLE_GO_EXPERTISE_EDITOR')): ?>
@@ -97,17 +97,16 @@
                     <td class="table__status">Черновик</td>
                 </tr>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-            <?php else: ?>
-            <p>Нет данных для отображения</p>
             <?php endif; ?>    
                 <?php $__currentLoopData = $versions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $version): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <tr>
                         <td class="table__name">
                             <?php if(auth()->check() && auth()->user()->hasRole('ROLE_GO_EXPERTISE_EDITOR')): ?>
                                 <a href="<?php echo e(route('expertise.edit', ['expertise' => $expertise->id, 'version' => $version->version_expertise])); ?>">
-                                    Версия <?php echo e($version->version_expertise); ?>
+                                    Версия <?php echo e($version->version_expertise == 0 ? 1 : $version->version_expertise); ?>
 
                                 </a>
+                                
                             <?php else: ?>
                                 <a href="<?php echo e(route('expertise.approve.info', ['id' => $expertise->id, 'version_id' => $version->version_expertise])); ?>">
                                     Версия <?php echo e($version->version_expertise); ?>
@@ -115,7 +114,7 @@
                                 </a>
                             <?php endif; ?>
                         </td>
-                        <td class="table__status"><?php echo e($version->version_expertise); ?></td>
+                        <td class="table__status"><?php echo e($version->version_expertise == 0 ? 1 : $version->version_expertise); ?></td>
                         <td class="table__status"><?php echo e($version->updated_at); ?></td>
                         <td class="table__status">Черновик</td>
                     </tr>

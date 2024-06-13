@@ -3,13 +3,8 @@
 
 
 <h2 class="is-content-title">Форма создания комментариев или заключения</h2>
-{{-- <select style="margin-bottom: 24px; padding: 8px; border: 1px solid #ccc; border-radius: 5px; background-color: #f9f9f9; cursor: pointer; width: 200px;">
-  <option selected>Выберите</option>
-  <option>ГТС</option>
-  <option>УО</option>
-  <option>СИ</option>
-</select> --}}
-<nav class="is-tabs tabs" style="border: 1px solid black">
+
+<nav class="is-tabs tabs" style="border: 1px solid rgb(112, 107, 107); width: 150px;">
   <a style="width: 25%; font-size: 16px; color:black" class="tabs__link" href="#" data-id="7">Просмотр</a>
 </nav>
 
@@ -21,7 +16,7 @@
   @php
   $conclusions = App\Models\ExpertiseConclutionSi::all(); // Получаем всех пользователей
   @endphp
-
+ 
 
 <div style="padding: 20px; border: 1px solid #ccc; border-radius: 10px; margin-bottom: 20px;">
   <p><b style="font-size: 18px; color: #333;">1. Документы, представленные на рассмотрение</b></p>
@@ -151,18 +146,18 @@
     <div style="display: flex; align-items: center; margin-bottom: 10px;">
       <p style="margin-right: 900px; font-size: 16px; flex: 1;">1. Требования к структуре и функционированию системы: - перечень подсистем, их назначение и основные характеристики, требования к числу уровней иерархии и степени централизации системы; - требования к способам и средствам связи для информационного обмена между компонентами системы; - требования к характеристикам взаимосвязей создаваемой системы со смежными системами, требования к ее совместимости, в том числе указания о способах обмена информацией (автоматически, пересылкой документов, по телефону и т. п.); - требования к безопасности структуры системы; - требования к режимам функционирования системы; - требования по диагностированию системы; - перспективы развития, модернизации системы.</p>
       <select id="concl_13" name="concl_13" style="padding: 8px; border: 1px solid #ccc; border-radius: 5px; background-color: #f9f9f9; cursor: pointer; width: 200px;">
-        <option value="available">Имеется</option>
-        <option value="absent">Отсутствует</option>
-        <option value="not required">Не требуется</option>
+        <option value="Имеется">Имеется</option>
+        <option value="Отсутствует">Отсутствует</option>
+        <option value="Не требуется">Не требуется</option>
       </select>
     </div>
     <hr style="border-top: 2px solid #333;">
     <div style="display: flex; align-items: center; margin-bottom: 10px;">
       <p style="margin-right: 900px; font-size: 16px; flex: 1;">2. Требования к надежности - состав и количественные значения показателей надежности для системы в целом или ее подсистем; - перечень аварийных ситуаций, по которым должны быть регламентированы требования к надежности, и значения соответствующих показателей; - требования к надежности технических средств и программного обеспечения; - требования к методам оценки и контроля показателей надежности на разных стадиях создания системы в соответствии с действующими нормативно-техническими документами.</p>
       <select id="concl_14" name="concl_14" style="padding: 8px; border: 1px solid #ccc; border-radius: 5px; background-color: #f9f9f9; cursor: pointer; width: 200px;">
-        <option value="available">Имеется</option>
-        <option value="absent">Отсутствует</option>
-        <option value="not required">Не требуется</option>
+        <option value="Имеется">Имеется</option>
+        <option value="Отсутствует">Отсутствует</option>
+        <option value="Не требуется">Не требуется</option>
       </select>
     </div>
     <hr style="border-top: 2px solid #333;">
@@ -180,9 +175,9 @@
     <p style="margin-right: 900px; font-size: 16px; flex: 1;">4. Требования к численности и квалификации персонала системы и режиму его работы - требования к численности персонала (пользователей) АС; - требования к квалификации персонала, порядку его подготовки и контроля знаний и навыков; - требуемый режим работы персонала АС.
   </p>
   <select id="concl_16" name="concl_16" style="padding: 8px; border: 1px solid #ccc; border-radius: 5px; background-color: #f9f9f9; cursor: pointer; width: 200px;">
-    <option value="available">Имеется</option>
-    <option value="absent">Отсутствует</option>
-    <option value="not required">Не требуется</option>
+    <option value="Имеется">Имеется</option>
+    <option value="Отсутствует">Отсутствует</option>
+    <option value="Не требуется">Не требуется</option>
   </select>
   </div>
 
@@ -191,9 +186,9 @@
     <p style="margin-right: 900px; font-size: 16px; flex: 1;">5. Требования к показателям назначения АС - приводятся значения параметров, характеризующие степень соответствия системы ее назначению. - указывают: степень приспособляемости системы к изменению процессов и методов управления, к отклонениям параметров объекта управления; допустимые пределы модернизации и развития системы; вероятностно-временные характеристики, при которых сохраняется целевое назначение системы.
   </p>
   <select id="concl_17" name="concl_17" style="padding: 8px; border: 1px solid #ccc; border-radius: 5px; background-color: #f9f9f9; cursor: pointer; width: 200px;">
-    <option value="available">Имеется</option>
-    <option value="absent">Отсутствует</option>
-    <option value="not required">Не требуется</option>
+    <option value="Имеется">Имеется</option>
+    <option value="Отсутствует">Отсутствует</option>
+    <option value="Не требуется">Не требуется</option>
   </select>
   </div>
 
@@ -852,6 +847,30 @@
       <button class="btn" id="" name=""  style="font-size: 14px; background: #b90404;">Вернуть</button>
       <button class="btn" id="send_to_go_fromUO" name="send_to_go_fromUO"  style="font-size: 14px; background: #00317B;">Отправить в ГО</button>
     @endif
+
+    {{-- @if(auth()->user()->hasRole('ROLE_SI_EXPERTISE_CONFIRMER') && $expertise->accept_uo_to_confirm == 1)
+      <input type="hidden" name="expertise_id" id="expertise_id" value="{{ $expertise->id }}">
+      <button class="btn" id="" name=""  style="font-size: 14px; background: #b90404;">Вернуть</button>
+    @endif --}}
+
+    @if (auth()->user()->hasRole('ROLE_SI_EXPERTISE_CONFIRMER') && $expertise->accept_si_reviewers == 1) 
+            @if (auth()->user()->id == 2669 && $expertise->accept_si_confirmer_first == 0)
+            <input type="hidden" name="expertise_id" id="expertise_id" value="{{ $expertise->id }}">
+            <button class="btn" id="discart_si_confirmer" name="discart_si_confirmer"  style="font-size: 14px; background: #b90404;">Вернуть</button>
+            @endif
+
+            @if (auth()->user()->id == 15 && $expertise->accept_si_confirmer_second == 0)
+            <input type="hidden" name="expertise_id" id="expertise_id" value="{{ $expertise->id }}">
+            <button class="btn" id="discart_si_confirmer" name="discart_si_confirmer"  style="font-size: 14px; background: #b90404;">Вернуть</button>
+            @endif
+    @endif
+
+     
+    @if (auth()->user()->hasRole('ROLE_GTS_EXPERTISE_CONFIRMER'))
+      <input type="hidden" name="expertise_id" id="expertise_id" value="{{ $expertise->id }}">
+      <button class="btn" id="discart_gts_confirmer" name="discart_gts_confirmer"  style="font-size: 14px; background: #b90404;">Вернуть</button>
+    @endif
+    
   </div>
 </form>
 

@@ -51,7 +51,7 @@ if ( $expertise->type_project == "1" ) {
 
 
 
-    @include ('expertise.menu')
+    @include('expertise.menu', ['expertise' => $expertise])
 
 
 

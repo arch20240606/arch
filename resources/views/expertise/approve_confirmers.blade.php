@@ -80,7 +80,8 @@ if (app()->getLocale() == "ru") {
             <tr>
               <td class="table__status">{{ $expertise->id }}</td>
               <td class="table__status">{{ $type_project_name }}</td>
-              <td class="table__name"><a href="{{ route ('expertise.approve.info', ['id' => $expertise->id]) }}">{{ $expertise->it_project->$names }}</a></td>
+              {{-- <td class="table__name"><a href="{{ route ('expertise.approve.info', ['id' => $expertise->id]) }}">{{ $expertise->it_project->$names }}</a></td> --}}
+              <td class="table__name"><a href="{{ route('expertise.create_version', ['expertise' => $expertise->id]) }}">{{ $expertise->it_project->$names }}</a></td>
               <td class="table__status">{{ $expertise->version }}</td>
               {{-- <td class="table__status">{{ $expertise->num_poject }}</td>
               <td class="table__status">{{ $expertise->company }}</td> --}}

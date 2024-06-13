@@ -82,7 +82,7 @@ if (app()->getLocale() == "ru") {
               <td class="table__status">{{ $type_project_name }}</td>
               {{-- <td class="table__name"><a href="{{ route ('expertise.approve.info', ['id' => $expertise->id]) }}">{{ $expertise->it_project->$names }}</a></td> --}}
               <td class="table__name"><a href="{{ route('expertise.create_version', ['expertise' => $expertise->id]) }}">{{ $expertise->it_project->$names }}</a></td>
-              <td class="table__name">{{$expertise->goverment_id}}</td>
+              <td class="table__name">{{$expertise->gosorg->name_ru}}</td>
               <td class="table__status">{{ $expertise->version }}</td>
               @if(auth()->check() && (auth()->user()->hasRole('ROLE_GO_EXPERTISE_EDITOR')))
                 @if($expertise->send_to_uo_si == 1)

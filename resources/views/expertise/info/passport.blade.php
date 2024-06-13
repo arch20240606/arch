@@ -1,5 +1,7 @@
 <div class="is-menu-navigation" style="grid-template-columns: auto;">
 {{-- @if(isset($version) && (intval($expertise->version_expertise) > intval($version->version_number))) --}}
+{{-- <a href="{{ route('export.passport') }}" class="btn btn-primary">Экспортировать паспорт в Word</a> --}}
+
   <div class="is-menu-content" data-id="1" style="display: block;">
     <table class="is-table">
       <tr>

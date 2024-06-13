@@ -10,6 +10,7 @@ class ExpertiseConclutionGts extends Model
     use HasFactory;
     protected $guarded = [];
     protected $table = 'conclusion_gts';
+    protected $fillable = ['conclusion_gts'];
     // public $timestamps = false;
 
     // public function it_project() {
@@ -24,6 +25,11 @@ class ExpertiseConclutionGts extends Model
     //     $iss = InformationSystem::where('id', $id)->first();
     //     return $iss;
     // }
+
+    public function nameExp()
+    {
+        return $this->belongsTo(Expertise::class, 'expertise_id', 'id');
+    }
 
 
 }

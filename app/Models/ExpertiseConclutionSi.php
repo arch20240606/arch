@@ -10,6 +10,7 @@ class ExpertiseConclutionSi extends Model
     use HasFactory;
     protected $guarded = [];
     protected $table = 'conclusion_si';
+    protected $fillable = ['conclusion_si'];
     // public $timestamps = false;
 
     // public function it_project() {
@@ -24,6 +25,9 @@ class ExpertiseConclutionSi extends Model
     //     $iss = InformationSystem::where('id', $id)->first();
     //     return $iss;
     // }
-
+    public function nameExp()
+    {
+        return $this->belongsTo(Expertise::class, 'expertise_id', 'id');
+    }
 
 }

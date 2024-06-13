@@ -12,20 +12,6 @@ class Expertise extends Model
     protected $guarded = [];
     protected $table = 'expertise';
 
-    protected static function boot()
-{
-    parent::boot();
-
-    static::created(function ($expertise) {
-        if (is_null($expertise->expertise_id)) {
-            $expertise->expertise_id = $expertise->id;
-            $expertise->save();
-        }
-    });
-}
-
-
-
     public function it_project() {
         return $this->belongsTo(It_Project::class, 'it_project_id');
     }

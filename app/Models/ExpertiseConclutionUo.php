@@ -10,6 +10,7 @@ class ExpertiseConclutionUo extends Model
     use HasFactory;
     protected $guarded = [];
     protected $table = 'conclusion_uo';
+    protected $fillable = ['conclusion_uo'];
     // public $timestamps = false;
 
     // public function it_project() {
@@ -24,6 +25,10 @@ class ExpertiseConclutionUo extends Model
     //     $iss = InformationSystem::where('id', $id)->first();
     //     return $iss;
     // }
+    public function nameExp()
+    {
+        return $this->belongsTo(Expertise::class, 'expertise_id', 'id');
+    }
 
 
 }

@@ -465,7 +465,7 @@
         <h1 class="page-title">{{ trans('app.m_expert') }}</h1>
 
         @include('expertise.menu')
-        <div class="filter-title">Запросы на экспертизу / Техническое задание</div>
+        <div class="filter-title">Запросы на экспертизу</div>
 
         <div class="actions">
             @if(auth()->check() && auth()->user()->hasRole('ROLE_GO_EXPERTISE_EDITOR'))
@@ -504,23 +504,24 @@
                     <td class="table__status">Черновик</td>
                 </tr>
                 @endforeach
-            @else
-            <p>Нет данных для отображения</p>
             @endif    
                 @foreach($versions as $version)
                     <tr>
                         <td class="table__name">
                             @if(auth()->check() && auth()->user()->hasRole('ROLE_GO_EXPERTISE_EDITOR'))
                                 <a href="{{ route('expertise.edit', ['expertise' => $expertise->id, 'version' => $version->version_expertise]) }}">
-                                    Версия {{ $version->version_expertise }}
+                                    Версия {{ $version->version_expertise == 0 ? 1 : $version->version_expertise }}
                                 </a>
+                                {{-- <a href="{{ route('expertise.approve.info', ['id' => $expertise->id, 'version_id' => $version->version_expertise]) }}">
+                                    Версия {{ $version->version_expertise }}
+                                </a> --}}
                             @else
                                 <a href="{{ route('expertise.approve.info', ['id' => $expertise->id, 'version_id' => $version->version_expertise]) }}">
                                     Версия {{ $version->version_expertise }}
                                 </a>
                             @endif
                         </td>
-                        <td class="table__status">{{ $version->version_expertise }}</td>
+                        <td class="table__status">{{ $version->version_expertise == 0 ? 1 : $version->version_expertise }}</td>
                         <td class="table__status">{{ $version->updated_at }}</td>
                         <td class="table__status">Черновик</td>
                     </tr>

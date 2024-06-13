@@ -1443,6 +1443,18 @@ function getKeyInfo(storageName, callBack) {
 
 
     
+// document.getElementById('exportButton').addEventListener('click', function() {
+//       const selectedOption = document.getElementById('conSelect').value;
+//       console.log('Selected option:', selectedOption);
+//       window.location.href = `/export-expertise/${selectedOption}`;
+//   });
+  
+document.getElementById('exportButton').addEventListener('click', function() {
+    const selectedOption = document.getElementById('conSelect').value;
+    console.log('Selected option:', selectedOption);
+    window.location.href = `/export-expertise/${selectedOption}`;
+});
+
 </script>
 
 @endsection
