@@ -48,16 +48,11 @@
       </a>
   <?php endif; ?>
 
-  <?php if(auth()->check() && (auth()->user()->hasRole('ROLE_UO_EXPERTISE_SIGNER') || auth()->user()->hasRole('ROLE_SI_EXPERTISE_SIGNER') || auth()->user()->hasRole('ROLE_STS_EXPERTISE_SIGNER'))): ?>
-      <a class="tabs__link <?php if(Route::is('expertise.signing*')): ?> tabs__link_active <?php endif; ?>" href="<?php echo e(route('expertise.signing')); ?>">
-          <span class="tabs__num" style="background: #39C07F;">0</span>
-          Исходящие
-      </a>
-  <?php endif; ?>
+  
 
   <?php if(auth()->check() && (auth()->user()->hasRole('ROLE_GO_EXPERTISE_EDITOR'))): ?>
       <a class="tabs__link <?php if(Route::is('expertise.goExecutor')): ?> tabs__link_active <?php endif; ?>" href="<?php echo e(route('expertise.goExecutor')); ?>">
-          <span class="tabs__num" style="background: #39C07F;">0</span>
+          <span class="tabs__num" style="background: #39C07F;"><?php echo e(session('expertiseGoExecutorCount')); ?></span>
           Исходящие
       </a>
   <?php endif; ?>

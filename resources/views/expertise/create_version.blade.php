@@ -465,10 +465,9 @@
         <h1 class="page-title">{{ trans('app.m_expert') }}</h1>
 
         @include('expertise.menu')
-        <div class="filter-title">Запросы на экспертизу</div>
 
         <div class="actions">
-            @if(auth()->check() && auth()->user()->hasRole('ROLE_GO_EXPERTISE_EDITOR'))
+            @if(auth()->check() && auth()->user()->hasRole('ROLE_GO_EXPERTISE_EDITOR') )
                 <a href="{{ route('expertise.create_new_version', ['expertise' => $expertise->id]) }}" class="btn btn-primary">
                     Создать новую версию
                 </a>
@@ -505,27 +504,27 @@
                 </tr>
                 @endforeach
             @endif    
-                @foreach($versions as $version)
+                {{-- @foreach($versions as $version) --}}
                     <tr>
                         <td class="table__name">
                             @if(auth()->check() && auth()->user()->hasRole('ROLE_GO_EXPERTISE_EDITOR'))
-                                <a href="{{ route('expertise.edit', ['expertise' => $expertise->id, 'version' => $version->version_expertise]) }}">
-                                    Версия {{ $version->version_expertise == 0 ? 1 : $version->version_expertise }}
+                                <a href="{{ route('expertise.edit', ['expertise' => $expertise->id, 'version' => $expertise->version_expertise]) }}">
+                                    Версия {{ $expertise->version_expertise == 0 ? 1 : $expertise->version_expertise }}
                                 </a>
-                                {{-- <a href="{{ route('expertise.approve.info', ['id' => $expertise->id, 'version_id' => $version->version_expertise]) }}">
+                                 {{-- <a href="{{ route('expertise.approve.info', ['id' => $expertise->id, 'version_id' => $version->version_expertise]) }}">
                                     Версия {{ $version->version_expertise }}
-                                </a> --}}
+                                </a>  --}}
                             @else
-                                <a href="{{ route('expertise.approve.info', ['id' => $expertise->id, 'version_id' => $version->version_expertise]) }}">
-                                    Версия {{ $version->version_expertise }}
+                                <a href="{{ route('expertise.approve.info', ['id' => $expertise->id, 'version_id' => $expertise->version_expertise]) }}">
+                                    Версия {{ $expertise->version_expertise }}
                                 </a>
                             @endif
                         </td>
-                        <td class="table__status">{{ $version->version_expertise == 0 ? 1 : $version->version_expertise }}</td>
-                        <td class="table__status">{{ $version->updated_at }}</td>
+                        <td class="table__status">{{ $expertise->version }}</td>
+                        <td class="table__status">{{ $expertise->updated_at }}</td>
                         <td class="table__status">Черновик</td>
                     </tr>
-                @endforeach
+                {{-- @endforeach --}}
             </tbody>
         </table>
     </div>

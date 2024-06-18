@@ -40,10 +40,10 @@ if (app()->getLocale() == "ru") {
     <?php echo $__env->make('expertise.menu', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
 
-    <div class="filter-title">Запросы на экспертизу: Исходящие</div>
+    <div class="filter-title">Запросы на экспертизу: Подписи</div>
 
     <?php if( $expertises->isEmpty() ): ?>
-      <div class="notice">В разделе <b>Исходящие</b> отсутствуют данные</div>
+      <div class="notice">В разделе <b>Подписи</b> отсутствуют данные</div>
     <?php else: ?>
 
       <table class="table table_expertise">

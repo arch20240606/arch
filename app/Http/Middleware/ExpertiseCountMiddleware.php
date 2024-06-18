@@ -62,6 +62,8 @@ class ExpertiseCountMiddleware
                 $expertiseSignerOutboxCount = $expertisesQuery->count();
             }
 
+
+
             $expertiseInWorkCounts = 0;
             $expertisesQuery = Expertise::query();
         
@@ -84,13 +86,20 @@ class ExpertiseCountMiddleware
                 }
                 $expertiseInWorkCounts = $expertisesQuery->count();
 
+                $expertiseGoExecutorCount = Expertise::where('expertise.send_to_uo_si', '1')
+                ->where('expertise.send_to_uo_gts', '1')
+                ->where('expertise.user_id', Auth::id())
+                ->count();
+                
+
 
 
             session([
                 'expertiseInWorkCount' => $expertiseInWorkCount,
                 'expertisesAppCount' => $expertisesAppCount,
                 'expertiseSignerOutboxCount' => $expertiseSignerOutboxCount,
-                'expertiseInWorkCounts' => $expertiseInWorkCounts
+                'expertiseInWorkCounts' => $expertiseInWorkCounts,
+                'expertiseGoExecutorCount' => $expertiseGoExecutorCount 
             ]);
         }
 

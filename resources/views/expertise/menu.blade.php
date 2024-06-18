@@ -112,16 +112,16 @@
       </a>
   @endif
 
-  @if (auth()->check() && (auth()->user()->hasRole('ROLE_UO_EXPERTISE_SIGNER') || auth()->user()->hasRole('ROLE_SI_EXPERTISE_SIGNER') || auth()->user()->hasRole('ROLE_STS_EXPERTISE_SIGNER')))
+  {{-- @if (auth()->check() && (auth()->user()->hasRole('ROLE_UO_EXPERTISE_SIGNER') || auth()->user()->hasRole('ROLE_SI_EXPERTISE_SIGNER') || auth()->user()->hasRole('ROLE_STS_EXPERTISE_SIGNER')))
       <a class="tabs__link @if(Route::is('expertise.signing*')) tabs__link_active @endif" href="{{ route('expertise.signing') }}">
           <span class="tabs__num" style="background: #39C07F;">0</span>
           Исходящие
       </a>
-  @endif
+  @endif --}}
 
   @if (auth()->check() && (auth()->user()->hasRole('ROLE_GO_EXPERTISE_EDITOR')))
       <a class="tabs__link @if(Route::is('expertise.goExecutor')) tabs__link_active @endif" href="{{ route('expertise.goExecutor') }}">
-          <span class="tabs__num" style="background: #39C07F;">0</span>
+          <span class="tabs__num" style="background: #39C07F;">{{ session('expertiseGoExecutorCount') }}</span>
           Исходящие
       </a>
   @endif

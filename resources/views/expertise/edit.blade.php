@@ -75,6 +75,40 @@ if ( $expertise->type_project == "1" ) {
           <h2 class="is-info__header-title"><span style="font-weight: normal;">{{ $type_project_name }}</span> «{{ $expertise->it_project->$names }}»</h2>
         </div>
 
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; padding: 15px; box-sizing: border-box;">
+          <div style="border: 1px solid #d7d2d2; width: 48%; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); overflow: hidden;">
+              <div style="background-color: #05adea; padding: 15px; color: #fff; text-align: center; border-top-left-radius: 10px; border-top-right-radius: 10px;">
+                  Последние действия
+              </div>
+              <div style="padding: 15px;">
+                  <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #d7d2d2; padding-bottom: 10px; margin-bottom: 10px;">
+                      <span style="display: flex; align-items: center;">
+                          <svg xmlns="http://www.w3.org/2000/svg" style="width: 20px; height: 20px; margin-right: 5px;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M12 2a10 10 0 100 20 10 10 0 000-20zM12 11a3 3 0 110-6 3 3 0 010 6zM12 12c-2.667 0-5 1.333-5 4v1h10v-1c0-2.667-2.333-4-5-4z"/>
+                          </svg>
+                          <strong style="padding-right: 10px;">{{$expertise->users->surname}} {{$expertise->users->name}}</strong> Создание
+                      </span>
+                      <span>{{ \Carbon\Carbon::parse($expertise->created_at)->format('d/m/Y H:i:s') }}</span>
+                  </div>
+              </div>
+          </div>
+      
+          <div style="border: 1px solid #d7d2d2; padding: 5px 10px; border-radius: 5px; display: flex; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); background-color: #fff;">
+              {{-- <svg xmlns="http://www.w3.org/2000/svg" style="width: 20px; height: 20px; margin-right: 5px;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 2a10 10 0 100 20 10 10 0 000-20zM12 11a3 3 0 110-6 3 3 0 010 6zM12 12c-2.667 0-5 1.333-5 4v1h10v-1c0-2.667-2.333-4-5-4z"/>
+              </svg> --}}
+              Кому отписано  <strong style="padding-left: 10px;">{{$expertise->users->surname}} {{$expertise->users->name}}</strong>
+          </div>
+      </div>
+      
+      
+      
+      
+      
+      
+      
+      
+
         @include('expertise.tabs_for_data_edit')
 
         <!-- это важные переменные -->
@@ -93,7 +127,7 @@ if ( $expertise->type_project == "1" ) {
           <select id="signer" name="signer_id" style="width: 100%; padding: 8px 12px; margin-bottom: 15px;">
               <option value="" selected disabled>Выберите Подписывающего</option>
               @foreach($users as $user)
-              @if($user->hasRole('ROLE_GO_EXPERTISE_SIGNER'))
+              @if($user->hasRole('ROLE_GO_EXPERTISE_SIGNER') && $user->government_id == $currentGovernmentId)
               <option value="{{ $user->id }}">{{ $user->name }} {{ $user->surname }} {{ $user->middlename }}</option>
               @endif
               @endforeach
@@ -102,13 +136,14 @@ if ( $expertise->type_project == "1" ) {
           
           <label for="approver1">Согласующие:</label>
           <select id="approver1" name="approver_id1" style="width: 100%; padding: 8px 12px; margin-bottom: 15px;">
-              <option value="" selected disabled>Выберите Согласующего</option>
-              @foreach($users as $user)
-              @if($user->hasRole('ROLE_GO_EXPERTISE_CONFIRMER'))
-              <option value="{{ $user->id }}">{{ $user->name }} {{ $user->surname }} {{ $user->middlename }}</option>
+          <option value="" selected disabled>Выберите Согласующего</option>
+            @foreach($users as $user)
+              @if($user->hasRole('ROLE_GO_EXPERTISE_CONFIRMER') && $user->government_id == $currentGovernmentId)
+                <option value="{{ $user->id }}">{{ $user->name }} {{ $user->surname }} {{ $user->middlename }}</option>
               @endif
-              @endforeach
+            @endforeach
           </select>
+
       
 
 

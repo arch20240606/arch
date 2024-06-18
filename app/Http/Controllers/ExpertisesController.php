@@ -851,6 +851,7 @@ class ExpertisesController extends Controller
                     $expertiseConclusionSiUpdate = ExpertiseConclutionSi::where('id', $request->expertise_id)->get();
                     dd($expertiseConclusionSiUpdate);
                     $expertiseConclusionSiUpdate->update([
+                    'status_concl' => $request->status_concl,
                     'concl_1'=> $request->concl_1,
                     'concl_2'=> $request->concl_2,
                     'concl_3'=> $request->concl_3,
@@ -937,6 +938,7 @@ class ExpertisesController extends Controller
                     }
 
                     // Обновляем поля _concl_1 до _concl_59
+                    $expertiseConclusionSi->status_concl = $request->status_concl;
                     $expertiseConclusionSi->concl_1 = $request->concl_1;
                     $expertiseConclusionSi->concl_2 = $request->concl_2;
                     $expertiseConclusionSi->concl_3 = $request->concl_3;
@@ -1008,6 +1010,7 @@ class ExpertisesController extends Controller
                 }
 
                 // Обновляем поля _concl_1 до _concl_59
+                $expertiseConclusionSi->status_concl = $request->status_concl;
                 $expertiseConclusionSi->concl_1 = $request->concl_1;
                 $expertiseConclusionSi->concl_2 = $request->concl_2;
                 $expertiseConclusionSi->concl_3 = $request->concl_3;
@@ -1077,6 +1080,7 @@ class ExpertisesController extends Controller
             $expertiseConclusionSi->expertise_version = 1; 
 
             // Обновляем поля _concl_1 до _concl_59
+            $expertiseConclusionSi->status_concl = $request->status_concl;
             $expertiseConclusionSi->concl_1 = $request->concl_1;
             $expertiseConclusionSi->concl_2 = $request->concl_2;
             $expertiseConclusionSi->concl_3 = $request->concl_3;
@@ -1164,6 +1168,7 @@ class ExpertisesController extends Controller
                     }
 
                     // Обновляем поля _concl_1 до _concl_59
+                    $expertiseConclusionUo->status_concl = $request->status_concl;
                     $expertiseConclusionUo->concl_1 = $request->concl_1;
                     $expertiseConclusionUo->concl_2 = $request->concl_2;
                     $expertiseConclusionUo->concl_3 = $request->concl_3;
@@ -1235,6 +1240,7 @@ class ExpertisesController extends Controller
                 }
 
                 // Обновляем поля _concl_1 до _concl_59
+                $expertiseConclusionUo->status_concl = $request->status_concl;
                 $expertiseConclusionUo->concl_1 = $request->concl_1;
                 $expertiseConclusionUo->concl_2 = $request->concl_2;
                 $expertiseConclusionUo->concl_3 = $request->concl_3;
@@ -1304,6 +1310,7 @@ class ExpertisesController extends Controller
             $expertiseConclusionUo->expertise_version = 1; 
 
             // Обновляем поля _concl_1 до _concl_59
+            $expertiseConclusionUo->status_concl = $request->status_concl;
             $expertiseConclusionUo->concl_1 = $request->concl_1;
             $expertiseConclusionUo->concl_2 = $request->concl_2;
             $expertiseConclusionUo->concl_3 = $request->concl_3;
@@ -1432,7 +1439,7 @@ class ExpertisesController extends Controller
                 }
 
                 // Обновляем поля _concl_1 до _concl_59
-                
+                $expertiseConclusionGts->status_concl = $request->status_concl;
                 $expertiseConclusionGts->concl_59 = $request->concl_59;
 
                 $expertiseConclusionGts->save();
@@ -1446,7 +1453,7 @@ class ExpertisesController extends Controller
                     }
 
                     // Обновляем поля _concl_1 до _concl_59
-                
+                    $expertiseConclusionGts->status_concl = $request->status_concl;
                     $expertiseConclusionGts->concl_59 = $request->concl_59;
 
                     $expertiseConclusionGts->save();
@@ -1456,7 +1463,7 @@ class ExpertisesController extends Controller
                 $expertiseConclusionGts->expertise_id = $request->expertise_id;
                 $expertiseConclusionGts->user_id = Auth::user()->id; // Предполагается, что у вас есть аутентификация пользователя
                 $expertiseConclusionGts->expertise_version = 1;
-                
+                $expertiseConclusionGts->status_concl = $request->status_concl;
                 $expertiseConclusionGts->concl_59 = $request->concl_59;
 
                 $expertiseConclusionGts->save();
@@ -1812,133 +1819,76 @@ class ExpertisesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        $projects = It_Project::where('goverment_id', Auth::user()->government_id)->get();
-        $iss = InformationSystem::where('goverment_id', Auth::user()->government_id)->get();
-        $expertise = Expertise::
-            where('id', $id)->
-            where('user_id', Auth::user()->id)->
-            where('goverment_id', Auth::user()->government_id)->
-            where('draft', '1')->
-            orWhere('send_to_go_fromUo', '1')->
-            first();
-        $tz = TechnicalTask::
-            where('expertise_id', $id)->
-            where('user_id', Auth::user()->id)->
-            where('government_id', Auth::user()->government_id)->
-            first();
-        $document = ExpertiseDocument::
-            where('expertise_id', $id)->
-            where('user_id', Auth::user()->id)->
-            where('government_id', Auth::user()->government_id)->
-            first();
-        $users = User::all();
-        return View::make('expertise.edit', [
-            'expertise' => $expertise,
-            'projects' => $projects,
-            'iss' => $iss,
-            'tz' => $tz,
-            'document' => $document,
-            'users' => $users
-        ]);
-    }
-
-//     public function edit($id, $version_id = null)
-// {
-//     $projects = It_Project::where('goverment_id', Auth::user()->government_id)->get();
-//     $iss = InformationSystem::where('goverment_id', Auth::user()->government_id)->get();
-//     $expertise = Expertise::
-//         where('id', $id)->
-//         where('user_id', Auth::user()->id)->
-//         where('goverment_id', Auth::user()->government_id)->
-//         where('draft', '1')->
-//         first();
-
-//     if ($version_id) {
-//         $tz = TechnicalTask::
-//             where('expertise_id', $id)->
-//             where('version', $version_id)->
-//             where('user_id', Auth::user()->id)->
-//             where('government_id', Auth::user()->government_id)->
-//             first();
-
-//         $document = ExpertiseDocument::
-//             where('expertise_id', $id)->
-//             where('version', $version_id)->
-//             where('user_id', Auth::user()->id)->
-//             where('government_id', Auth::user()->government_id)->
-//             first();
-//     } else {
-//         $tz = TechnicalTask::
-//             where('expertise_id', $id)->
-//             where('user_id', Auth::user()->id)->
-//             where('government_id', Auth::user()->government_id)->
-//             first();
-
-//         $document = ExpertiseDocument::
-//             where('expertise_id', $id)->
-//             where('user_id', Auth::user()->id)->
-//             where('government_id', Auth::user()->government_id)->
-//             first();
-//     }
-
-//     $users = User::all();
-//     return View::make('expertise.edit', [
-//         'expertise' => $expertise,
-//         'projects' => $projects,
-//         'iss' => $iss,
-//         'tz' => $tz,
-//         'document' => $document,
-//         'users' => $users
-//     ]);
-// }
-
-
-
-    // Добавим метод createVersion в ExpertisesController.php
-    // public function createVersion($expertiseId)
+    // public function edit($id)
     // {
-    //     $expertise = Expertise::find($expertiseId);
-    //     if (!$expertise) {
-    //         return redirect()->route('expertise.index')->with('error', 'Expertise not found');
-    //     }
-    
-    //     // $versions = ExpertiseVersion::where('expertise_id', $expertiseId)->get();
-    //     $versions = ExpertiseVersion::where('expertise_id', $expertiseId)->get();
-
-    //     // Проверяем, есть ли версии и их количество
-    //     if ($versions->isNotEmpty() && $versions->first()->version_number > 1) {
-    //         // Получаем версии, если есть версии с номером больше 1
-    //         $versions = ExpertiseVersion::where('expertise_id', $expertiseId)->get();
-    //     } else {
-    //         // Если нет, то получаем данные из таблицы Expertise
-    //         $versions = Expertise::where('id', $expertiseId)->get();
-    //     }
-
-    //     return view('expertise.create_version', compact('expertise', 'versions'));
+    //     $projects = It_Project::where('goverment_id', Auth::user()->government_id)->get();
+    //     $iss = InformationSystem::where('goverment_id', Auth::user()->government_id)->get();
+    //     $expertise = Expertise::
+    //         where('id', $id)->
+    //         where('user_id', Auth::user()->id)->
+    //         where('goverment_id', Auth::user()->government_id)->
+    //         where('draft', '1')->
+    //         first();
+    //     $tz = TechnicalTask::
+    //         where('expertise_id', $id)->
+    //         where('user_id', Auth::user()->id)->
+    //         where('government_id', Auth::user()->government_id)->
+    //         first();
+    //     $document = ExpertiseDocument::
+    //         where('expertise_id', $id)->
+    //         where('user_id', Auth::user()->id)->
+    //         where('government_id', Auth::user()->government_id)->
+    //         first();
+    //     $users = User::all();
+    //     return View::make('expertise.edit', [
+    //         'expertise' => $expertise,
+    //         'projects' => $projects,
+    //         'iss' => $iss,
+    //         'tz' => $tz,
+    //         'document' => $document,
+    //         'users' => $users
+    //     ]);
     // }
 
-
-//     public function createVersion($expertiseId)
-// {
-//     $expertise = Expertise::find($expertiseId);
-//     if (!$expertise) {
-//         return redirect()->route('expertise.index')->with('error', 'Expertise not found');
-//     }
-
-//     // Получаем все версии из модели ExpertiseVersion
-//     $versions = ExpertiseVersion::where('expertise_id', $expertiseId)->get();
-
-//     // Добавляем первую версию (из модели Expertise) в начало коллекции
-//     $allVersions = collect([$expertise])->merge($versions);
-
-//     return view('expertise.create_version', compact('expertise', 'allVersions'));
-// }
-
-
-public function createVersion($expertiseId)
+    public function edit($id)
 {
+    $projects = It_Project::where('goverment_id', Auth::user()->government_id)->get();
+    $iss = InformationSystem::where('goverment_id', Auth::user()->government_id)->get();
+    $expertise = Expertise::
+        where('id', $id)->
+        where('user_id', Auth::user()->id)->
+        where('goverment_id', Auth::user()->government_id)->
+        where('draft', '1')->
+        first();
+    $tz = TechnicalTask::
+        where('expertise_id', $id)->
+        where('user_id', Auth::user()->id)->
+        where('government_id', Auth::user()->government_id)->
+        first();
+    $document = ExpertiseDocument::
+        where('expertise_id', $id)->
+        where('user_id', Auth::user()->id)->
+        where('government_id', Auth::user()->government_id)->
+        first();
+    $users = User::all();
+    $currentGovernmentId = Auth::user()->government_id;
+
+    return View::make('expertise.edit', [
+        'expertise' => $expertise,
+        'projects' => $projects,
+        'iss' => $iss,
+        'tz' => $tz,
+        'document' => $document,
+        'users' => $users,
+        'currentGovernmentId' => $currentGovernmentId
+    ]);
+}
+
+
+
+
+public function createVersion($expertiseId){
+    
     $expertise = Expertise::find($expertiseId);
     $expertises = $expertise -> expertise_id;
    
@@ -1946,171 +1896,58 @@ public function createVersion($expertiseId)
         return redirect()->route('expertise.index')->with('error', 'Expertise not found');
     }
 
-    $versions = Expertise::where('id', $expertiseId)->get();
+    // dd($expertiseId);
+    // $versions = Expertise::where('id', $expertiseId)->get();
     $versionsTwo = ExpertiseVersion::where('expertise_id', $expertiseId)->get();
     
-    return view('expertise.create_version', compact('expertise', 'versions','versionsTwo'));
+    return view('expertise.create_version', compact('expertise','versionsTwo'));
 }
 
-// public function Version($expertiseId)
-// {
-//     $expertise = Expertise::find($expertiseId);
-//     $expertises = $expertise -> expertise_id;
-   
-//     if (!$expertise) {
-//         return redirect()->route('expertise.index')->with('error', 'Expertise not found');
-//     }
-
-//     $versions = Expertise::where('id', $expertiseId)->get();
-//     $versionsTwo = ExpertiseVersion::where('expertise_id', $expertiseId)->get();
-    
-//     return view('expertise.create_version', compact('expertise', 'versions','versionsTwo'));
-// }
 
 
-    
-// public function createNewVersion($id)
-// {
-//     $expertise = Expertise::findOrFail($id);
-
-//     // // Создайте новую версию
-//     // $newVersion = new Expertise();
-//     // $newVersion->some_property = $expertise->some_property; // Копируйте необходимые данные
-//     // // Убедитесь, что вы сохраняете новую версию
-//     // $newVersion->save();
-
-//     return redirect()->route('expertise.edit', ['expertise' => $expertise->id])
-//         ->with('success', 'Новая версия успешно создана');
-// }
-
-
-
-    public function createNewVersion($id)
-    {
+public function createNewVersion($id){
         $expertise = Expertise::findOrFail($id);
 
         $newVersion = null;
 
-        // DB::transaction(function () use ($expertise, &$newVersion) {
-                // Получаем текущую последнюю версию
-                $lastVersionNumber = Expertise::where('id', $expertise->id)->max('version_expertise');
-                // if($lastVersionNumber > 1){
-            //  $lastVersionNumber = ExpertiseVersion::where('expertise_id', $expertise->id)->max('version_number');
-            // }
-            // else{
-            //  $lastVersionNumber = Expertise::where('id', $expertise->id)->max('version_expertise');
-            // }
-
-            // Создаем новую версию в таблице expertise_versions
-            $newVersion = ExpertiseVersion::create([
-                'expertise_id' => $expertise->id,
-                'version_number' => $lastVersionNumber,
-                'abbr' => $expertise->abbr,
-                'num_poject' => $expertise->num_poject,
-                'company' => $expertise->company,
-                'address' => $expertise->address,
-                'customer' => $expertise->сustomer,
-                'address_customer' => $expertise->address_customer,
-                'list_docs' => $expertise->list_docs,
-                'dates_start_end' => $expertise->dates_start_end,
-                'finances' => $expertise->finances,
-                'is_appointment' => $expertise->is_appointment, 
-                'is_target' => $expertise->is_target, 
-                'type_ntd' => $expertise->type_ntd,
-                'basis_development' => $expertise->basis_development,
-                'links' => $expertise->links,
-                'build_year' => $expertise->build_year,
-                'gosproject' => $expertise->gosproject,
-                'sostav' => $expertise->sostav,
-                'modules' => $expertise->modules,
-                'po' => $expertise->po,
-                'hosting' => $expertise->hosting,
-                'selected_is_for_change' => $expertise->selected_is_for_change, 
-                'selected_is_for_exit' => $expertise->selected_is_for_exit, 
-                'plan_integrations' => $expertise->plan_integrations,
-                'documents_list' => $expertise->documents_list
-            ]);
-
-            // Создаем новую версию в таблице technical_tasks
-            // $lastVersionTech = TechnicalTask::where('expertise_id', $expertise->id)->max('version');
-            // $technicalTask = TechnicalTask::where('expertise_id', $expertise->id)->latest('version')->first();
-            // if ($technicalTask) {
-            //     TechnicalTask::create([
-            //         'user_id' => $technicalTask->user_id,
-            //         'government_id' => $technicalTask->government_id,
-            //         'it_project_id' => $technicalTask->it_project_id,
-            //         'type_project' => $technicalTask->type_project,
-            //         'expertise_id' => $technicalTask->expertise_id,
-            //         'version' => $lastVersionTech + 1,
-            //         'part_1' => $technicalTask->part_1,
-            //         'part_2' => $technicalTask->part_2,
-            //         'part_3' => $technicalTask->part_3,
-            //         'part_4' => $technicalTask->part_4,
-            //         'part_5' => $technicalTask->part_5,
-            //         'part_6' => $technicalTask->part_6,
-            //         'part_7' => $technicalTask->part_7,
-            //         'part_8' => $technicalTask->part_8,
-            //         'part_9' => $technicalTask->part_9,
-            //         'part_10' => $technicalTask->part_10,
-            //         'part_11' => $technicalTask->part_11,
-            //         'part_12' => $technicalTask->part_12
-            //     ]);
-            // }
-
-            // Создаем новую версию в таблице expertise_documents
-            // $lastVersionDoc = ExpertiseDocument::where('expertise_id', $expertise->id)->max('version');
-            // $expertiseDocument = ExpertiseDocument::where('expertise_id', $expertise->id)->latest('version')->first();
-            // if ($expertiseDocument) {
-            //     ExpertiseDocument::create([
-            //         'user_id' => $expertiseDocument->user_id,
-            //         'government_id' => $expertiseDocument->government_id,
-            //         'it_project_id' => $expertiseDocument->it_project_id,
-            //         'type_project' => $expertiseDocument->type_project,
-            //         'expertise_id' => $expertiseDocument->expertise_id,
-            //         'doc_status' => $expertiseDocument->doc_status,
-            //         'doc_lang' => $expertiseDocument->doc_lang,
-            //         'doc_type' => $expertiseDocument->doc_type,
-            //         'doc_version' => $expertiseDocument->doc_version,
-            //         'doc_year' => $expertiseDocument->doc_year,
-            //         'doc_name' => $expertiseDocument->doc_name,
-            //         'file_name' => $expertiseDocument->file_name,
-            //         'file_name_upload' => $expertiseDocument->file_name_upload,
-            //         'file_type' => $expertiseDocument->file_type,
-            //         'file_size' => $expertiseDocument->file_size,
-            //         'version' => $lastVersionDoc + 1
-            //     ]);
-            // }
-        // });
+        // Получаем текущую последнюю версию
+        $lastVersionNumber = Expertise::where('id', $expertise->id)->max('version_expertise');
+         
+        // Создаем новую версию в таблице expertise_versions
+        $newVersion = ExpertiseVersion::create([
+            'expertise_id' => $expertise->id,
+            'version_number' => $lastVersionNumber,
+            'abbr' => $expertise->abbr,
+            'num_poject' => $expertise->num_poject,
+            'company' => $expertise->company,
+            'address' => $expertise->address,
+            'customer' => $expertise->сustomer,
+            'address_customer' => $expertise->address_customer,
+            'list_docs' => $expertise->list_docs,
+            'dates_start_end' => $expertise->dates_start_end,
+            'finances' => $expertise->finances,
+            'is_appointment' => $expertise->is_appointment, 
+            'is_target' => $expertise->is_target, 
+            'type_ntd' => $expertise->type_ntd,
+            'basis_development' => $expertise->basis_development,
+            'links' => $expertise->links,
+            'build_year' => $expertise->build_year,
+            'gosproject' => $expertise->gosproject,
+            'sostav' => $expertise->sostav,
+            'modules' => $expertise->modules,
+            'po' => $expertise->po,
+            'hosting' => $expertise->hosting,
+            'selected_is_for_change' => $expertise->selected_is_for_change, 
+            'selected_is_for_exit' => $expertise->selected_is_for_exit, 
+            'plan_integrations' => $expertise->plan_integrations,
+            'documents_list' => $expertise->documents_list
+        ]);
 
         return redirect()->route('expertise.edit', ['expertise' => $expertise->id, 'version' => $newVersion->id])
             ->with('success', 'Новая версия успешно создана');
     }
 
     
-    // public function createNewVersion($id)
-    // {
-    //     $expertise = Expertise::findOrFail($id);
-    
-    //     // Создание новой версии на основе текущей
-    //     $newVersion = $expertise->replicate();
-    //     $newVersion->expertise_id = $expertise->expertise_id; // Явно устанавливаем значение expertise_id
-    //     $newVersion->version_expertise = Expertise::where('it_project_id', $expertise->it_project_id)
-    //                                               ->where('type_project', $expertise->type_project)
-    //                                               ->where('expertise_id', $expertise->expertise_id)
-    //                                               ->max('version_expertise') + 1;
-    //     $newVersion->save();
-    
-    //     // return redirect()->route('expertise.edit', ['expertise' => $newVersion->id])
-    //     //     ->with('success', 'Новая версия успешно создана');
-    //     return redirect()->route('expertise.edit', ['expertise' => $expertise->id])
-    //          ->with('success', 'Новая версия успешно создана');
-    // }
-    
-    
-
-
-
-
 
     /**
      * Update the specified resource in storage.
@@ -2194,161 +2031,77 @@ public function createVersion($expertiseId)
 
    
 
-    public function export(Request $request)
-    {
-        $expertise = Expertise::where('id', $request->_id)->first();
+    // public function export(Request $request)
+    // {
+    //     $expertise = Expertise::where('id', $request->_id)->first();
 
-        if ( $expertise->type_project == "1" ) {
-            $type_project_name = "Запрос государственного органа на автоматизацию деятельности государственного органа в уполномоченный орган и сервисному интегратору (СМИ)";
-        } elseif ( $expertise->type_project == "2" ) {
-            $type_project_name = "Инвестиционное предложение";
-        } elseif ( $expertise->type_project == "3" ) {
-            $type_project_name = "Технико-экономическое обоснование";
-        } elseif ( $expertise->type_project == "4" ) {
-            $type_project_name = "Техническое задание";
-        } else {
-            $type_project_name = "Не определен";
-        }
+    //     if ( $expertise->type_project == "1" ) {
+    //         $type_project_name = "Запрос государственного органа на автоматизацию деятельности государственного органа в уполномоченный орган и сервисному интегратору (СМИ)";
+    //     } elseif ( $expertise->type_project == "2" ) {
+    //         $type_project_name = "Инвестиционное предложение";
+    //     } elseif ( $expertise->type_project == "3" ) {
+    //         $type_project_name = "Технико-экономическое обоснование";
+    //     } elseif ( $expertise->type_project == "4" ) {
+    //         $type_project_name = "Техническое задание";
+    //     } else {
+    //         $type_project_name = "Не определен";
+    //     }
 
-        $project = It_Project::where('id', $expertise->it_project_id)->first();
+    //     $project = It_Project::where('id', $expertise->it_project_id)->first();
 
-        $data = [
-            'name' => $project->name_ru,
-            'type_project' => $type_project_name,
-            'abbr' => $expertise->abbr,
-            'num_poject' => $expertise->num_poject,
-            'company' => $expertise->company,
-            'address' => $expertise->address,
-            'сustomer' => $expertise->сustomer,
-            'address_customer' => $expertise->address_customer,
-            'list_docs' => $expertise->list_docs,
-            'dates_start_end' => $expertise->dates_start_end,
-            'finanсes' => $expertise->finanсes,
-            'is_appointment' => $expertise->is_appointment,
-            'is_target' => $expertise->is_target,
-            'type_ntd' => $expertise->type_ntd,
-            'basis_development' => $expertise->basis_development,
-            'links' => $expertise->links,
-            'build_year' => $expertise->build_year,
-            'gosproject' => $expertise->gosproject,
-            'sostav' => $expertise->sostav,
-            'modules' => $expertise->modules,
-            'po' => $expertise->po,
-            'hosting' => $expertise->hosting,
-            'comment_accept' => $expertise->comment_accept,
+    //     $data = [
+    //         'name' => $project->name_ru,
+    //         'type_project' => $type_project_name,
+    //         'abbr' => $expertise->abbr,
+    //         'num_poject' => $expertise->num_poject,
+    //         'company' => $expertise->company,
+    //         'address' => $expertise->address,
+    //         'сustomer' => $expertise->сustomer,
+    //         'address_customer' => $expertise->address_customer,
+    //         'list_docs' => $expertise->list_docs,
+    //         'dates_start_end' => $expertise->dates_start_end,
+    //         'finanсes' => $expertise->finanсes,
+    //         'is_appointment' => $expertise->is_appointment,
+    //         'is_target' => $expertise->is_target,
+    //         'type_ntd' => $expertise->type_ntd,
+    //         'basis_development' => $expertise->basis_development,
+    //         'links' => $expertise->links,
+    //         'build_year' => $expertise->build_year,
+    //         'gosproject' => $expertise->gosproject,
+    //         'sostav' => $expertise->sostav,
+    //         'modules' => $expertise->modules,
+    //         'po' => $expertise->po,
+    //         'hosting' => $expertise->hosting,
+    //         'comment_accept' => $expertise->comment_accept,
 
-            // 'ecp_name_mcriap' => $expertise->ecp_name_mcriap,
-            // 'ecp_mcriap' => $expertise->ecp_mcriap,
-            // 'ecp_name_go' => $expertise->ecp_name_go,
-            // 'ecp' => $expertise->ecp,
-            // 'accept_mcriap_date' => $expertise->accept_mcriap_date,
-            // 'comm_1' => $expertise->comm_1,
-            // 'comm_2' => $expertise->comm_2,
-            // 'comm_3' => $expertise->comm_3,
-            // 'comm_4' => $expertise->comm_4,
-            // 'comm_5' => $expertise->comm_5,
-            // 'comm_6' => $expertise->comm_6,
-            // 'comm_7' => $expertise->comm_7,
-            // 'comm_8' => $expertise->comm_8,
-            // 'comm_9' => $expertise->comm_9,
-            // 'comm_10' => $expertise->comm_10,
-            // 'comm_11' => $expertise->comm_11,
-            // 'comm_12' => $expertise->comm_12,
-            // 'comm_13' => $expertise->comm_13,
+    //         // 'ecp_name_mcriap' => $expertise->ecp_name_mcriap,
+    //         // 'ecp_mcriap' => $expertise->ecp_mcriap,
+    //         // 'ecp_name_go' => $expertise->ecp_name_go,
+    //         // 'ecp' => $expertise->ecp,
+    //         // 'accept_mcriap_date' => $expertise->accept_mcriap_date,
+    //         // 'comm_1' => $expertise->comm_1,
+    //         // 'comm_2' => $expertise->comm_2,
+    //         // 'comm_3' => $expertise->comm_3,
+    //         // 'comm_4' => $expertise->comm_4,
+    //         // 'comm_5' => $expertise->comm_5,
+    //         // 'comm_6' => $expertise->comm_6,
+    //         // 'comm_7' => $expertise->comm_7,
+    //         // 'comm_8' => $expertise->comm_8,
+    //         // 'comm_9' => $expertise->comm_9,
+    //         // 'comm_10' => $expertise->comm_10,
+    //         // 'comm_11' => $expertise->comm_11,
+    //         // 'comm_12' => $expertise->comm_12,
+    //         // 'comm_13' => $expertise->comm_13,
 
             
-        ];
-        $pdf = \PDF::loadView('expertise_result', $data);
-        return $pdf->download('expertise_result.pdf');
+    //     ];
+    //     $pdf = \PDF::loadView('expertise_result', $data);
+    //     return $pdf->download('expertise_result.pdf');
 
-    }
+    // }
 
 
 
-    // На согласовании
-//     public function approve()
-// {
-//     $govs = Government::all();
-//     $user = Auth::user();
-
-//     // Проверяем, имеет ли пользователь роль ROLE_GO_EXPERTISE_CONFIRMER
-//     if ($user->hasRole('ROLE_GO_EXPERTISE_CONFIRMER')) {
-//         $expertises = Expertise::join('expertise_role_status', 'expertise.id', '=', 'expertise_role_status.expertise_id')
-//             ->where('expertise.goverment_id', $user->government_id)
-//             ->where('expertise.send', '1')
-//             ->where('expertise_role_status.user_id', $user->id)
-//             ->where('expertise_role_status.approve', 1)
-//             ->orderBy('expertise.id', 'desc')
-//             ->select('expertise.*') // Выбираем все поля из таблицы expertise
-//             ->paginate(10);
-
-//         return view('expertise.approve', [
-//             'govs' => $govs,
-//             'expertises' => $expertises
-//         ]);
-//     }
-
-//     if ($user->hasRole('ROLE_GO_EXPERTISE_EDITOR')) {
-//         $expertises = Expertise::join('expertise_role_status', 'expertise.id', '=', 'expertise_role_status.expertise_id')
-//             ->where('expertise.goverment_id', $user->government_id)
-//             ->where('expertise.send', '1')
-//             // ->where('expertise_role_status.user_id', $user->id)
-//             ->where('expertise_role_status.approve', 1)
-//             ->orderBy('expertise.id', 'desc')
-//             ->select('expertise.*') // Выбираем все поля из таблицы expertise
-//             ->paginate(10);
-
-//         return view('expertise.approve', [
-//             'govs' => $govs,
-//             'expertises' => $expertises
-//         ]);
-//     }
-
-//     if ($user->hasRole('ROLE_GO_EXPERTISE_SIGNER')) {
-//         $expertises = Expertise::join('expertise_role_status', 'expertise.id', '=', 'expertise_role_status.expertise_id')
-//             ->where('expertise.goverment_id', $user->government_id)
-//             ->where('expertise.send', '1')
-//             // ->where('expertise_role_status.user_id', $user->id)
-//             ->where('expertise_role_status.approve', 1)
-//             ->orderBy('expertise.id', 'desc')
-//             ->select('expertise.*') // Выбираем все поля из таблицы expertise
-//             ->paginate(10);
-
-//         return view('expertise.approve', [
-//             'govs' => $govs,
-//             'expertises' => $expertises
-//         ]);
-//     }
-
-//     // Проверяем, имеет ли пользователь роль ROLE_UO_EXPERTISE_CONFIRMER
-//     if ($user->hasRole('ROLE_UO_EXPERTISE_CONFIRMER')) {
-//         // Отладочная информация
-//         Log::info('User has role ROLE_UO_EXPERTISE_CONFIRMER');
-        
-//         $expertises = Expertise::join('expertise_role_status', 'expertise.id', '=', 'expertise_role_status.expertise_id')
-//             // ->where('expertise.goverment_id', $user->government_id)
-//             ->where('expertise.send_to_uo_confirmer', 1) // Новое условие для send_to_uo_confirmer
-//             ->where('expertise_role_status.user_id', $user->id)
-//             ->where('expertise_role_status.approve', 1) // Новое условие для approve
-//             ->orderBy('expertise.id', 'desc')
-//             ->select('expertise.*') // Выбираем все поля из таблицы expertise
-//             ->paginate(10);
-
-//         // Отладочная информация
-//         Log::info('Expertises count: ' . $expertises->total());
-
-//         return view('expertise.approve', [
-//             'govs' => $govs,
-//             'expertises' => $expertises
-//         ]);
-//     }
-
-//     // Если у пользователя нет необходимой роли, просто возвращаем пустую страницу
-//     return view('expertise.approve', [
-//         'govs' => $govs,
-//         'expertises' => collect(), // передаем пустую коллекцию экспертиз
-//     ]);
-// }
 
 public function approve()
 {
@@ -2429,10 +2182,6 @@ public function approve()
 }
 
 
-    
-
-
-   
 
 public function approve_confirmers(){
     $user = Auth::user();
@@ -2455,52 +2204,11 @@ public function approve_confirmers(){
 }
     
 
-    
-
-
-// public function approve_info($id, $version_id = null)
-// {
-//     $expertise = Expertise::findOrFail($id);
-
-//     // Получить нужную версию или самую последнюю, если не указана
-//     // if ($version_id) {
-//         $version = ExpertiseVersion::where('expertise_id', $id)->where('version_number', $version_id)->firstOrFail();
-//         // dd($version);
-//     // } else {
-//         // $version = ExpertiseVersion::where('expertise_id', $id)->orderBy('version_expertise', 'desc')->first();
-//         // $version = ExpertiseVersion::where('expertise_id', $id)->where('version_number', $version_id)->firstOrFail();
-
-//     // }
-
-//     if ($version_id) {
-//         $tz = TechnicalTask::where('expertise_id', $id)->where('version', $version_id)->first();
-//     } else {
-//         $tz = TechnicalTask::where('expertise_id', $id)->first();
-//     }
-
-//     if ($version_id) {
-//         $document = ExpertiseDocument::where('expertise_id', $id)->where('version', $version_id)->first();
-//     } else {
-//         $document = ExpertiseDocument::where('expertise_id', $id)->first();
-//     }
-
-//     return view('expertise.info.index', [
-//         'expertise' => $expertise,
-//         'version' => $version,
-//         'tz' => $tz,
-//         'document' => $document
-//     ]);
-// }
-
-
 public function approve_info($id, $version_id = null)
 {
     $expertise = Expertise::findOrFail($id);
     $current_version = $expertise -> version_expertise;
-    // dd((int) $current_version, (int) $version_id);
-    // $ef = (int) $current_version > (int) $version_id;
-    // dd($ef);
-
+    
     if ((int) $current_version > (int) $version_id) {
         // Выборка из обеих моделей, если версия больше предыдущей
         $version = ExpertiseVersion::where('expertise_id', $id)->where('version_number', $version_id)->firstOrFail();
@@ -2512,13 +2220,19 @@ public function approve_info($id, $version_id = null)
    
     $tz = TechnicalTask::where('expertise_id', $id)->where('version', $version_id)->first();
     $document = ExpertiseDocument::where('expertise_id', $id)->where('version', $version_id)->first();
-    // dd($tz,$document);
+
+    $conclusionsSi = ExpertiseConclutionSi::where('expertise_id', $id)->get();
+    $conclusionsUo = ExpertiseConclutionUo::where('expertise_id', $id)->get();
+    $conclusionsGts = ExpertiseConclutionGts::where('expertise_id', $id)->get();
 
     return view('expertise.info.index', [
         'expertise' => $expertise,
         'version' => $version,
         'tz' => $tz,
-        'document' => $document
+        'document' => $document,
+        'conclusions' => $conclusionsSi,
+        'conclusionsUo' => $conclusionsUo,
+        'conclusionsGts' => $conclusionsGts,
     ]);
 }
 
@@ -2563,135 +2277,14 @@ public function approve_info($id, $version_id = null)
     
     
 
-    // Исходящие
-    // public function outbox()
-    // {
-    //     $govs = Government::all();
-    //     $user = Auth::user();
-    
-    //     // Проверяем, имеет ли пользователь роль ROLE_GO_EXPERTISE_SIGNER
-    //     if (!$user->hasRole('ROLE_GO_EXPERTISE_SIGNER')) {
-    //         // Если у пользователя нет необходимой роли, просто возвращаем пустую страницу
-    //         return view('expertise.outbox', [
-    //             'govs' => $govs,
-    //             'expertises' => collect(), // передаем пустую коллекцию экспертиз
-    //         ]);
-    //     }
-    
-    //     $expertises = Expertise::join('expertise_role_status as signer_status', function ($join) use ($user) {
-    //         $join->on('expertise.id', '=', 'signer_status.expertise_id')
-    //              ->where('signer_status.user_id', $user->id) // Условие для роли подписанта
-    //              ->where('signer_status.signing', 1); // Проверяем, что пользователь - подписант
-    //     })
-    //     ->select('expertise.*') // Выбираем все поля из таблицы expertise
-    //     ->leftJoin('expertise_role_status as approver_status', function ($join) {
-    //         $join->on('expertise.id', '=', 'approver_status.expertise_id')
-    //             ->where(function ($query) {
-    //                 // Условие для согласующего или если user_id равен 0
-    //                 $query->where('approver_status.approve', 1)
-    //                     ->orWhere('approver_status.user_id', 0);
-    //             });
-    //     })
-    //     ->where(function ($query) {
-    //         // Условие, когда документ доступен после согласования согласующим
-    //         $query->where('expertise.go_approve', 1)
-    //               ->where('expertise.send_to_go_signer', 1);
-    //     })
-    //     ->orWhere(function ($query) {
-    //         // Условие, когда документ доступен после подписания подписывающим без согласования
-    //         $query->where(function ($query) {
-    //             $query->orWhere('approver_status.user_id', 0);
-    //         })
-    //         ->where('expertise.go_approve', 0);
-    //     })
-    //     ->orWhere(function ($query) use ($user) {
-    //         if ($user->hasRole('ROLE_SI_EXPERTISE_SIGNER')) {
-    //             $query->where('expertise.send_to_si_signer', '=', 1);
-    //         }
-    //     })
-    //     ->orderBy('expertise.id', 'desc')
-    //     ->paginate(10);
-    //     return view('expertise.outbox', [
-    //         'govs' => $govs,
-    //         'expertises' => $expertises
-    //     ]);
-    // }
+public function outbox(){
 
-    // public function outbox()
-    // {
-    //     $govs = Government::all();
-    //     $user = Auth::user();
-    
-
-    //     // Проверяем, имеет ли пользователь роль ROLE_GO_EXPERTISE_SIGNER или ROLE_UO_EXPERTISE_SIGNER
-    //     if (!$user->hasRole('ROLE_GO_EXPERTISE_SIGNER') && !$user->hasRole('ROLE_UO_EXPERTISE_SIGNER')) {
-    //         // Если у пользователя нет необходимой роли, просто возвращаем пустую страницу
-    //         return view('expertise.outbox', [
-    //             'govs' => $govs,
-    //             'expertises' => collect(), // передаем пустую коллекцию экспертиз
-    //         ]);
-    //     }
-    
-    //     $query = Expertise::join('expertise_role_status as signer_status', function ($join) use ($user) {
-    //         $join->on('expertise.id', '=', 'signer_status.expertise_id')
-    //              ->where('signer_status.user_id', $user->id) // Условие для роли подписанта
-    //              ->where('signer_status.signing', 1); // Проверяем, что пользователь - подписант
-    //     })
-    //     ->select('expertise.*') // Выбираем все поля из таблицы expertise
-    //     ->leftJoin('expertise_role_status as approver_status', function ($join) {
-    //         $join->on('expertise.id', '=', 'approver_status.expertise_id')
-    //             ->where(function ($query) {
-    //                 // Условие для согласующего или если user_id равен 0
-    //                 $query->where('approver_status.approve', 1)
-    //                     ->orWhere('approver_status.user_id', 0);
-    //             });
-    //     })
-    //     ->where(function ($query) {
-    //         // Условие, когда документ доступен после согласования согласующим
-    //         $query->where('expertise.go_approve', 1)
-    //               ->where('expertise.send_to_go_signer', 1);
-    //     })
-    //     ->orWhere(function ($query) {
-    //         // Условие, когда документ доступен после подписания подписывающим без согласования
-    //         $query->where(function ($query) {
-    //             $query->orWhere('approver_status.user_id', 0);
-    //         })
-    //         ->where('expertise.go_approve', 0);
-    //     })
-    //     ->orWhere(function ($query) use ($user) {
-    //         if ($user->hasRole('ROLE_SI_EXPERTISE_SIGNER')) {
-    //             $query->where('expertise.send_to_si_signer', '=', 1);
-    //         }
-    //     });
-    
-    //     // Добавляем новое условие для ROLE_UO_EXPERTISE_SIGNER
-    //     if ($user->hasRole('ROLE_UO_EXPERTISE_SIGNER')) {
-    //         $query->leftJoin('expertise_role_status as uo_signer_status', 'expertise.id', '=', 'uo_signer_status.expertise_id')
-    //             ->orWhere(function ($query) use ($user) {
-    //                 $query->where('uo_signer_status.user_id', $user->id)
-    //                       ->where('uo_signer_status.signing', 1)
-    //                       ->where('expertise.send_to_uo_signer', 1);
-    //             });
-    //     }
-    
-    //     $expertises = $query->distinct() // Исключаем дублирования
-    //                         ->orderBy('expertise.id', 'desc')
-    //                         ->paginate(10);
-    
-    //     return view('expertise.outbox', [
-    //         'govs' => $govs,
-    //         'expertises' => $expertises
-    //     ]);
-    // }
-
-    public function outbox()
-{
     $govs = Government::all();
     $user = Auth::user();
     $expertisesCount = 0; // Инициализация переменной для подсчета
 
     // Проверяем, имеет ли пользователь роль ROLE_GO_EXPERTISE_SIGNER или ROLE_UO_EXPERTISE_SIGNER
-    if (!$user->hasRole('ROLE_GO_EXPERTISE_SIGNER') && !$user->hasRole('ROLE_UO_EXPERTISE_SIGNER')) {
+    if (!$user->hasRole('ROLE_GO_EXPERTISE_SIGNER') && !$user->hasRole('ROLE_UO_EXPERTISE_SIGNER') && !$user->hasRole('ROLE_GO_EXPERTISE_EDITOR') && !$user->hasRole('ROLE_GO_EXPERTISE_CONFIRMER')) {
         // Если у пользователя нет необходимой роли, просто возвращаем пустую страницу
         return view('expertise.outbox', [
             'govs' => $govs,
@@ -2701,7 +2294,7 @@ public function approve_info($id, $version_id = null)
 
     $query = Expertise::join('expertise_role_status as signer_status', function ($join) use ($user) {
         $join->on('expertise.id', '=', 'signer_status.expertise_id')
-             ->where('signer_status.user_id', $user->id) // Условие для роли подписанта
+            //  ->where('signer_status.user_id', $user->id) // Условие для роли подписанта
              ->where('signer_status.signing', 1); // Проверяем, что пользователь - подписант
     })
     ->select('expertise.*') // Выбираем все поля из таблицы expertise
@@ -2741,6 +2334,10 @@ public function approve_info($id, $version_id = null)
             });
     }
 
+    if ($user->hasRole('ROLE_GO_EXPERTISE_EDITOR') || $user->hasRole('ROLE_GO_EXPERTISE_CONFIRMER')) {
+        $query->orWhere('expertise.send_to_go_signer', 1);
+    }
+
     $expertises = $query->distinct() // Исключаем дублирования
                         ->orderBy('expertise.id', 'desc')
                         ->paginate(10);
@@ -2758,43 +2355,10 @@ public function approve_info($id, $version_id = null)
 }
 
 
-//     public function approve_info($id, $version_id)
-// {
-//     // Находим экспертизу по ID
-//     $expertise = Expertise::where('id', $id)->first();
-
-//     // Проверяем, была ли найдена экспертиза
-//     if (!$expertise) {
-//         abort(404); // Экспертиза не найдена
-//     }
-
-//     // Находим версию по version_id
-//     $version = ExpertiseVersion::where('id', $version_id)->where('expertise_id', $id)->first();
-
-//     // Проверяем, была ли найдена версия
-//     if (!$version) {
-//         abort(404); // Версия не найдена
-//     }
-
-//     $tz = TechnicalTask::where('expertise_id', $id)->first();
-//     $document = ExpertiseDocument::where('expertise_id', $id)->first();
-
-//     return view('expertise.info.index', [
-//         'expertise' => $expertise,
-//         'version' => $version,
-//         'tz' => $tz,
-//         'document' => $document
-//     ]);
-// }
 
     
+public function signer_outbox(){
 
-    
-
-    
-
-    public function signer_outbox()
-{
     $govs = Government::all();
     $user = Auth::user();
     $expertises = collect(); // Пустая коллекция на случай отсутствия ролей
@@ -2834,95 +2398,6 @@ public function approve_info($id, $version_id = null)
     ]);
 }
 
-    
-    
-    // }
-
-    // public function outbox()
-    // {
-    //     $govs = Government::all();
-    //     $expertises = Expertise::join('expertise_role_status', 'expertise.id', '=', 'expertise_role_status.expertise_id')
-    // ->where('expertise.send', '1')
-    // ->when(Auth::user()->hasRole('ROLE_GO_EXPERTISE_SIGNER'), function ($query) {
-    //     return $query->where(function($subquery) {
-    //         $subquery->where(function($subquery) {
-    //             $subquery->where('expertise.go_approve', 0)
-    //                      ->where('expertise_role_status.signing', 1);
-    //         })->orWhere(function($subquery) {
-    //             $subquery->where('expertise.go_approve', 1)
-                         
-    //         });
-    //     });
-    // })
-    // ->orderBy('expertise.id', 'desc')
-    // ->paginate(10);
-    // return view('expertise.outbox', [
-    //     'govs' => $govs,
-    //     'expertises' => $expertises
-    // ]);
-
-    
-    // }
-
-
-
-    // Черновики
-    // public function draft()
-    // {
-    //     $govs = Government::all();
-    //     $expertises = Expertise::
-    //         where('user_id', Auth::user()->id)->
-    //         where('goverment_id', Auth::user()->government_id)->
-    //         where('draft', '1')->
-    //         orderBy('id', 'desc')->
-    //         paginate(10);
-    //     return View::make('expertise.draft', [
-    //         'govs' => $govs,
-    //         'expertises' => $expertises
-    //     ]);
-    // }
-
-//     public function draft()
-// {
-//     $govs = Government::all();
-//     $expertises = Expertise::where(function ($query) {
-//         $query->where('user_id', Auth::user()->id)
-//               ->where('goverment_id', Auth::user()->government_id)
-//               ->where('draft', '1');
-//     })->orWhere('send_to_go_fromUo', '1')
-//       ->orderBy('id', 'desc')
-//       ->paginate(10);
-
-//     return View::make('expertise.draft', [
-//         'govs' => $govs,
-//         'expertises' => $expertises
-//     ]);
-// }
-
-// public function draft()
-// {
-//     $govs = Government::all();
-//     $expertises = Expertise::where(function ($query) {
-//         $query->where('user_id', Auth::user()->id)
-//               ->where('goverment_id', Auth::user()->government_id)
-//               ->where('draft', '1');
-//     })->orWhere('send_to_go_fromUo', '1')
-//       ->orderBy('id', 'desc')
-//       ->paginate(10);
-
-//     $expertiseCount = Expertise::where(function ($query) {
-//         $query->where('user_id', Auth::user()->id)
-//               ->where('goverment_id', Auth::user()->government_id)
-//               ->where('draft', '1');
-//     })->orWhere('send_to_go_fromUo', '1')
-//       ->count();
-
-//     return View::make('expertise.draft', [
-//         'govs' => $govs,
-//         'expertises' => $expertises,
-//         'expertiseCount' => $expertiseCount // добавьте это
-//     ]);
-// }
 
 public function draft()
 {
@@ -2955,38 +2430,7 @@ public function draft()
 
 
 
-
-    
-
-
-    // public function in_work(){
-    //     $user = Auth::user();
-    //     $govs = Government::all();
-        
-    //     $expertises = Expertise::where(function ($query) use ($user) {
-    //         if ($user->hasRole('ROLE_UO_EXPERTISE_REVIEWER')) {
-    //             $query->where('send_to_uo_reviewer', '1')
-    //             ->orWhere('accept_uo_reviewer', '1');
-    //         }  elseif ($user->hasRole('ROLE_KIB_EXPERTISE_EXECUTOR')) {
-    //             $query->where('send_to_kib', '1');
-    //         } elseif ($user->hasRole('ROLE_SI_EXPERTISE_CONFIRMER')) {
-    //             $query->where('send_to_si', '1');
-    //         }elseif ($user->hasRole('ROLE_GTS_EXPERTISE_CONFIRMER')) {
-    //             $query->where('send_to_gts', '1');
-    //         }elseif ($user->hasRole('ROLE_UO_EXPERTISE_DANA')) {
-    //             $query->where('send_to_uo', '1');
-    //         } else {
-    //             // Если у пользователя нет соответствующей роли, не отображаем ничего
-    //             $query->whereRaw('1=0');
-    //         }
-    //     })
-    //     ->orderBy('id', 'desc')
-    //     ->paginate(10);
-    
-    //     return view('expertise.in_work', compact('govs', 'expertises'));
-    // }
-
-    public function in_work() {
+public function in_work() {
         $user = Auth::user();
         $govs = Government::all();
         
@@ -3054,22 +2498,6 @@ public function draft()
 }
 
 
-// public function goExecutor(){
-
-//     $govs = Government::all();
-//     $expertises = Expertise::
-//     where('expertise.send_to_uo_si', '1')
-//     ->where('expertise.send_to_uo_gts', '1')
-//     ->where('expertise.user_id', Auth::id())
-//     ->orderBy('expertise.id', 'desc')
-//     ->paginate(10);
-    
-//     return view('expertise.goExecutor', [
-//         'govs' => $govs,
-//         'expertises' => $expertises
-//     ]);
-// }
-
 
 public function goExecutor() {
     $govs = Government::all();
@@ -3102,32 +2530,7 @@ public function goExecutor() {
         $user = User::all();
         return view('expertise.info.comments', compact('user'));
     }
-
-   
-    // public function approve_go(Request $request) {
-    //     if ($request->ajax()) {
-    //         Expertise::find($request->expertise_id)->update([
-    //             'go_approve' => 1,
-    //             'send' => 0,
-    //             'send_to_go_signer' => 1
-    //         ]);
-    //         return response()->json(['options' => 'Запрос согласован']);
-
-    //     }
-    // }
-    // public function approve_go(Request $request) {
-    //     if ($request->ajax()) {
-    //         Expertise::find($request->expertise_id)->update([
-    //             'go_approve' => 1,
-    //             'send' => 0,
-    //             'send_to_go_signer' => 1
-    //         ]);
-    //         return response()->json(['options' => 'Запрос согласован']);
-    //     }
-    
-    //     return redirect()->route('expertise.approve');
-    // }
-    
+ 
 
     public function approve_si_reviewer(Request $request) {
         if ($request->ajax()) {
@@ -3293,18 +2696,6 @@ public function goExecutor() {
         }
     }
 
-    // public function send_uo_reviewer(Request $request) {
-    //     if ($request->ajax()) {
-    //         Expertise::find($request->expertise_id)->update([
-    //             'send_to_uo_reviewer' => 1,
-    //             'comment_accept' => $request->_comment,
-    //             'send_to_uo' => 0,
-    //             'uo_reviewer' => $request->send_to_mcriap_executor  // Используем переданный идентификатор исполнителя
-    //         ]);
-    //         return response()->json(['options' => 'Отправлен к исполнителю']);
-    //     }
-    // }
-
 
     public function accept_uo_reviewer(Request $request) {
         if ($request->ajax()) {
@@ -3330,101 +2721,6 @@ public function goExecutor() {
     }
 
     
-    // public function exportExpertise($type)
-    // {
-    //     \Log::info('exportExpertise method called with type: ' . $type);
-    
-    //     try {
-    //         switch ($type) {
-    //             case 'ГТС':
-    //                 $expertise = ExpertiseConclutionGts::first(['concl_59']);
-    //                 break;
-    //             case 'СИ':
-    //                 $expertise = ExpertiseConclutionSi::first();
-    //                 break;
-    //             case 'УО':
-    //                 $expertise = ExpertiseConclutionUo::first();
-    //                 break;
-    //             default:
-    //                 \Log::error('Invalid expertise type: ' . $type);
-    //                 return redirect()->back()->with('error', 'Неверный тип заключения.');
-    //         }
-    
-    //         if (!$expertise) {
-    //             \Log::error('No expertise found for type: ' . $type);
-    //             return redirect()->back()->with('error', 'Заключение не найдено.');
-    //         }
-    
-    //         \Log::info('Expertise found: ' . json_encode($expertise));
-    
-    //         $phpWord = new \PhpOffice\PhpWord\PhpWord();
-    //         $section = $phpWord->addSection();
-    
-    //         $phpWord->setDefaultFontName('Arial');
-    //         $phpWord->setDefaultFontSize(12);
-    
-    //         // Add title
-    //         $section->addText('Экспертное заключение', ['name' => 'Arial', 'size' => 16, 'bold' => true, 'align' => 'center']);
-    
-    //         // Add table of contents
-    //         $section->addTextBreak(1);
-    //         $section->addText('Оглавление', ['name' => 'Arial', 'size' => 14, 'bold' => true]);
-    //         $section->addTOC(['name' => 'Arial', 'size' => 12]);
-    
-    //         // Define sections and headings
-    //         $sections = [
-    //             'ГТС' => [
-    //                 '1. Введение',
-    //                 '2. Основная часть',
-    //                 '3. Заключение'
-    //             ],
-    //             'СИ' => [
-    //                 '1. Документы представленные на рассмотрение',
-    //                 '2. Документы принятые во внимание при рассмотрении',
-    //                 '3. Используемые сокращения',
-    //                 '4. Проверка разделов'
-    //             ],
-    //             'УО' => [
-    //                 '1. Основные сведения',
-    //                 '2. Анализ документации',
-    //                 '3. Заключительные замечания'
-    //             ]
-    //         ];
-    
-    //         // Add sections based on type
-    //         foreach ($sections[$type] as $heading) {
-    //             $section->addTextBreak(1);
-    //             $section->addText($heading, ['name' => 'Arial', 'size' => 14, 'bold' => true], ['spaceAfter' => 240]);
-    //             $section->addText('... контент ...', ['name' => 'Arial', 'size' => 12]);
-    //         }
-    
-    //         if ($type === 'ГТС') {
-    //             $section->addText($expertise->concl_59, ['name' => 'Arial', 'size' => 12, 'color' => '333333']);
-    //         } else {
-    //             for ($i = 1; $i <= 59; $i++) {
-    //                 $field = 'concl_' . $i;
-    //                 if (isset($expertise->$field)) {
-    //                     $section->addText($expertise->$field, ['name' => 'Arial', 'size' => 12, 'color' => '333333']);
-    //                 }
-    //             }
-    //         }
-    
-    //         \Log::info('Контент добавлен в документ.');
-    
-    //         $fileName = "expertise_{$type}.docx";
-    //         $filePath = storage_path("app/public/{$fileName}");
-    
-    //         $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
-    //         $objWriter->save($filePath);
-    
-    //         \Log::info('Документ сохранен по пути: ' . $filePath);
-    
-    //         return response()->download($filePath)->deleteFileAfterSend(true);
-    //     } catch (\Exception $e) {
-    //         \Log::error('Error exporting expertise: ' . $e->getMessage());
-    //         return redirect()->back()->with('error', 'Ошибка при экспорте заключения.');
-    //     }
-    // }
     
     
 //     public function exportExpertise($type)
@@ -3572,190 +2868,6 @@ public function goExecutor() {
 // }
     
 
-
-// public function exportExpertise($type)
-// {
-//     Log::info('exportExpertise method called with type: ' . $type);
-
-//     try {
-//         switch ($type) {
-//             case 'ГТС':
-//                 $expertiseConclution = ExpertiseConclutionGts::first(['expertise_id', 'concl_59']);
-//                 break;
-//             case 'СИ':
-//                 $expertiseConclution = ExpertiseConclutionSi::first();
-//                 break;
-//             case 'УО':
-//                 $expertiseConclution = ExpertiseConclutionUo::first();
-//                 break;
-//             default:
-//                 Log::error('Invalid expertise type: ' . $type);
-//                 return redirect()->back()->with('error', 'Неверный тип заключения.');
-//         }
-
-//         if (!$expertiseConclution) {
-//             Log::error('No expertise found for type: ' . $type);
-//             return redirect()->back()->with('error', 'Заключение не найдено.');
-//         }
-
-//         Log::info('ExpertiseConclution found: ' . json_encode($expertiseConclution));
-
-//         $expertise = Expertise::find($expertiseConclution->expertise_id);
-
-//         if (!$expertise) {
-//             Log::error('No expertise details found for expertise_id: ' . $expertiseConclution->expertise_id);
-//             return redirect()->back()->with('error', 'Детали заключения не найдены.');
-//         }
-
-//         Log::info('Expertise details found: ' . json_encode($expertise));
-
-//         // Define sections and field mappings
-//         $fieldMappings = [
-//             'ГТС' => [
-//                 'Заключение экспертизы на' => 'abbr',
-//                 'Заключение на соответствие требованиям информационной безопасности' => 'concl_59'
-//             ],
-//             'СИ' => [
-//                 'Заключение экспертизы на' => 'abbr',
-//                 '1. Документы, представленные на рассмотрение' => 'concl_1',
-//                 '2. Документы, принятые во внимание при рассмотрении' => 'concl_2',
-//                 '3. Используемые сокращения' => 'concl_3',
-//                 '4. Заключение 4' => 'concl_4',
-//                 '5. Заключение 5' => 'concl_5',
-//                 '6. Заключение 6' => 'concl_6',
-//                 '7. Заключение 7' => 'concl_7',
-//                 '8. Заключение 8' => 'concl_8',
-//                 '9. Заключение 9' => 'concl_9',
-//                 '10. Заключение 10' => 'concl_10',
-//                 '11. Заключение 11' => 'concl_11',
-//                 '12. Заключение 12' => 'concl_12',
-//                 '13. Заключение 13' => 'concl_13',
-//                 '14. Заключение 14' => 'concl_14',
-//                 '15. Заключение 15' => 'concl_15',
-//                 '16. Заключение 16' => 'concl_16',
-//                 '17. Заключение 17' => 'concl_17',
-//                 '18. Заключение 18' => 'concl_18',
-//                 '19. Заключение 19' => 'concl_19',
-//                 '20. Заключение 20' => 'concl_20',
-//                 '21. Заключение 21' => 'concl_21',
-//                 '22. Заключение 22' => 'concl_22',
-//                 '23. Заключение 23' => 'concl_23',
-//                 '24. Заключение 24' => 'concl_24',
-//                 '25. Заключение 25' => 'concl_25',
-//                 '26. Заключение 26' => 'concl_26',
-//                 '27. Заключение 27' => 'concl_27',
-//                 '28. Заключение 28' => 'concl_28',
-//                 '29. Заключение 29' => 'concl_29',
-//                 '30. Заключение 30' => 'concl_30',
-//                 '31. Заключение 31' => 'concl_31',
-//                 '32. Заключение 32' => 'concl_32',
-//                 '33. Заключение 33' => 'concl_33',
-//                 '34. Заключение 34' => 'concl_34',
-//                 '35. Заключение 35' => 'concl_35',
-//                 '36. Заключение 36' => 'concl_36',
-//                 '37. Заключение 37' => 'concl_37',
-//                 '38. Заключение 38' => 'concl_38',
-//                 '39. Заключение 39' => 'concl_39',
-//                 '40. Заключение 40' => 'concl_40',
-//                 '41. Заключение 41' => 'concl_41',
-//                 '42. Заключение 42' => 'concl_42',
-//                 '43. Заключение 43' => 'concl_43',
-//                 '44. Заключение 44' => 'concl_44',
-//                 '45. Заключение 45' => 'concl_45',
-//                 '46. Заключение 46' => 'concl_46',
-//                 '47. Заключение 47' => 'concl_47',
-//                 '48. Заключение 48' => 'concl_48',
-//                 '49. Заключение 49' => 'concl_49',
-//                 '50. Заключение 50' => 'concl_50',
-//                 '51. Заключение 51' => 'concl_51',
-//                 '52. Заключение 52' => 'concl_52',
-//                 '53. Заключение 53' => 'concl_53',
-//                 '54. Заключение 54' => 'concl_54',
-//                 '55. Заключение 55' => 'concl_55',
-//                 '56. Заключение 56' => 'concl_56',
-//                 '57. Заключение 57' => 'concl_57',
-//                 '58. Заключение 58' => 'concl_58',
-//                 '59. Заключение 59' => 'concl_59',
-//             ],
-//             'УО' => [
-//                 'Заключение экспертизы на' => 'abbr',
-//                 '1. Документы, представленные на рассмотрение' => 'concl_1',
-//                 '2. Документы, принятые во внимание при рассмотрении' => 'concl_2',
-//                 '3. Используемые сокращения' => 'concl_3',
-//                 'Выводы и рекомендации' => 'concl_58',
-//                 'Заключение на соответствие требованиям информационной безопасности' => 'concl_59'
-//             ]
-//         ];
-
-//         $html = '<html><head><style>
-//                     @font-face {
-//                         font-family: "DejaVu Sans";
-//                         src: url("' . storage_path('fonts/DejaVuSans.ttf') . '") format("truetype");
-//                     }
-//                     body { font-family: "DejaVu Sans", Arial, sans-serif; font-size: 12px; }
-//                     .section-heading { font-size: 14px; font-weight: bold; margin-top: 20px; }
-//                     .content { margin-top: 10px; }
-//                 </style></head><body>';
-
-//         foreach ($fieldMappings[$type] as $heading => $fieldName) {
-//             $content = $expertiseConclution->$fieldName ?? 'Не указано';
-//             $html .= '<div class="section">';
-//             $html .= '<div class="section-heading">' . $heading . '</div>';
-//             $html .= '<div class="content">' . nl2br(e($content)) . '</div>';
-//             $html .= '</div>';
-//         }
-
-//         // Prepare EDS data and generate multiple QR codes
-//         $qrCodes = [];
-
-//         if ($type == 'ГТС') {
-//             $qrCodes[] = $expertise->ecp_gts_reviewers . ', ' . $expertise->ecp_name_gts_reviewers;
-//         } elseif ($type == 'СИ') {
-//             $qrCodes[] = $expertise->ecp_si_confirmer_first . ', ' . $expertise->ecp_name_si_confirmer_first;
-//             $qrCodes[] = $expertise->ecp_si_confirmer_second . ', ' . $expertise->ecp_name_si_confirmer_second;
-//             $qrCodes[] = $expertise->ecp_si_reviewers . ', ' . $expertise->ecp_name_si_reviewers;
-//             // $qrCodes[] = $expertise->ecp_si_signer . ', ' . $expertise->ecp_name_si_signer;
-//         } elseif ($type == 'УО') {
-//             $qrCodes[] = $expertise->ecp . ', ' . $expertise->ecp_name_go;
-//         }
-
-//         // Generate and add QR codes to the document
-//         foreach ($qrCodes as $edsData) {
-//             $qrCode = new QrCode($edsData);
-//             $qrCode->setSize(150);
-//             $qrWriter = new PngWriter();
-//             $qrPath = storage_path('app/public/qrcode.png');
-//             $qrWriter->write($qrCode)->saveToFile($qrPath);
-
-//             $qrCodeBase64 = base64_encode(file_get_contents($qrPath));
-//             $html .= '<div class="qr-code" style="margin-top: 50px;">';
-//             $html .= '<img src="data:image/png;base64,' . $qrCodeBase64 . '" alt="QR Code">';
-//             $html .= '</div>';
-//         }
-
-//         $html .= '</body></html>';
-
-//         // Create and configure Dompdf instance
-//         $options = new Options();
-//         $options->set('isHtml5ParserEnabled', true);
-//         $options->set('isRemoteEnabled', true);
-//         $dompdf = new Dompdf($options);
-//         $dompdf->loadHtml($html);
-//         $dompdf->setPaper('A4', 'portrait');
-//         $dompdf->render();
-
-//         $fileName = "Заключение_{$type}.pdf";
-//         $filePath = storage_path("app/public/{$fileName}");
-//         file_put_contents($filePath, $dompdf->output());
-
-//         Log::info('Документ сохранен по пути: ' . $filePath);
-
-//         return response()->download($filePath)->deleteFileAfterSend(true);
-//     } catch (\Exception $e) {
-//         Log::error('Error exporting expertise: ' . $e->getMessage());
-//         return redirect()->back()->with('error', 'Ошибка при экспорте заключения.');
-//     }
-// }
 
 
 public function exportExpertise($type)

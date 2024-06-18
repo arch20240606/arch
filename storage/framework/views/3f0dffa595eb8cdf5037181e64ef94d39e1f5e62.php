@@ -83,18 +83,19 @@ if (app()->getLocale() == "ru") {
               
               <td class="table__name"><a href="<?php echo e(route('expertise.create_version', ['expertise' => $expertise->id])); ?>"><?php echo e($expertise->it_project->$names); ?></a></td>
               <td class="table__status"><?php echo e($expertise->version); ?></td>
-              
-                <?php if($expertise->send_to_uo_si == 1): ?>
-                    <td class="table__status">Отработано СИ <?php echo e($expertise->si_signer_accept_date); ?></td>
-                <?php else: ?>
-                    <td class="table__status">На рассмотрении в СИ</td>
-                <?php endif; ?>
-                <?php if($expertise->send_to_uo_gts == 1): ?>
-                    <td class="table__status">Отработано ГТС <?php echo e($expertise->gts_signer_accept_date); ?></td>
-                <?php else: ?>
-                    <td class="table__status">На рассмотрении в ГТС</td>
-                <?php endif; ?>
-              
+              <?php if(auth()->check() && (auth()->user()->hasRole('ROLE_UO_EXPERTISE_DANA'))): ?>
+                  
+                  <?php if($expertise->send_to_uo == 1): ?>
+                  <td class="table__status">Не направлялось в СИ</td>
+                  <?php else: ?>
+                  <td class="table__status">Отработано СИ <?php echo e($expertise->si_signer_accept_date); ?></td>
+                  <?php endif; ?>
+                  <?php if($expertise->send_to_uo == 1): ?>
+                  <td class="table__status">Не направлялось в ГТС</td>
+                  <?php else: ?>
+                  <td class="table__status">Отработано ГТС <?php echo e($expertise->gts_signer_accept_date); ?></td>
+                  <?php endif; ?>
+              <?php endif; ?>
               
               
               <td class="table__status">

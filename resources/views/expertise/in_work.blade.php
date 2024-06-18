@@ -83,18 +83,28 @@ if (app()->getLocale() == "ru") {
               {{-- <td class="table__name"><a href="{{ route ('expertise.approve.info', ['id' => $expertise->id]) }}">{{ $expertise->it_project->$names }}</a></td> --}}
               <td class="table__name"><a href="{{ route('expertise.create_version', ['expertise' => $expertise->id]) }}">{{ $expertise->it_project->$names }}</a></td>
               <td class="table__status">{{ $expertise->version }}</td>
-              {{-- @if(auth()->check() && (auth()->user()->hasRole('ROLE_UO_EXPERTISE_REVIEWER'))) --}}
-                @if($expertise->send_to_uo_si == 1)
-                    <td class="table__status">Отработано СИ {{ $expertise->si_signer_accept_date }}</td>
-                @else
-                    <td class="table__status">На рассмотрении в СИ</td>
-                @endif
-                @if($expertise->send_to_uo_gts == 1)
-                    <td class="table__status">Отработано ГТС {{ $expertise->gts_signer_accept_date }}</td>
-                @else
-                    <td class="table__status">На рассмотрении в ГТС</td>
-                @endif
-              {{-- @endif --}}
+              @if(auth()->check() && (auth()->user()->hasRole('ROLE_UO_EXPERTISE_DANA')))
+                  {{-- @if($expertise->send_to_uo_si == 1)
+                      <td class="table__status">Отработано СИ {{ $expertise->si_signer_accept_date }}</td>
+                  @else
+                      <td class="table__status">На рассмотрении в СИ</td>
+                  @endif
+                  @if($expertise->send_to_uo_gts == 1)
+                      <td class="table__status">Отработано ГТС {{ $expertise->gts_signer_accept_date }}</td>
+                  @else
+                      <td class="table__status">На рассмотрении в ГТС</td>
+                  @endif --}}
+                  @if($expertise->send_to_uo == 1)
+                  <td class="table__status">Не направлялось в СИ</td>
+                  @else
+                  <td class="table__status">Отработано СИ {{ $expertise->si_signer_accept_date }}</td>
+                  @endif
+                  @if($expertise->send_to_uo == 1)
+                  <td class="table__status">Не направлялось в ГТС</td>
+                  @else
+                  <td class="table__status">Отработано ГТС {{ $expertise->gts_signer_accept_date }}</td>
+                  @endif
+              @endif
               {{-- <td class="table__status">{{ date('d.m.Y H:i:s', strtotime( $expertise->updated_at )) }}</td> --}}
               {{-- <td class="table__status">
                 @if ( $expertise->accept_go == 1 )

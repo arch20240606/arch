@@ -33,27 +33,7 @@
   {{-- <form class="form" method="POST" action="{{ route('expertise.store') }}">
   @csrf --}}
 
-@php
-  // Получить первую запись из коллекции Expertise и взять ее ID
-  $firstExpertise = App\Models\Expertise::first();
-  if ($firstExpertise) {
-    $expertiseId = $firstExpertise->id;
-  } else {
-    // Обработка ситуации, когда нет записей в таблице Expertise
-    $expertiseId = null;
-  }
 
-  // Проверка, если идентификатор не найден, можно установить его по умолчанию или вызвать ошибку
-  if (!$expertiseId) {
-    abort(404, 'Expertise ID not found');
-  }
-  // dd($expertiseId);
-
-  // Получить все записи модели, связанные с определенной экспертизой
-  $conclusions = App\Models\ExpertiseConclutionSi::where('expertise_id', $expertiseId)->get();
-  $conclusionsUo = App\Models\ExpertiseConclutionUo::where('expertise_id', $expertiseId)->get();
-  $conclusionsGts = App\Models\ExpertiseConclutionGts::where('expertise_id', $expertiseId)->get();
-@endphp
 
 {{-- @if($expertise->discart_si_confirmer == 1)
   @foreach ($conclusions as $concl)
@@ -1229,6 +1209,15 @@
   @endforeach
 @else  --}}
   @foreach ($conclusions as $concl)
+
+  <div class="conclusion_si" style="display: none;">
+    <div style="padding: 20px; border: 1px solid #ccc; border-radius: 10px; margin-bottom: 20px;">
+      <div style="display: flex; align-items: center;">
+        <p style="margin-right: 20px; color: #666;">Результат СИ:</p>
+        {{$concl->status_concl}}
+      </div>
+    </div>
+
   <div class="conclusion_si" style="display: none;">
         <div style="padding: 20px; border: 1px solid #ccc; border-radius: 10px; margin-bottom: 20px;">
           <p><b style="font-size: 18px; color: #333;">1. Документы, представленные на рассмотрение</b></p>

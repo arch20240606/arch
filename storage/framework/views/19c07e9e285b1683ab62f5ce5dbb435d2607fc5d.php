@@ -11,12 +11,16 @@
 
 <form class="form" method="POST" action="<?php echo e(route('expertise.store')); ?>">
   <?php echo csrf_field(); ?>
-   
 
-  <?php
-  $conclusions = App\Models\ExpertiseConclutionSi::all(); // Получаем всех пользователей
-  ?>
- 
+ <div style="display: flex; align-items: center; margin-bottom: 10px;">
+  <select id="status_concl" name="status_concl" style="padding: 8px; border: 1px solid #ccc; border-radius: 5px; background-color: #f9f9f9; cursor: pointer; width: 200px;">
+    <option value="Выберите статус">Выберите статус</option>
+    <option value="На доработку">На доработку</option>
+    <option value="Положительно">Положительно</option>
+    <option value="Отрицательно">Отрицательно</option>
+    <option value="Условно-положительное (данное заключение будет являться положительным при условии устранения представленных замечаний)">Условно-положительное (данное заключение будет являться положительным при условии устранения представленных замечаний)</option>
+  </select>
+</div>
 
 <div style="padding: 20px; border: 1px solid #ccc; border-radius: 10px; margin-bottom: 20px;">
   <p><b style="font-size: 18px; color: #333;">1. Документы, представленные на рассмотрение</b></p>
@@ -678,10 +682,13 @@
   <?php endif; ?>   
 <?php if(auth()->check() && auth()->user()->hasRole('ROLE_UO_EXPERTISE_DANA') && $expertise->accept_uo_reviewer == 0): ?>
     <label for="send_to_mcriap_executor">Выбрать исполнителя:</label>
-    <select id="send_to_mcriap_executor" name="send_to_mcriap_executor" style="width: 100%; padding: 8px 12px; margin-bottom: 15px;">
+    <select id="send_to_mcriap_executor" name="send_to_mcriap_executor" style="width: 100%; padding: 8px 12px;">
       <option value="" selected disabled>Выбрать исполнителя</option>
-       
-       <option>Мурат Ахатай</option>
+       <?php $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+           <?php if($user->hasRole('ROLE_UO_EXPERTISE_REVIEWER')): ?>
+              <option value="<?php echo e($user->id); ?>"><?php echo e($user->name); ?> <?php echo e($user->surname); ?> <?php echo e($user->middlename); ?></option>
+           <?php endif; ?>
+       <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
   </select>
 <?php endif; ?> 
 <?php endif; ?>

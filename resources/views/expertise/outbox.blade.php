@@ -40,10 +40,10 @@ if (app()->getLocale() == "ru") {
     @include ('expertise.menu')
 
 
-    <div class="filter-title">Запросы на экспертизу: Исходящие</div>
+    <div class="filter-title">Запросы на экспертизу: Подписи</div>
 
     @if ( $expertises->isEmpty() )
-      <div class="notice">В разделе <b>Исходящие</b> отсутствуют данные</div>
+      <div class="notice">В разделе <b>Подписи</b> отсутствуют данные</div>
     @else
 
       <table class="table table_expertise">

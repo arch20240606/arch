@@ -56,10 +56,9 @@
         <h1 class="page-title"><?php echo e(trans('app.m_expert')); ?></h1>
 
         <?php echo $__env->make('expertise.menu', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-        <div class="filter-title">Запросы на экспертизу</div>
 
         <div class="actions">
-            <?php if(auth()->check() && auth()->user()->hasRole('ROLE_GO_EXPERTISE_EDITOR')): ?>
+            <?php if(auth()->check() && auth()->user()->hasRole('ROLE_GO_EXPERTISE_EDITOR') ): ?>
                 <a href="<?php echo e(route('expertise.create_new_version', ['expertise' => $expertise->id])); ?>" class="btn btn-primary">
                     Создать новую версию
                 </a>
@@ -98,27 +97,27 @@
                 </tr>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             <?php endif; ?>    
-                <?php $__currentLoopData = $versions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $version): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                
                     <tr>
                         <td class="table__name">
                             <?php if(auth()->check() && auth()->user()->hasRole('ROLE_GO_EXPERTISE_EDITOR')): ?>
-                                <a href="<?php echo e(route('expertise.edit', ['expertise' => $expertise->id, 'version' => $version->version_expertise])); ?>">
-                                    Версия <?php echo e($version->version_expertise == 0 ? 1 : $version->version_expertise); ?>
+                                <a href="<?php echo e(route('expertise.edit', ['expertise' => $expertise->id, 'version' => $expertise->version_expertise])); ?>">
+                                    Версия <?php echo e($expertise->version_expertise == 0 ? 1 : $expertise->version_expertise); ?>
 
                                 </a>
-                                
+                                 
                             <?php else: ?>
-                                <a href="<?php echo e(route('expertise.approve.info', ['id' => $expertise->id, 'version_id' => $version->version_expertise])); ?>">
-                                    Версия <?php echo e($version->version_expertise); ?>
+                                <a href="<?php echo e(route('expertise.approve.info', ['id' => $expertise->id, 'version_id' => $expertise->version_expertise])); ?>">
+                                    Версия <?php echo e($expertise->version_expertise); ?>
 
                                 </a>
                             <?php endif; ?>
                         </td>
-                        <td class="table__status"><?php echo e($version->version_expertise == 0 ? 1 : $version->version_expertise); ?></td>
-                        <td class="table__status"><?php echo e($version->updated_at); ?></td>
+                        <td class="table__status"><?php echo e($expertise->version); ?></td>
+                        <td class="table__status"><?php echo e($expertise->updated_at); ?></td>
                         <td class="table__status">Черновик</td>
                     </tr>
-                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                
             </tbody>
         </table>
     </div>
