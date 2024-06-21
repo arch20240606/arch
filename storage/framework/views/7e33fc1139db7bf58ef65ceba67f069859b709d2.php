@@ -64,7 +64,6 @@ if ( $expertise->type_project == "1" ) {
     <?php echo $__env->make('expertise.info.tabs_for_data', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
 
-
   </div>
 
 </main>

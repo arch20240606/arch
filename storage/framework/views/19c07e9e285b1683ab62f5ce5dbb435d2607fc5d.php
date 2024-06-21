@@ -733,12 +733,14 @@
     <input type="hidden" name="expertise_id" id="expertise_id" value="<?php echo e($expertise->id); ?>">
     <button class="btn" type="submit" id="create_and_send_to_dana" name="create_and_send_to_dana" style="display: none; font-size: 14px; background: #0178BC;">Отправить в УО</button>
 <?php endif; ?>
+
 <div class="buttons-wrapper">
   <?php if(auth()->user()->hasRole('ROLE_GO_EXPERTISE_CONFIRMER') && $expertise->send == 1): ?>
   <input type="hidden" name="expertise_id" id="expertise_id" value="<?php echo e($expertise->id); ?>">
   <button type="submit" name="discart_gos" id="discart_gos" style="display: block; font-size: 14px; background: #b90404;">Вернуть</a>
   <?php endif; ?>
 </div>
+
 <div class="buttons-wrapper">
   <?php if(auth()->user()->hasRole('ROLE_SI_EXPERTISE_REVIEWER') && $expertise->send_to_si_reviewers == 1): ?>
       <button class="btn" type="submit" id="save_si_reviewer" name="save_si_reviewer" style="display: block; font-size: 14px; background: #0178BC; margin-bottom: 10px;">Сохранить заключения</button>

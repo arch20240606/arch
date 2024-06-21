@@ -2238,7 +2238,7 @@ public function approve_info($id, $version_id = null)
         'version' => $version,
         'tz' => $tz,
         'document' => $document,
-        'conclusions' => $conclusionsSi,
+        'conclusionsSi' => $conclusionsSi,
         'conclusionsUo' => $conclusionsUo,
         'conclusionsGts' => $conclusionsGts,
     ]);

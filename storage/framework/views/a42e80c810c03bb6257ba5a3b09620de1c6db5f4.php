@@ -1522,6 +1522,48 @@ function toggleEdit() {
 
 document.getElementById('editButton').addEventListener('click', toggleEdit);
 
+
+document.addEventListener('DOMContentLoaded', function () {
+    const editButton = document.getElementById('editButton');
+    const conSelect = document.getElementById('conSelect');
+    const userRoles = <?php echo json_encode(auth()->user()->roles, 15, 512) ?>;
+
+    console.log('User roles:', userRoles);  // For debugging
+
+    function userHasRole(roleName) {
+        return userRoles.some(role => role.name === roleName);
+    }
+
+    function updateEditButtonState() {
+        const selectedValue = conSelect.value;
+        let canEdit = false;
+
+        console.log('Selected value:', selectedValue);  // For debugging
+
+        if (selectedValue === 'СИ' && userHasRole('ROLE_SI_EXPERTISE_REVIEWER')) {
+            canEdit = true;
+        } else if (selectedValue === 'ГТС' && userHasRole('ROLE_GTS_EXPERTISE_REVIEWER')) {
+            canEdit = true;
+        } else if (selectedValue === 'УО' && userHasRole('ROLE_UO_EXPERTISE_REVIEWER')) {
+            canEdit = true;
+        }
+
+        console.log('Can edit:', canEdit);  // For debugging
+
+        if (canEdit) {
+            editButton.style.display = 'inline-block';
+        } else {
+            editButton.style.display = 'none';
+        }
+    }
+
+    // Initial check
+    updateEditButtonState();
+
+    // Check on change
+    conSelect.addEventListener('change', updateEditButtonState);
+});
+
 </script>
 
 

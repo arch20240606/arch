@@ -3,7 +3,7 @@
 
 
 <h2 class="is-content-title">Форма создания комментариев или заключения</h2>
-<select id="conSelect" style="margin-bottom: 24px; padding: 8px; border: 1px solid #ccc; border-radius: 5px; background-color: #f9f9f9; cursor: pointer; width: 200px;">
+{{-- <select id="conSelect" style="margin-bottom: 24px; padding: 8px; border: 1px solid #ccc; border-radius: 5px; background-color: #f9f9f9; cursor: pointer; width: 200px;">
   <option selected>Выберите</option>
   @if(auth()->user()->hasAnyRole(['ROLE_SI_EXPERTISE_REVIEWER', 'ROLE_SI_EXPERTISE_CONFIRMER', 'ROLE_SI_EXPERTISE_SIGNER']))
       <option value="СИ">СИ</option>
@@ -17,12 +17,36 @@
       <option value="ГТС">ГТС</option>
       <option value="СИ">СИ</option>
   @endif
+</select> --}}
+<select id="conSelect" style="margin-bottom: 24px; padding: 8px; border: 1px solid #ccc; border-radius: 5px; background-color: #f9f9f9; cursor: pointer; width: 200px;">
+  <option selected>Выберите</option>
+  @if(auth()->user()->hasAnyRole(['ROLE_SI_EXPERTISE_REVIEWER', 'ROLE_SI_EXPERTISE_CONFIRMER', 'ROLE_SI_EXPERTISE_SIGNER']))
+      <option value="СИ">СИ</option>
+  @endif
+  @if(auth()->user()->hasAnyRole(['ROLE_GTS_EXPERTISE_REVIEWER', 'ROLE_GTS_EXPERTISE_CONFИRMER', 'ROLE_GTS_EXPERTISE_SIGNER']))
+      <option value="ГТС">ГТС</option>
+      <option value="СИ">СИ</option>
+  @endif
+  @if(auth()->user()->hasAnyRole(['ROLE_UO_EXPERTISE_REVIEWER', 'ROLE_UO_EXPERTISE_CONFИRMER', 'ROLE_UO_EXPERTISE_SIGNER','ROLE_GO_EXPERTISE_EDITOR']))
+      <option value="УО">УО</option>
+      <option value="ГТС">ГТС</option>
+      <option value="СИ">СИ</option>
+  @endif
 </select>
 
-<div>
+{{-- <div>
+  @if(auth()->user()->hasAnyRole(['ROLE_SI_EXPERTISE_REVIEWER', 'ROLE_UO_EXPERTISE_REVIEWER', 'ROLE_GTS_EXPERTISE_REVIEWER']))
   <button id="editButton" style="padding: 10px; margin-bottom: 10px;">Редактировать</button>
+  @endif
+  <button style="padding: 10px; margin-bottom: 10px;" id="exportButton">Экспорт заключения</button>
+</div> --}}
+<div>
+  @if(auth()->user()->hasAnyRole(['ROLE_SI_EXPERTISE_REVIEWER', 'ROLE_UO_EXPERTISE_REVIEWER', 'ROLE_GTS_EXPERTISE_REVIEWER']))
+  <button id="editButton" style="padding: 10px; margin-bottom: 10px;">Редактировать</button>
+  @endif
   <button style="padding: 10px; margin-bottom: 10px;" id="exportButton">Экспорт заключения</button>
 </div>
+
 <nav class="is-tabs tabs" style="border: 1px solid black">
   <a style="width: 25%; font-size: 16px; color:black" class="tabs__link" href="#" data-id="5">Написать</a>
 </nav>
@@ -32,7 +56,7 @@
   <input type="hidden" name="expertise_id" id="expertise_id" value="{{ $expertise->id }}">
  
 
-  @foreach ($conclusions as $concl)
+  @foreach ($conclusionsSi as $concl)
 
   <div class="conclusion_si" style="display: none;">
     <div style="padding: 20px; border: 1px solid #ccc; border-radius: 10px; margin-bottom: 20px;">
@@ -687,10 +711,10 @@
 <!------------------------------------------------------------------------------------------------------------------------------------------------------------------>
 
 @foreach ($conclusionsUo as $concl)
-<div class="conclusion_si" style="display: none;">
+<div class="conclusion_uo" style="display: none;">
   <div style="padding: 20px; border: 1px solid #ccc; border-radius: 10px; margin-bottom: 20px;">
       <div style="display: flex; align-items: center;">
-          <p style="margin-right: 20px; color: #666;">Результат СИ:</p>
+          <p style="margin-right: 20px; color: #666;">Результат УО:</p>
           <select id="status_concl" name="status_concl" style="padding: 8px; border: 1px solid #ccc; border-radius: 5px; background-color: #f9f9f9; cursor: pointer; width: 200px;" disabled>
               <option value="Выберите статус" {{ $concl->status_concl == 'Выберите статус' ? 'selected' : '' }}>Выберите статус</option>
               <option value="На доработку" {{ $concl->status_concl == 'На доработку' ? 'selected' : '' }}>На доработку</option>
@@ -701,7 +725,7 @@
       </div>
   </div>
 
-  <div class="conclusion_si" style="display: none;">
+  <div class="conclusion_uo" style="display: none;">
     <div style="padding: 20px; border: 1px solid #ccc; border-radius: 10px; margin-bottom: 20px;">
       <p><b style="font-size: 18px; color: #333;">1. Документы, представленные на рассмотрение</b></p>
       <hr style="border-top: 2px solid #333; margin: 10px 0;">
@@ -712,7 +736,7 @@
     </div>
   </div>
 
-  <div class="conclusion_si" style="display: none;">
+  <div class="conclusion_uo" style="display: none;">
     <div style="padding: 20px; border: 1px solid #ccc; border-radius: 10px; margin-bottom: 20px;">
       <p><b style="font-size: 18px; color: #333;">2. Документы, принятые во внимание при рассмотрении</b></p>
       <hr style="border-top: 2px solid #333; margin: 10px 0;">
@@ -723,7 +747,7 @@
     </div>
   </div>
 
-  <div class="conclusion_si" style="display: none;">
+  <div class="conclusion_uo" style="display: none;">
     <div style="padding: 20px; border: 1px solid #ccc; border-radius: 10px; margin-bottom: 20px;">
       <p><b style="font-size: 18px; color: #333;">3. Используемые сокращения</b></p>
       <hr style="border-top: 2px solid #333; margin: 10px 0;">
@@ -734,7 +758,7 @@
     </div>
   </div>
 
-  <div class="conclusion_si" style="display: none;">
+  <div class="conclusion_uo" style="display: none;">
     <div style="padding: 20px; border: 1px solid #ccc; border-radius: 10px; margin-bottom: 20px;">
         <p><b style="font-size: 18px;">4.1. Проверка раздела «Назначение и цели создания (развития) системы»</b></p>
         <hr style="border-top: 2px solid #333;">
@@ -769,7 +793,7 @@
       </div>
     </div>
 
-  <div class="conclusion_si" style="display: none;">
+  <div class="conclusion_uo" style="display: none;">
     <div style="padding: 20px; border: 1px solid #ccc; border-radius: 10px; margin-bottom: 20px;">
       <p><b style="font-size: 18px;">4.2 Проверка раздела «Характеристика объектов автоматизации»</b></p>
       <hr style="border-top: 2px solid #333;">
@@ -802,7 +826,7 @@
     </div>
   </div>
 
-  <div class="conclusion_si" style="display: none;">
+  <div class="conclusion_uo" style="display: none;">
     <div style="padding: 20px; border: 1px solid #ccc; border-radius: 10px; margin-bottom: 20px;">
       <p><b style="font-size: 18px;">4.3 Проверка раздела «Сведения о выделенных подсистемах»</b></p>
       <hr style="border-top: 2px solid #333;">
@@ -835,7 +859,7 @@
     </div>
   <div>
 
-    <div class="conclusion_si" style="display: none;">
+    <div class="conclusion_uo" style="display: none;">
       <div style="padding: 20px; border: 1px solid #ccc; border-radius: 10px; margin-bottom: 20px;">
         <p><b style="font-size: 18px;">4.4 Проверка раздела «Основные функции системы»</b></p>
         <hr style="border-top: 2px solid #333;">
@@ -952,7 +976,7 @@
 </div>
 </div>
 
-  <div class="conclusion_si" style="display: none;">
+  <div class="conclusion_uo" style="display: none;">
     <div style="padding: 20px; border: 1px solid #ccc; border-radius: 10px; margin-bottom: 20px;">
       <p><b>4.4 Проверка подраздела «Требование к функциям (задачам)» раздела «Требования к системе»</b></p>
       <hr style="border-top: 2px solid #333;">
@@ -1008,7 +1032,7 @@
     </div>    
     <div>
 
-      <div class="conclusion_si" style="display: none;">
+      <div class="conclusion_uo" style="display: none;">
         <div style="padding: 20px; border: 1px solid #ccc; border-radius: 10px; margin-bottom: 20px;">
           <p><b>4.5 Проверка подраздела «Требования к видам обеспечения» раздела «Требования к системе»</b></p>
         <hr style="border-top: 2px solid #333;">
@@ -1083,7 +1107,7 @@
       </div>
       <div>
 
-        <div class="conclusion_si" style="display: none;">
+        <div class="conclusion_uo" style="display: none;">
           <div style="padding: 20px; border: 1px solid #ccc; border-radius: 10px; margin-bottom: 20px;">
             <p><b>4.6 Проверка раздела «Состав и содержание работ по созданию/модификации системы»</b></p>
             <hr style="border-top: 2px solid #333;">
@@ -1255,7 +1279,7 @@
         </div> 
       <div>
 
-        <div class="conclusion_si" style="display: none;">
+        <div class="conclusion_uo" style="display: none;">
           <div style="padding: 20px; border: 1px solid #ccc; border-radius: 10px; margin-bottom: 20px;">
             <p><b>4.9 Проверка раздела «Требования к документированию»</b></p>
           <hr style="border-top: 2px solid #333;">
@@ -1300,7 +1324,7 @@
         </div>
         </div>
 
-        <div class="conclusion_si" style="display: none;">
+        <div class="conclusion_uo" style="display: none;">
           <div style="padding: 20px; border: 1px solid #ccc; border-radius: 10px; margin-bottom: 20px;">
             <p><b>4.10 Проверка раздела «Источники разработки»</b></p>
           <hr style="border-top: 2px solid #333;">
@@ -1353,10 +1377,19 @@
 
   </div>
 @endforeach
-
+@if (auth()->user()->hasRole('ROLE_SI_EXPERTISE_REVIEWER'))
   <div class="buttons-wrapper">
     <button class="btn" type="submit" id="save_si_reviewer" name="save_si_reviewer" style=" font-size: 14px; background: #0178BC; margin-bottom: 10px;">Сохранить заключения</button>
   </div>
+@elseif(auth()->user()->hasRole('ROLE_GTS_EXPERTISE_REVIEWER')) 
+<div class="buttons-wrapper">
+  <button class="btn" type="submit" id="save_gts_reviewer" name="save_gts_reviewer" style=" font-size: 14px; background: #0178BC; margin-bottom: 10px;">Сохранить заключения</button>
+</div>
+@elseif(auth()->user()->hasRole('ROLE_UO_EXPERTISE_REVIEWER')) 
+<div class="buttons-wrapper">
+  <button class="btn" type="submit" id="save_uo_reviewer" name="save_uo_reviewer" style=" font-size: 14px; background: #0178BC; margin-bottom: 10px;">Сохранить заключения</button>
+</div>
+@endif
 </form>
 
 

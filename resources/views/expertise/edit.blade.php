@@ -100,14 +100,7 @@ if ( $expertise->type_project == "1" ) {
               Кому отписано  <strong style="padding-left: 10px;">{{$expertise->users->surname}} {{$expertise->users->name}}</strong>
           </div>
       </div>
-      
-      
-      
-      
-      
-      
-      
-      
+            
 
         @include('expertise.tabs_for_data_edit')
 

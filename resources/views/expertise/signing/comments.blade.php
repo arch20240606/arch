@@ -3,12 +3,6 @@
 
 
 <h2 class="is-content-title">Форма создания комментариев или заключения</h2>
-{{-- <select style="margin-bottom: 24px; padding: 8px; border: 1px solid #ccc; border-radius: 5px; background-color: #f9f9f9; cursor: pointer; width: 200px;">
-  <option selected>Выберите</option>
-  <option>ГТС</option>
-  <option>УО</option>
-  <option>СИ</option>
-</select> --}}
 <nav class="is-tabs tabs" style="border: 1px solid black">
   <a style="width: 25%; font-size: 16px; color:black" class="tabs__link" href="#" data-id="7">Просмотр</a>
 </nav>
@@ -18,9 +12,9 @@
   @csrf
    
 
-  @php
+  {{-- @php
   $conclusions = App\Models\ExpertiseConclutionSi::all(); // Получаем всех пользователей
-  @endphp
+  @endphp --}}
 
 
 <div style="padding: 20px; border: 1px solid #ccc; border-radius: 10px; margin-bottom: 20px;">
