@@ -91,7 +91,7 @@ if ( app()->getLocale() == "ru" ) {
               <td class="table__name">Файл диаграммы AS IS</td>
               <td><span data-hint="*"><img style="width: 25px;" src="/assets/images/question.png"></span></td>
               <td class="table__status">
-                <input name="file_bpm_asis" style="cursor: pointer;" accept=".bpm" id="file_bpm_asis" type="file">
+                <input name="file_bpm_asis" style="cursor: pointer;" accept=".bpmn" id="file_bpm_asis" type="file">
               </td>
             </tr>
 
@@ -99,15 +99,15 @@ if ( app()->getLocale() == "ru" ) {
               <td class="table__name">Файл диаграммы TO BE</td>
               <td><span data-hint="*"><img style="width: 25px;" src="/assets/images/question.png"></span></td>
               <td class="table__status">
-                <input name="file_bpm_tobe" style="cursor: pointer;" accept=".bpm" id="file_bpm_tobe" type="file">
+                <input name="file_bpm_tobe" style="cursor: pointer;" accept=".bpmn" id="file_bpm_tobe" type="file">
               </td>
             </tr>
 
             <tr>
-              <td class="table__name">Файл программы мероприятий</td>
+              <td class="table__name">Файл плана мероприятий</td>
               <td><span data-hint="*"><img style="width: 25px;" src="/assets/images/question.png"></span></td>
               <td class="table__status">
-                <input name="file_bpm_program" style="cursor: pointer;" accept=".bpm" id="file_bpm_program" type="file">
+                <input name="file_bpm_program" style="cursor: pointer;" accept=".doc, .docx, .pdf" id="file_bpm_program" type="file">
               </td>
             </tr>
 

@@ -18,4 +18,12 @@ class BusinessCase extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    public function government() {
+        return $this->belongsTo(Government::class, 'government_id');
+    }
+
+    public function processes($case_id) {
+        return $this->belongsTo(BusinessProcess::class, 'businesscase_id');
+    }
+
 }

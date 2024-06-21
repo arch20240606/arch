@@ -137,6 +137,9 @@ Route::group([ 'prefix' => LaravelLocalization::setLocale(), 'middleware' => [ '
 
     Route::resource('reestr', App\Http\Controllers\ReestrController::class);
 
+    Route::get('businessprocess/reestr', [App\Http\Controllers\BusinessProcessController::class, 'reestr'])->name('businessprocess.reestr');
+    Route::get('businessprocess/reestr/view_bp/{id}', [App\Http\Controllers\BusinessProcessController::class, 'view_bp'])->name('businessprocess.reestr.view_bp');
+    Route::post('businessprocess/reestr/approve/{id}', [App\Http\Controllers\BusinessProcessController::class, 'approve'])->name('businessprocess.reestr.approve');
     Route::get('businessprocess/edit_bp/{id}', [App\Http\Controllers\BusinessProcessController::class, 'edit_bp'])->name('businessprocess.edit_bp');
     Route::get('businessprocess/create_bp/{id}', [App\Http\Controllers\BusinessProcessController::class, 'create_bp'])->name('businessprocess.create_bp');
     Route::get('businessprocess/roadmaps', [App\Http\Controllers\BusinessProcessController::class, 'roadmaps'])->name('businessprocess.roadmaps');

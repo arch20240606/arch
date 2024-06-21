@@ -3,9 +3,9 @@
 @section('title')Реестр бизнес-процессов@endsection
 
 <?php
-if ( app()->getLocale() == "ru" ) {
+if (app()->getLocale() == "ru") {
   $names = 'name_ru';
-} elseif ( app()->getLocale() == "en" ) {
+} elseif (app()->getLocale() == "en") {
   $names = 'name_en';
 } else {
   $names = 'name_kz';
@@ -38,6 +38,9 @@ if ( app()->getLocale() == "ru" ) {
     @if( session()->has('successMsg') )
     <div class="success-info">{!! session()->get('successMsg') !!}</div>
     @endif
+
+
+
 
 
 
@@ -93,14 +96,9 @@ if ( app()->getLocale() == "ru" ) {
 
             @foreach ($b_roadmap->getCase($b_roadmap->id) as $case)
               <div class="is-menu-content" data-id="case_{{ $case->id }}">
-                <h2 class="is-content-title" style="margin-left: 0px;">
-                  {{ $case->name }} 
-                  <a  href="{{ route('businessprocess.edit', ['businessprocess' => $case->id]) }}">
-                    <span class="systems__count" style="margin-left: 20px; padding-left: 15px; padding-right: 15px; font-weight: normal; font-size: 12px; color: #FFFFFF;">РЕДАКТИРОВАТЬ</span>
-                  </a>
-                </h2>
-    
                 <span class="is-menu__item-title">Автор кейса: <span style="color: #0075ff;">{{ $case->user->surname }} {{ $case->user->name }} {{ $case->user->middlename }}</span></span>
+                <br>
+                <span class="is-menu__item-title">Государственный орган: <span style="color: #0075ff;">{{ $case->government->$names }}</span></span>
                 <br>
                 <span class="is-menu__item-title">Создан: <span style="color: #0075ff;">{{ date('d.m.Y в H:i:s', strtotime( $case->created_at )) }}</span></span>
                 <br><br>
@@ -112,9 +110,6 @@ if ( app()->getLocale() == "ru" ) {
                 <br><br><br><br>
                 <h2 class="is-content-title" style="margin-left: 0px; color: #0075ff;">
                   Связанные функции и бизнес-процессы
-                  <a href="{{ route('businessprocess.create_bp', ['id' => $case->id ]) }}">
-                    <span class="systems__count" style="margin-left: 20px; padding-left: 15px; padding-right: 15px; font-weight: normal; font-size: 12px; color: #FFFFFF;">СОЗДАТЬ БИЗНЕС-ПРОЦЕСС</span>
-                  </a>
                 </h2>
                 
                 <table class="table table_expertise">
@@ -142,7 +137,7 @@ if ( app()->getLocale() == "ru" ) {
                         ?>
 
                           <tr>
-                            <td><a href="{{ route('businessprocess.edit_bp', ['id' => $b_proccess->id]) }}">{{ $b_proccess->name }}</a></td>
+                            <td><a href="{{ route('businessprocess.reestr.view_bp', ['id' => $b_proccess->id]) }}">{{ $b_proccess->name }}</a></td>
                             <td class="table__status" style="width: 76px;">
                               @if ($b_proccess->file_as_is)
                                 @if ($b_proccess->file_as_is_accept == "on")
@@ -192,6 +187,7 @@ if ( app()->getLocale() == "ru" ) {
                               @endif
                             </td>
                           </tr>
+                          
                   
       
                         <?php
@@ -231,10 +227,6 @@ if ( app()->getLocale() == "ru" ) {
 
 
 
-
-
-
-    
 
 </main>
 @endsection

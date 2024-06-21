@@ -50,6 +50,20 @@ if ( app()->getLocale() == "ru" ) {
           <img src="/assets/images/coordinate-system 1.svg" alt="">
         </div>
         <h2 class="is-info__header-title">Форма редактирования бизнес-процесса</h2>
+        <b>Статус:</b>
+        @if ($b_process->accept == 0 && $b_process->discard == 0)
+          На рссмотрении
+        @else
+        
+          @if ($b_process->accept == 1)
+            <span style="color: green">Принят</span>
+          @endif
+
+          @if ($b_process->discard == 1)
+            <span style="color: red">Отклонен</span>
+          @endif
+
+        @endif
       </div>
 
 
@@ -86,7 +100,7 @@ if ( app()->getLocale() == "ru" ) {
               <td class="table__name">Файл диаграммы AS IS</td>
               <td><span data-hint="*"><img style="width: 25px;" src="/assets/images/question.png"></span></td>
               <td class="table__status">
-                <input name="file_bpm_asis" style="cursor: pointer;" accept=".bpm" id="file_bpm_asis" type="file">
+                <input name="file_bpm_asis" style="cursor: pointer;" accept=".bpmn" id="file_bpm_asis" type="file">
               </td>
             </tr>
 
@@ -94,15 +108,15 @@ if ( app()->getLocale() == "ru" ) {
               <td class="table__name">Файл диаграммы TO BE</td>
               <td><span data-hint="*"><img style="width: 25px;" src="/assets/images/question.png"></span></td>
               <td class="table__status">
-                <input name="file_bpm_tobe" style="cursor: pointer;" accept=".bpm" id="file_bpm_tobe" type="file">
+                <input name="file_bpm_tobe" style="cursor: pointer;" accept=".bpmn" id="file_bpm_tobe" type="file">
               </td>
             </tr>
 
             <tr>
-              <td class="table__name">Файл программы мероприятий</td>
+              <td class="table__name">Файл плана мероприятий</td>
               <td><span data-hint="*"><img style="width: 25px;" src="/assets/images/question.png"></span></td>
               <td class="table__status">
-                <input name="file_bpm_program" style="cursor: pointer;" accept=".bpm" id="file_bpm_program" type="file">
+                <input name="file_bpm_program" style="cursor: pointer;" accept=".doc, .docx, .pdf" id="file_bpm_program" type="file">
               </td>
             </tr>
 
@@ -110,6 +124,14 @@ if ( app()->getLocale() == "ru" ) {
         </tbody>
       </table>
 
+      <div style="border-top: 1px solid #e3e5ec; padding-top: 0px; margin-top: 50px;">
+        <div style="margin-left: 15px;">
+          <div><p><b>Комментарий к бизнес-процессу</b></p></div>
+          <div class="form__field">
+            {{ $b_process->comment }}
+          </div>
+        </div> 
+      </div>
 
       <div class="buttons-wrapper" style="border-top: 1px solid #e3e5ec; padding-top: 25px; margin-top: 50px;">
         <a class="btn btn_white" style="font-size: 14px;" onclick="history.back()">← Отменить и назад</a>

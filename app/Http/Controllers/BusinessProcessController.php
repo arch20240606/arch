@@ -319,7 +319,9 @@ class BusinessProcessController extends Controller
                 'file_program' => $file_bpm_program,
                 'file_program_upload' => $file_bpm_program_upload,
                 'file_program_type' => $file_bpm_program_type,
-                'file_program_size' => $file_bpm_program_size
+                'file_program_size' => $file_bpm_program_size,
+                'accept' => 0,
+                'discard' => 0,
             ]);
             return Redirect::to('businessprocess')->with(['successMsg' => 'Бизнес-процесс <b>'.$request->bp_name.'</b> был успешно обновлен']);
         }
@@ -359,5 +361,85 @@ class BusinessProcessController extends Controller
         ]);
     }
 
+
+
+    public function reestr()
+    {
+        if ( Auth::user()->government_id == 108 ) {
+
+
+            $b_roadmaps = RoadMap::where('status', '1')->orderBy('id', 'desc')->get();
+            $b_proccesses = BusinessProcess::where('status', '1')->orderBy('id', 'desc')->get();
+            return View::make('businessprocess.reestr', [
+                'b_proccesses' => $b_proccesses,
+                'b_roadmaps' => $b_roadmaps
+            ]);
+
+            /*
+            $cases = BusinessCase::where('status', '1')->orderBy('id', 'desc')->get();
+            return View::make('businessprocess.reestr', [
+                'cases' => $cases
+            ]);
+            */
+
+
+        } else {
+            return "Access denied";
+        }
+
+    }
+
+    public function view_bp($id)
+    {
+        $b_process = BusinessProcess::where('id', $id)->first();
+        $b_roadmaps = RoadMap::where('status', '1')->orderBy('id', 'desc')->get();
+        $b_functions = BusinessFunction::where('status', '1')->get();
+        return View::make('businessprocess.reestr_view_bp', [
+            'b_functions' => $b_functions,
+            'b_roadmaps' => $b_roadmaps,
+            'b_process' => $b_process
+        ]);
+    }
+
+
+
+    public function approve(Request $request, $id)
+    {
+        if ( Auth::user()->government_id == 108 ) {
+
+            // Если бизнес-процесс принят
+            if ( $request->has('accept_bp') ) {
+                $updateBP = BusinessProcess::find($id);
+                $updateBP->update([
+                    'file_as_is_accept' => $request->file_as_is_accept,
+                    'file_to_be_accept' => $request->file_to_be_accept,
+                    'file_program_accept' => $request->file_program_accept,
+                    'accept' => 1,
+                    'discard' => 0,
+                    'comment' => $request->comment
+                ]);
+                return Redirect::to('businessprocess/reestr')->with(['successMsg' => 'Бизнес-процесс был успешно одобрен']);
+            }
+
+            // Если бизнес-процесс отклонен
+            if ( $request->has('discard_bp') ) {
+                $updateBP = BusinessProcess::find($id);
+                $updateBP->update([
+                    'file_as_is_accept' => $request->file_as_is_accept,
+                    'file_to_be_accept' => $request->file_to_be_accept,
+                    'file_program_accept' => $request->file_program_accept,
+                    'accept' => 0,
+                    'discard' => 1,
+                    'comment' => $request->comment
+                ]);
+                return Redirect::to('businessprocess/reestr')->with(['successMsg' => 'Бизнес-процесс был успешно отклонен']);
+            }
+            
+
+
+        } else {
+            return "Access denied";
+        }
+    }
     
 }
