@@ -2,7 +2,7 @@
 {{-- @if(isset($version) && (intval($expertise->version_expertise) > intval($version->version_number))) --}}
 {{-- <a href="{{ route('export.passport') }}" class="btn btn-primary">Экспортировать паспорт в Word</a> --}}
 
-  <div class="is-menu-content" data-id="1" style="display: block;">
+  {{-- <div class="is-menu-content" data-id="1" style="display: block;">
     <table class="is-table">
       <tr>
         <td style="width: 30%;">1.1. Полное наименование системы</td>
@@ -172,8 +172,8 @@
         </td>
       </tr>
     </table>
-  </div> 
-  {{-- @else
+  </div>  --}}
+  {{-- @else --}}
   <div class="is-menu-content" data-id="1" style="display: block;">
     <table class="is-table">
       <tr>
@@ -344,6 +344,6 @@
         </td>
       </tr>
     </table>
-  </div>   --}}
+  </div>  
   </div>
 {{-- @endif --}}

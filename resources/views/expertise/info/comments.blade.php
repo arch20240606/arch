@@ -697,6 +697,7 @@
     <form class="form" enctype="multipart/form-data" method="POST" action="{{ route('expertise.store') }}">
       @csrf
       <input type="hidden" id="approver_id1" name="approver_id1">  
+      <input type="hidden" name="expertise_id" id="expertise_id" value="{{ $expertise->id }}">
         <!-- Поле "Согласующий" -->
         @if(auth()->user()->hasRole('ROLE_SI_EXPERTISE_CONFIRMER') && $expertise->send_to_si == 1 && $expertise->send_to_si_reviewers == 0 && $expertise->accept_si_reviewers != 1)
         <h2>Отправка заявки</h2>

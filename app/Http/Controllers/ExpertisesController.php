@@ -732,7 +732,9 @@ class ExpertisesController extends Controller
         }elseif ($request->has('send_to')) {
             $selectedApproverId1 = $request->input('approver_id1');
         
-            $expertiseId = Expertise::latest()->first()->id;
+            // $expertiseId = Expertise::first()->id;
+            $expertiseId = $request->input('expertise_id');
+            // dd($expertiseId);
         
             // Создание записи в таблице ExpertiseRoleStatus для согласующего
             $expertiseRoleStatusApprover1 = ExpertiseRoleStatus::create([
@@ -789,6 +791,7 @@ class ExpertisesController extends Controller
             $updateExpertise->update([
                 'send_to_uo_si' => 1,
                 'send_to_si_signer' => 0,
+                'accept_si_signer' => 1,
                 'si_signer_accept_date' => now(), // Запись текущей даты и времени
             ]);
 
@@ -824,7 +827,8 @@ class ExpertisesController extends Controller
 
             $selectedSignerId = $request->input('signer_id');
         
-            $expertiseId = Expertise::latest()->first()->id;
+            // $expertiseId = Expertise::latest()->first()->id;
+            $expertiseId = $request->input('expertise_id');
         
             // Создание записи в таблице ExpertiseRoleStatus для подписанта
             $expertiseRoleStatusSigner = ExpertiseRoleStatus::create([
@@ -921,7 +925,8 @@ class ExpertisesController extends Controller
                 'projects' => $projects
             ])->with('successMsg', 'Заключение сохранено');
 
-        }elseif($request->has('save_si_reviewer')){
+         }
+        elseif($request->has('save_si_reviewer')){
             // Добавление данных в таблицу conclusion_si
             $expertiseConclusionSi = ExpertiseConclutionSi::where('expertise_id', $request->expertise_id)->first();
             if($expertiseConclusionSi){
@@ -1151,7 +1156,8 @@ class ExpertisesController extends Controller
                 'projects' => $projects
             ])->with('successMsg', 'Заключение сохранено');
 
-        }elseif($request->has('save_uo_reviewer')){
+        }
+        elseif($request->has('save_uo_reviewer')){
             // Добавление данных в таблицу conclusion_si
             $expertiseConclusionUo = ExpertiseConclutionUo::where('expertise_id', $request->expertise_id)->first();
             if($expertiseConclusionUo){
@@ -2190,8 +2196,10 @@ public function approve_confirmers(){
     $expertises = Expertise::where(function ($query) use ($user) {
         if ($user->hasRole('ROLE_KIB_EXPERTISE_CONFIRMER')) {
             $query->where('send_to_kib', '1');
+                //   ->where('accept_kib_reviewers', '1');
         } elseif ($user->hasRole('ROLE_SI_EXPERTISE_CONFIRMER')) {
-            $query->where('send_to_si', '1');
+            $query->where('send_to_si', '1')
+                  ->where('accept_si_reviewers', '1');
         } else {
             // Если у пользователя нет соответствующей роли, не отображаем ничего
             $query->whereRaw('1=0');
@@ -2444,7 +2452,9 @@ public function in_work() {
         } elseif ($user->hasRole('ROLE_KIB_EXPERTISE_EXECUTOR')) {
             $expertisesQuery->where('send_to_kib', '1');
         } elseif ($user->hasRole('ROLE_SI_EXPERTISE_CONFIRMER')) {
-            $expertisesQuery->where('send_to_si', '1');
+            $expertisesQuery->where('send_to_si', '1')
+            ->where('send_to_si_reviewers', '0')
+            ->where('accept_si_reviewers', '0');
         } elseif ($user->hasRole('ROLE_GTS_EXPERTISE_CONFIRMER')) {
             $expertisesQuery->where('send_to_gts', '1');
         } elseif ($user->hasRole('ROLE_UO_EXPERTISE_DANA')) {
@@ -2474,7 +2484,30 @@ public function in_work() {
         ]); 
     }
 
-    public function executor(){
+//     public function executor(){
+
+//     $govs = Government::all();
+//     $expertises = Expertise::join('expertise_role_status', 'expertise.id', '=', 'expertise_role_status.expertise_id')
+//     ->select('expertise.*')
+//     ->where('expertise.send_to_si_reviewers', '1')
+//     ->where('expertise_role_status.user_id', Auth::id())
+//     ->where('expertise_role_status.executor', 1)
+//     ->orWhere(function($query) {
+//         $query->where('expertise.send_to_gts_reviewers', '1')
+//               ->where('expertise_role_status.user_id', Auth::id())
+//               ->where('expertise_role_status.executor', 1);
+//     })
+//     ->orderBy('expertise.id', 'desc')
+//     ->paginate(10);
+
+    
+//     return view('expertise.executor', [
+//         'govs' => $govs,
+//         'expertises' => $expertises
+//     ]);
+// }
+
+public function executor(){
 
     $govs = Government::all();
     $expertises = Expertise::join('expertise_role_status', 'expertise.id', '=', 'expertise_role_status.expertise_id')
@@ -2487,15 +2520,16 @@ public function in_work() {
               ->where('expertise_role_status.user_id', Auth::id())
               ->where('expertise_role_status.executor', 1);
     })
+    ->distinct() // Добавляем этот метод для удаления дубликатов
     ->orderBy('expertise.id', 'desc')
     ->paginate(10);
 
-    
     return view('expertise.executor', [
         'govs' => $govs,
         'expertises' => $expertises
     ]);
 }
+
 
 
 
@@ -2870,6 +2904,190 @@ public function goExecutor() {
 
 
 
+// public function exportExpertise($type)
+// {
+//     Log::info('exportExpertise method called with type: ' . $type);
+
+//     try {
+//         switch ($type) {
+//             case 'ГТС':
+//                 $expertiseConclution = ExpertiseConclutionGts::first(['expertise_id', 'concl_59']);
+//                 break;
+//             case 'СИ':
+//                 $expertiseConclution = ExpertiseConclutionSi::first();
+//                 break;
+//             case 'УО':
+//                 $expertiseConclution = ExpertiseConclutionUo::first();
+//                 break;
+//             default:
+//                 Log::error('Invalid expertise type: ' . $type);
+//                 return redirect()->back()->with('error', 'Неверный тип заключения.');
+//         }
+
+//         if (!$expertiseConclution) {
+//             Log::error('No expertise found for type: ' . $type);
+//             return redirect()->back()->with('error', 'Заключение не найдено.');
+//         }
+
+//         Log::info('ExpertiseConclution found: ' . json_encode($expertiseConclution));
+
+//         $expertise = Expertise::find($expertiseConclution->expertise_id);
+
+//         if (!$expertise) {
+//             Log::error('No expertise details found for expertise_id: ' . $expertiseConclution->expertise_id);
+//             return redirect()->back()->with('error', 'Детали заключения не найдены.');
+//         }
+
+//         Log::info('Expertise details found: ' . json_encode($expertise));
+
+//         // Define sections and field mappings
+//         $fieldMappings = [
+//             'ГТС' => [
+//                 'Заключение экспертизы на' => 'abbr',
+//                 'Заключение на соответствие требованиям информационной безопасности' => 'concl_59'
+//             ],
+//             'СИ' => [
+//                 'Заключение экспертизы на' => 'abbr',
+//                 '1. Документы, представленные на рассмотрение' => 'concl_1',
+//                 '2. Документы, принятые во внимание при рассмотрении' => 'concl_2',
+//                 '3. Используемые сокращения' => 'concl_3',
+//                 '4. Заключение 4' => 'concl_4',
+//                 '5. Заключение 5' => 'concl_5',
+//                 '6. Заключение 6' => 'concl_6',
+//                 '7. Заключение 7' => 'concl_7',
+//                 '8. Заключение 8' => 'concl_8',
+//                 '9. Заключение 9' => 'concl_9',
+//                 '10. Заключение 10' => 'concl_10',
+//                 '11. Заключение 11' => 'concl_11',
+//                 '12. Заключение 12' => 'concl_12',
+//                 '13. Заключение 13' => 'concl_13',
+//                 '14. Заключение 14' => 'concl_14',
+//                 '15. Заключение 15' => 'concl_15',
+//                 '16. Заключение 16' => 'concl_16',
+//                 '17. Заключение 17' => 'concl_17',
+//                 '18. Заключение 18' => 'concl_18',
+//                 '19. Заключение 19' => 'concl_19',
+//                 '20. Заключение 20' => 'concl_20',
+//                 '21. Заключение 21' => 'concl_21',
+//                 '22. Заключение 22' => 'concl_22',
+//                 '23. Заключение 23' => 'concl_23',
+//                 '24. Заключение 24' => 'concl_24',
+//                 '25. Заключение 25' => 'concl_25',
+//                 '26. Заключение 26' => 'concl_26',
+//                 '27. Заключение 27' => 'concl_27',
+//                 '28. Заключение 28' => 'concl_28',
+//                 '29. Заключение 29' => 'concl_29',
+//                 '30. Заключение 30' => 'concl_30',
+//                 '31. Заключение 31' => 'concl_31',
+//                 '32. Заключение 32' => 'concl_32',
+//                 '33. Заключение 33' => 'concl_33',
+//                 '34. Заключение 34' => 'concl_34',
+//                 '35. Заключение 35' => 'concl_35',
+//                 '36. Заключение 36' => 'concl_36',
+//                 '37. Заключение 37' => 'concl_37',
+//                 '38. Заключение 38' => 'concl_38',
+//                 '39. Заключение 39' => 'concl_39',
+//                 '40. Заключение 40' => 'concl_40',
+//                 '41. Заключение 41' => 'concl_41',
+//                 '42. Заключение 42' => 'concl_42',
+//                 '43. Заключение 43' => 'concl_43',
+//                 '44. Заключение 44' => 'concl_44',
+//                 '45. Заключение 45' => 'concl_45',
+//                 '46. Заключение 46' => 'concl_46',
+//                 '47. Заключение 47' => 'concl_47',
+//                 '48. Заключение 48' => 'concl_48',
+//                 '49. Заключение 49' => 'concl_49',
+//                 '50. Заключение 50' => 'concl_50',
+//                 '51. Заключение 51' => 'concl_51',
+//                 '52. Заключение 52' => 'concl_52',
+//                 '53. Заключение 53' => 'concl_53',
+//                 '54. Заключение 54' => 'concl_54',
+//                 '55. Заключение 55' => 'concl_55',
+//                 '56. Заключение 56' => 'concl_56',
+//                 '57. Заключение 57' => 'concl_57',
+//                 '58. Заключение 58' => 'concl_58',
+//                 '59. Заключение 59' => 'concl_59',
+//             ],
+//             'УО' => [
+//                 'Заключение экспертизы на' => 'abbr',
+//                 '1. Документы, представленные на рассмотрение' => 'concl_1',
+//                 '2. Документы, принятые во внимание при рассмотрении' => 'concl_2',
+//                 '3. Используемые сокращения' => 'concl_3',
+//                 'Выводы и рекомендации' => 'concl_58',
+//                 'Заключение на соответствие требованиям информационной безопасности' => 'concl_59'
+//             ]
+//         ];
+
+//         $html = '<html><head><style>
+//                     @font-face {
+//                         font-family: "DejaVu Sans";
+//                         src: url("' . storage_path('fonts/DejaVuSans.ttf') . '") format("truetype");
+//                     }
+//                     body { font-family: "DejaVu Sans", Arial, sans-serif; font-size: 12px; }
+//                     .section-heading { font-size: 14px; font-weight: bold; margin-top: 20px; }
+//                     .content { margin-top: 10px; }
+//                 </style></head><body>';
+
+//         foreach ($fieldMappings[$type] as $heading => $fieldName) {
+//             $content = $expertiseConclution->$fieldName ?? 'Не указано';
+//             $html .= '<div class="section">';
+//             $html .= '<div class="section-heading">' . $heading . '</div>';
+//             $html .= '<div class="content">' . nl2br(e($content)) . '</div>';
+//             $html .= '</div>';
+//         }
+
+//         // Prepare EDS data and generate multiple QR codes based on role
+//         $qrCodes = [];
+
+//         if ($type == 'ГТС' && Auth::user()->hasRole('ROLE_GTS_EXPERTISE_SIGNER')) {
+//             $qrCodes[] = $expertise->ecp_gts_confirmer . ', ' . $expertise->ecp_name_gts_confirmer;
+//             $qrCodes[] = $expertise->ecp_gts_reviewers . ', ' . $expertise->ecp_name_gts_reviewers;
+//         } elseif ($type == 'СИ' && Auth::user()->hasRole('ROLE_SI_EXPERTISE_SIGNER')) {
+//             $qrCodes[] = $expertise->ecp_si_confirmer_first . ', ' . $expertise->ecp_name_si_confirmer_first;
+//             $qrCodes[] = $expertise->ecp_si_confirmer_second . ', ' . $expertise->ecp_name_si_confirmer_second;
+//             $qrCodes[] = $expertise->ecp_si_reviewers . ', ' . $expertise->ecp_name_si_reviewers;
+//         } elseif ($type == 'УО') {
+//             $qrCodes[] = $expertise->ecp . ', ' . $expertise->ecp_name_go;
+//         }
+
+//         foreach ($qrCodes as $edsData) {
+//             $qrCode = new QrCode($edsData);
+//             $qrCode->setSize(150);
+//             $qrWriter = new PngWriter();
+//             $qrPath = storage_path('app/public/qrcode.png');
+//             $qrWriter->write($qrCode)->saveToFile($qrPath);
+
+//             $qrCodeBase64 = base64_encode(file_get_contents($qrPath));
+//             $html .= '<div class="qr-code" style="margin-top: 50px;">';
+//             $html .= '<img src="data:image/png;base64,' . $qrCodeBase64 . '" alt="QR Code">';
+//             $html .= '</div>';
+//         }
+
+//         $html .= '</body></html>';
+
+//         // Create and configure Dompdf instance
+//         $options = new Options();
+//         $options->set('isHtml5ParserEnabled', true);
+//         $options->set('isRemoteEnabled', true);
+//         $dompdf = new Dompdf($options);
+//         $dompdf->loadHtml($html);
+//         $dompdf->setPaper('A4', 'portrait');
+//         $dompdf->render();
+
+//         $fileName = "Заключение_{$type}.pdf";
+//         $filePath = storage_path("app/public/{$fileName}");
+//         file_put_contents($filePath, $dompdf->output());
+
+//         Log::info('Документ сохранен по пути: ' . $filePath);
+
+//         return response()->download($filePath)->deleteFileAfterSend(true);
+//     } catch (\Exception $e) {
+//         Log::error('Error exporting expertise: ' . $e->getMessage());
+//         return redirect()->back()->with('error', 'Ошибка при экспорте заключения.');
+//     }
+// }
+
+
 public function exportExpertise($type)
 {
     Log::info('exportExpertise method called with type: ' . $type);
@@ -2917,6 +3135,7 @@ public function exportExpertise($type)
                 '1. Документы, представленные на рассмотрение' => 'concl_1',
                 '2. Документы, принятые во внимание при рассмотрении' => 'concl_2',
                 '3. Используемые сокращения' => 'concl_3',
+                '4.1. Проверка раздела «Назначение и цели создания (развития) системы»',
                 '4. Заключение 4' => 'concl_4',
                 '5. Заключение 5' => 'concl_5',
                 '6. Заключение 6' => 'concl_6',
@@ -2990,8 +3209,8 @@ public function exportExpertise($type)
                         src: url("' . storage_path('fonts/DejaVuSans.ttf') . '") format("truetype");
                     }
                     body { font-family: "DejaVu Sans", Arial, sans-serif; font-size: 12px; }
-                    .section-heading { font-size: 14px; font-weight: bold; margin-top: 20px; }
-                    .content { margin-top: 10px; }
+                    .section-heading { font-size: 14px; font-weight: bold; margin-top: 20px; border-bottom: 1px solid #000; }
+                    .content { margin-top: 10px; padding: 10px; border: 1px solid #000; }
                 </style></head><body>';
 
         foreach ($fieldMappings[$type] as $heading => $fieldName) {
@@ -3008,7 +3227,9 @@ public function exportExpertise($type)
         if ($type == 'ГТС' && Auth::user()->hasRole('ROLE_GTS_EXPERTISE_SIGNER')) {
             $qrCodes[] = $expertise->ecp_gts_confirmer . ', ' . $expertise->ecp_name_gts_confirmer;
             $qrCodes[] = $expertise->ecp_gts_reviewers . ', ' . $expertise->ecp_name_gts_reviewers;
-        } elseif ($type == 'СИ' && Auth::user()->hasRole('ROLE_SI_EXPERTISE_SIGNER')) {
+        } elseif ($type == 'СИ' && Auth::user()->hasRole('ROLE_SI_EXPERTISE_CONFIRMER')) {
+            $qrCodes[] = $expertise->ecp_si_reviewers . ', ' . $expertise->ecp_name_si_reviewers;
+        }elseif ($type == 'СИ' && Auth::user()->hasRole('ROLE_SI_EXPERTISE_SIGNER')) {
             $qrCodes[] = $expertise->ecp_si_confirmer_first . ', ' . $expertise->ecp_name_si_confirmer_first;
             $qrCodes[] = $expertise->ecp_si_confirmer_second . ', ' . $expertise->ecp_name_si_confirmer_second;
             $qrCodes[] = $expertise->ecp_si_reviewers . ', ' . $expertise->ecp_name_si_reviewers;

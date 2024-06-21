@@ -21,8 +21,10 @@
   <?php echo $__env->make('expertise.tabs_data.function_edit', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 </div>
 
+
+
 <div class="is-tab-content" data-id="3">
-  <?php echo $__env->make('expertise.tabs_data.tz_edit', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+  <?php echo $__env->make('expertise.tabs_data.tz', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 </div>
 
 <div class="is-tab-content" data-id="4">

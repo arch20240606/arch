@@ -1455,6 +1455,74 @@ document.getElementById('exportButton').addEventListener('click', function() {
     window.location.href = `/export-expertise/${selectedOption}`;
 });
 
+
+
+
+
+
+// function toggleEdit() {
+//   const editButton = document.getElementById('editButton');
+//   const editables = document.querySelectorAll('.editable');
+
+//   editables.forEach(el => {
+//     if (el.readOnly) {
+//       el.readOnly = false;
+//       el.style.backgroundColor = "#fff"; // Optional: Change background color to indicate editable state
+//     } else {
+//       el.readOnly = true;
+//       el.style.backgroundColor = "#f9f9f9"; // Revert background color
+//     }
+//   });
+
+//   if (editButton.textContent === 'Редактировать') {
+//     // editButton.textContent = 'Сохранить';
+//     document.getElementById('save_si_reviewer').style.display = 'block'; // Показать кнопку сохранения
+//   } else {
+//     editButton.textContent = 'Редактировать';
+//     document.getElementById('save_si_reviewer').click(); // Trigger form submission
+//   }
+// }
+
+// document.getElementById('editButton').addEventListener('click', toggleEdit);
+
+function toggleEdit() {
+  const editButton = document.getElementById('editButton');
+  const editables = document.querySelectorAll('.editable');
+  const selects = document.querySelectorAll('select');
+
+  editables.forEach(el => {
+    if (el.readOnly) {
+      el.readOnly = false;
+      el.style.backgroundColor = "#fff"; // Optional: Change background color to indicate editable state
+    } else {
+      el.readOnly = true;
+      el.style.backgroundColor = "#f9f9f9"; // Revert background color
+    }
+  });
+
+  selects.forEach(el => {
+    if (el.disabled) {
+      el.disabled = false;
+      el.style.backgroundColor = "#fff"; // Optional: Change background color to indicate editable state
+    } else {
+      el.disabled = true;
+      el.style.backgroundColor = "#f9f9f9"; // Revert background color
+    }
+  });
+
+  if (editButton.textContent === 'Редактировать') {
+    // editButton.textContent = 'Сохранить';
+    editButton.style.display = 'none';
+    document.getElementById('save_si_reviewer').style.display = 'block'; // Показать кнопку сохранения
+  } else {
+    editButton.textContent = 'Редактировать';
+    document.getElementById('save_si_reviewer').click(); // Trigger form submission
+  }
+}
+
+document.getElementById('editButton').addEventListener('click', toggleEdit);
+
 </script>
+
 
 <?php $__env->stopSection(); ?><?php /**PATH C:\Users\user\Documents\НОВЫЙ ПОРТАЛ\www\resources\views/expertise/info/comments_scripts.blade.php ENDPATH**/ ?>

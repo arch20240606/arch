@@ -21,8 +21,12 @@
   @include('expertise.tabs_data.function_edit')
 </div>
 
-<div class="is-tab-content" data-id="3">
+{{-- <div class="is-tab-content" data-id="3">
   @include('expertise.tabs_data.tz_edit')
+</div> --}}
+
+<div class="is-tab-content" data-id="3">
+  @include('expertise.tabs_data.tz')
 </div>
 
 <div class="is-tab-content" data-id="4">

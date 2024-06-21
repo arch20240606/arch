@@ -54,7 +54,6 @@ if (app()->getLocale() == "ru") {
           <th>Тип проекта</th>
           <th style="text-align: left;">Наименование</th>
           <th>Версия</th>
-          {{-- <th>Шифр</th> --}}
           <th>Статус СИ</th>
           <th>Статус ГТС</th>
           <th>Статус</th>
@@ -83,53 +82,93 @@ if (app()->getLocale() == "ru") {
               {{-- <td class="table__name"><a href="{{ route ('expertise.approve.info', ['id' => $expertise->id]) }}">{{ $expertise->it_project->$names }}</a></td> --}}
               <td class="table__name"><a href="{{ route('expertise.create_version', ['expertise' => $expertise->id]) }}">{{ $expertise->it_project->$names }}</a></td>
               <td class="table__status">{{ $expertise->version }}</td>
-              @if(auth()->check() && (auth()->user()->hasRole('ROLE_UO_EXPERTISE_DANA')))
-                  {{-- @if($expertise->send_to_uo_si == 1)
-                      <td class="table__status">Отработано СИ {{ $expertise->si_signer_accept_date }}</td>
+
+              @if(auth()->check() && (auth()->user()->hasRole('ROLE_UO_EXPERTISE_DANA') || auth()->user()->hasRole('ROLE_UO_EXPERTISE_REVIEWER')))
+                  @if($expertise->send_to_uo == 1 || $expertise->send_to_uo_reviewer == 1)
+                    <td class="table__status">Не направлялось в СИ</td>
+                  @elseif($expertise->send_to_si == 1 || $expertise->send_to_si_reviewers == 1)
+                    <td class="table__status">На рассмотрении СИ</td>
                   @else
-                      <td class="table__status">На рассмотрении в СИ</td>
+                    <td class="table__status">Отработано СИ {{ $expertise->si_signer_accept_date }}</td>
                   @endif
-                  @if($expertise->send_to_uo_gts == 1)
-                      <td class="table__status">Отработано ГТС {{ $expertise->gts_signer_accept_date }}</td>
+                  @if($expertise->send_to_uo == 1 || $expertise->send_to_uo_reviewer == 1)
+                    <td class="table__status">Не направлялось в ГТС</td>
+                  @elseif($expertise->send_to_kib == 1 || $expertise->send_to_kib_reviewers == 1)
+                    <td class="table__status">На рассмотрении ГТС</td>
                   @else
-                      <td class="table__status">На рассмотрении в ГТС</td>
-                  @endif --}}
-                  @if($expertise->send_to_uo == 1)
-                  <td class="table__status">Не направлялось в СИ</td>
-                  @else
-                  <td class="table__status">Отработано СИ {{ $expertise->si_signer_accept_date }}</td>
-                  @endif
-                  @if($expertise->send_to_uo == 1)
-                  <td class="table__status">Не направлялось в ГТС</td>
-                  @else
-                  <td class="table__status">Отработано ГТС {{ $expertise->gts_signer_accept_date }}</td>
+                    <td class="table__status">Отработано ГТС {{ $expertise->gts_signer_accept_date }}</td>
                   @endif
               @endif
+             
+              @if(auth()->check() && (auth()->user()->hasRole('ROLE_SI_EXPERTISE_CONFIRMER')))
+                  @if($expertise->send_to_si == 1)
+                    <td class="table__status">На рассмотрении в СИ</td>
+                  @else
+                    <td class="table__status">Отработано СИ {{ $expertise->si_signer_accept_date }}</td>
+                  @endif
+                  @if($expertise->send_to_si == 1)
+                    <td class="table__status">На рассмотрении в ГТС</td>
+                  @else
+                    <td class="table__status">Отработано ГТС {{ $expertise->gts_signer_accept_date }}</td>
+                  @endif
+              @endif
+
+              @if(auth()->check() && (auth()->user()->hasRole('ROLE_KIB_EXPERTISE_EXECUTOR')))
+                  @if($expertise->send_to_si == 1)
+                    <td class="table__status">Отработано СИ {{ $expertise->si_signer_accept_date }}</td>
+                  @else
+                    <td class="table__status">На рассмотрении в СИ</td>
+                  @endif
+                  @if($expertise->send_to_gts == 1)
+                    <td class="table__status">Отработано ГТС {{ $expertise->gts_signer_accept_date }}</td>
+                  @else
+                    <td class="table__status">На рассмотрении в ГТС</td>
+                  @endif
+              @endif
+
+              @if(auth()->check() && (auth()->user()->hasRole('ROLE_GTS_EXPERTISE_EXECUTOR') || auth()->user()->hasRole('ROLE_GTS_EXPERTISE_CONFIRMER')))
+                  @if($expertise->accept_si_signer == 1)
+                    <td class="table__status">Отработано СИ {{ $expertise->si_signer_accept_date }}</td>
+                  @else
+                    <td class="table__status">На рассмотрении в СИ</td>
+                  @endif
+                  @if($expertise->accept_gts_signer == 1)
+                    <td class="table__status">Отработано ГТС {{ $expertise->gts_signer_accept_date }}</td>
+                  @else
+                    <td class="table__status">На рассмотрении в ГТС</td>
+                  @endif
+              @endif
+
               {{-- <td class="table__status">{{ date('d.m.Y H:i:s', strtotime( $expertise->updated_at )) }}</td> --}}
-              {{-- <td class="table__status">
-                @if ( $expertise->accept_go == 1 )
-                  <span style="width: 100%; cursor: pointer;" class="status status_wait">На подписании</span>
-                @else
-                  <span style="width: 100%; cursor: pointer;" class="status status_wait">Ожидание рассмотрения</span>
-                @endif
-                <span style="width: 100%; cursor: pointer;" class="status status_wait">Ожидание рассмотрения</span>
-              </td> --}}
+              
               <td class="table__status">
-                @if ( $expertise->accept_uo_reviewer == 1 )
-                <span style="width: 100%; cursor: pointer;" class="status status_yes">Исполнитель принял</span>
-                @else
-                <span style="width: 100%; cursor: pointer;" class="status status_wait">Ожидание рассмотрения</span>
-                @endif
+                @if(auth()->check() && (auth()->user()->hasRole('ROLE_UO_EXPERTISE_DANA') || auth()->user()->hasRole('ROLE_UO_EXPERTISE_REVIEWER')))
+                  @if ( $expertise->accept_uo_reviewer == 1 )
+                    <span style="width: 100%; cursor: pointer;" class="status status_yes">Исполнитель принял</span>
+                  @else
+                    <span style="width: 100%; cursor: pointer;" class="status status_wait">Ожидание рассмотрения</span>
+                  @endif
+                @endif  
+
+                @if(auth()->check() && (auth()->user()->hasRole('ROLE_SI_EXPERTISE_CONFIRMER') || auth()->user()->hasRole('ROLE_KIB_EXPERTISE_CONFIRMER')))
+                  @if ( $expertise->send_to_si == 1 )
+                    <span style="width: 100%; cursor: pointer;" class="status status_wait">Ожидание рассмотрения</span>
+                  @else
+                    <span style="width: 100%; cursor: pointer;" class="status status_yes">Исполнитель принял</span>
+                  @endif
+                @endif 
+
+                @if(auth()->check() && (auth()->user()->hasRole('ROLE_GTS_EXPERTISE_CONFIRMER') || auth()->user()->hasRole('ROLE_GTS_EXPERTISE_REVIEWER')))
+                  @if ( $expertise->accept_gts_signer == 1 )
+                  <span style="width: 100%; cursor: pointer;" class="status status_yes">Исполнитель принял</span>
+                  @else
+                  <span style="width: 100%; cursor: pointer;" class="status status_wait">Ожидание рассмотрения</span>
+                  @endif
+                @endif 
               </td>
 
-
-
             </tr>
-
           @endforeach
-
-
-
         </tbody>
       </table>
 

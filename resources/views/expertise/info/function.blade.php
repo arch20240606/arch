@@ -1,7 +1,7 @@
 <h2 class="is-content-title" style="padding-left: 15px; font-size: 15px; color: #0075ff;">Информационные системы</h2>
 
 {{-- @if(isset($version) && (intval($expertise->version_expertise) > intval($version->version_number))) --}}
-<div class="is-menu-content" data-id="1" style="display: block;">
+{{-- <div class="is-menu-content" data-id="1" style="display: block;">
   <table class="is-table">
 
     <tr>
@@ -39,8 +39,8 @@
       <td style="padding: 12px 20px 12px 20px; color: #000000; font-size: 16px; width: 65%">{{ $version->paln_integrations }}</td>
     </tr>
   </table>
-</div>  
-{{-- @else
+</div>   --}}
+{{-- @else --}}
 <div class="is-menu-content" data-id="1" style="display: block;">
   <table class="is-table">
 
@@ -80,4 +80,4 @@
     </tr>
   </table>
 </div>
-@endif  --}}
+{{-- @endif  --}}
