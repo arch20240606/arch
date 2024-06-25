@@ -183,7 +183,10 @@ Route::group([ 'prefix' => LaravelLocalization::setLocale(), 'middleware' => [ '
     Route::get('expertise/signing/info/{id}', [App\Http\Controllers\ExpertisesController::class, 'info'])->name('expertise.signing.info');
     Route::get('expertise/signing', [App\Http\Controllers\ExpertisesController::class, 'signing'])->name('expertise.signing');
     Route::get('expertise/create_it_project', [App\Http\Controllers\ExpertisesController::class, 'create_it_project'])->name('expertise.create_it_project');
-    Route::get('/expertise/create_version/{expertise}', [App\Http\Controllers\ExpertisesController::class, 'createVersion'])->name('expertise.create_version');
+    // Route::get('/expertise/create_version/{expertise}', [App\Http\Controllers\ExpertisesController::class, 'createVersion'])->name('expertise.create_version');
+    // Route::get('/expertise/version/{expertise}', [App\Http\Controllers\ExpertisesController::class, 'createVersion'])->name('expertise.create_version');
+    Route::get('/expertise/create_version/{expertise}', [App\Http\Controllers\ExpertisesController::class, 'handleVersionRequest'])->name('expertise.create_version');
+    Route::get('/expertise/version/{expertise}', [App\Http\Controllers\ExpertisesController::class, 'handleVersionRequest'])->name('expertise.version');
     Route::get('/expertise/create_new_version/{expertise}', [App\Http\Controllers\ExpertisesController::class, 'createNewVersion'])->name('expertise.create_new_version');
     Route::get('/export-expertise/{type}', [App\Http\Controllers\ExpertisesController::class, 'exportExpertise'])->name('export.expertise');
     

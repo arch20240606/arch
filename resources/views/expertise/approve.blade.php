@@ -54,8 +54,14 @@ if (app()->getLocale() == "ru") {
           <th>Тип проекта</th>
           <th style="text-align: left;">Наименование</th>
           <th>Версия</th>
+          @if(auth()->check() && (auth()->user()->hasRole('ROLE_UO_EXPERTISE_CONFIRMER')))
+          <th>Статус УполСогласующего</th>
+          <th>Статус УполПодписывающего</th>
+          @endif
+          @if(auth()->check() && (auth()->user()->hasRole('ROLE_GO_EXPERTISE_EDITOR') || auth()->user()->hasRole('ROLE_GO_EXPERTISE_CONFIRMER') || auth()->user()->hasRole('ROLE_GO_EXPERTISE_SIGNER')))
           <th>Статус ГосСогласующего</th>
           <th>Статус ГосПодписывающего</th>
+          @endif
           {{-- <th>Статус</th> --}}
         </tr>
         </thead>
@@ -80,8 +86,9 @@ if (app()->getLocale() == "ru") {
               <td class="table__status">{{ $expertise->id }}</td>
               <td class="table__status">{{ $type_project_name }}</td>
               {{-- <td class="table__name"><a href="{{ route ('expertise.approve.info', ['id' => $expertise->id]) }}">{{ $expertise->it_project->$names }}</a></td> --}}
-              <td class="table__name"><a href="{{ route('expertise.create_version', ['expertise' => $expertise->id]) }}">{{ $expertise->it_project->$names }}</a></td>
+              <td class="table__name"><a href="{{ route('expertise.version', ['expertise' => $expertise->id]) }}">{{ $expertise->it_project->$names }}</a></td>
               <td class="table__status">{{ $expertise->version }}</td>
+              @if(auth()->check() && (auth()->user()->hasRole('ROLE_GO_EXPERTISE_EDITOR') || auth()->user()->hasRole('ROLE_GO_EXPERTISE_CONFIRMER') || auth()->user()->hasRole('ROLE_GO_EXPERTISE_SIGNER')))
               <td class="table__status">
                 @if ( $expertise->send == 1 )
                   <span style="width: 100%; cursor: pointer;" class="status status_wait">На согласовании</span>
@@ -89,6 +96,16 @@ if (app()->getLocale() == "ru") {
                   <span style="width: 100%; cursor: pointer;" class="status status_wait">Ожидание расмотренния</span>
                 @endif
               </td>
+              @endif
+              @if(auth()->check() && (auth()->user()->hasRole('ROLE_UO_EXPERTISE_CONFIRMER')))
+              <td class="table__status">
+                @if ( $expertise->send_to_uo_confirmer == 1 )
+                  <span style="width: 100%; cursor: pointer;" class="status status_wait">На согласовании</span>
+                @else
+                  <span style="width: 100%; cursor: pointer;" class="status status_wait">Ожидание расмотренния</span>
+                @endif
+              </td>
+              @endif
               <td class="table__status">Не расмотренна </td>
               {{-- <td class="table__status">{{ date('d.m.Y H:i:s', strtotime( $expertise->updated_at )) }}</td> --}}
             </tr>

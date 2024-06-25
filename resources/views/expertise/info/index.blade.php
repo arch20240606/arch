@@ -62,6 +62,7 @@ if ( $expertise->type_project == "1" ) {
     @endif
 
     @include('expertise.info.tabs_for_data')
+    
 
 
   </div>

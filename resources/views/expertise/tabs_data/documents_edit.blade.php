@@ -88,7 +88,7 @@
     </td>
   </tr>
 
-  <tr>
+  {{-- <tr>
     <td style="width: 30%;">Файл документа</td>
     <td></td>
     <td style="width: 70%; padding: 12px 20px 12px 20px;">
@@ -100,6 +100,22 @@
     <input type="hidden" value="{{ $document->id }}" name="document_id" id="document_id">
     @endif
     </td>
+  </tr> --}}
+
+  <tr>
+    <td style="width: 30%;">Файл документа</td>
+    <td></td>
+    <td style="width: 70%; padding: 12px 20px 12px 20px;">
+      <input name="doc_file" id="doc_file" type="file" style="cursor: pointer;">
+      <p style="color: #FF0000; font-size: 14px; margin-top: 8px;">Предупреждение: Максимальный размер загружаемого файла не должен превышать 8 MB.</p>
+      @if(isset($document->id))
+      <br><br>
+      <p style="color: #000000;">Предыдущий документ: <a href="/storage/{{ $document->file_name_upload }}" target="_blank">{{ $document->file_name }}</a></p>
+      <br><br>
+      <input type="hidden" value="{{ $document->id }}" name="document_id" id="document_id">
+      @endif
+    </td>
   </tr>
+  
 
 </table>

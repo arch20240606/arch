@@ -10,6 +10,10 @@ class ExpertiseVersion extends Model
     use HasFactory;
 
     protected $fillable = [
+        'user_id',
+        'goverment_id',
+        'it_project_id',
+        'type_project',
         'expertise_id',
         'version_number',
         'abbr',
@@ -20,7 +24,7 @@ class ExpertiseVersion extends Model
         'address_customer',
         'list_docs',
         'dates_start_end',
-        'finances',
+        'finanсes',
         'is_appointment',
         'is_target',
         'type_ntd',
@@ -34,9 +38,11 @@ class ExpertiseVersion extends Model
         'hosting',
         'selected_is_for_change',
         'selected_is_for_exit',
-        'plan_integrations',
-        'documents_list'
+        'paln_integrations',
+        'documents_list',
+        'version',
     ];
+    
 
     // Связь с основной моделью Expertise
     public function expertise()
@@ -47,5 +53,9 @@ class ExpertiseVersion extends Model
     public function getISS($id) {
         $iss = InformationSystem::where('id', $id)->first();
         return $iss;
+    }
+
+    public function it_project() {
+        return $this->belongsTo(It_Project::class, 'it_project_id');
     }
 }

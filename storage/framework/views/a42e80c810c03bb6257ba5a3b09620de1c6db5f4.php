@@ -1528,7 +1528,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const conSelect = document.getElementById('conSelect');
     const userRoles = <?php echo json_encode(auth()->user()->roles, 15, 512) ?>;
 
-    console.log('User roles:', userRoles);  // For debugging
+    // console.log('User roles:', userRoles);
+    // console.log('asd', conSelect);  // For debugging
 
     function userHasRole(roleName) {
         return userRoles.some(role => role.name === roleName);
@@ -1538,7 +1539,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const selectedValue = conSelect.value;
         let canEdit = false;
 
-        console.log('Selected value:', selectedValue);  // For debugging
+        // console.log('Selected value:', selectedValue);  // For debugging
 
         if (selectedValue === 'СИ' && userHasRole('ROLE_SI_EXPERTISE_REVIEWER')) {
             canEdit = true;
@@ -1548,7 +1549,7 @@ document.addEventListener('DOMContentLoaded', function () {
             canEdit = true;
         }
 
-        console.log('Can edit:', canEdit);  // For debugging
+        // console.log('Can edit:', canEdit);  // For debugging
 
         if (canEdit) {
             editButton.style.display = 'inline-block';
@@ -1563,6 +1564,66 @@ document.addEventListener('DOMContentLoaded', function () {
     // Check on change
     conSelect.addEventListener('change', updateEditButtonState);
 });
+
+
+
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    var selectElement = document.querySelector('#conSelect');
+    var conclusionsSi = document.querySelectorAll('.conclusion_si');
+    var conclusionsUo = document.querySelectorAll('.conclusion_uo');
+    var conclusionsGts = document.querySelectorAll('.conclusion_gts');
+
+    console.log('selectElement:', selectElement);
+    console.log('conclusionsSi:', conclusionsSi);
+    console.log('conclusionsUo:', conclusionsUo);
+    console.log('conclusionsGts:', conclusionsGts);
+
+    function toggleConclusions(selectedOption) {
+      switch (selectedOption) {
+        case 'СИ':
+          hideAllConclusions();
+          conclusionsSi.forEach(function (element) {
+            element.style.display = 'block';
+          });
+          break;
+        case 'УО':
+          hideAllConclusions();
+          conclusionsUo.forEach(function (element) {
+            element.style.display = 'block';
+          });
+          break;
+        case 'ГТС':
+          hideAllConclusions();
+          conclusionsGts.forEach(function (element) {
+            element.style.display = 'block';
+          });
+          break;
+        default:
+          hideAllConclusions();
+      }
+    }
+
+    function hideAllConclusions() {
+      conclusionsSi.forEach(function (element) {
+        element.style.display = 'none';
+      });
+      conclusionsUo.forEach(function (element) {
+        element.style.display = 'none';
+      });
+      conclusionsGts.forEach(function (element) {
+        element.style.display = 'none';
+      });
+    }
+
+    selectElement.addEventListener('change', function () {
+      toggleConclusions(this.value);
+    });
+
+    // Initially hide all conclusions
+    hideAllConclusions();
+  });
 
 </script>
 

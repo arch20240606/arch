@@ -1,0 +1,231 @@
+// elseif($request->has('save_si_reviewer')){
+        //     // Добавление данных в таблицу conclusion_si
+        //     $expertiseConclusionSi = ExpertiseConclutionSi::where('expertise_id', $request->expertise_id)->first();
+        //     if($expertiseConclusionSi){
+        //         $lastVersionNumber = $expertiseConclusionSi->expertise_version;
+                
+        //         if($lastVersionNumber >=1){
+
+        //             if (!$expertiseConclusionSi) {
+        //                 // Создаем новую запись, если ее еще нет
+        //                 $expertiseConclusionSi = new ExpertiseConclutionSi();
+        //                 $expertiseConclusionSi->expertise_id = $request->expertise_id;
+        //                 $expertiseConclusionSi->user_id = Auth::user()->id; // Предполагается, что у вас есть аутентификация пользователя
+        //                 $expertiseConclusionSi->expertise_version = $lastVersionNumber + 1; 
+        //             }
+
+        //             // Обновляем поля _concl_1 до _concl_59
+        //             $expertiseConclusionSi->status_concl = $request->status_concl;
+        //             $expertiseConclusionSi->concl_1 = $request->concl_1;
+        //             $expertiseConclusionSi->concl_2 = $request->concl_2;
+        //             $expertiseConclusionSi->concl_3 = $request->concl_3;
+        //             $expertiseConclusionSi->concl_4 = $request->concl_4;
+        //             $expertiseConclusionSi->concl_5 = $request->concl_5;
+        //             $expertiseConclusionSi->concl_6 = $request->concl_6;
+        //             $expertiseConclusionSi->concl_7 = $request->concl_7;
+        //             $expertiseConclusionSi->concl_8 = $request->concl_8;
+        //             $expertiseConclusionSi->concl_9 = $request->concl_9;
+        //             $expertiseConclusionSi->concl_10 = $request->concl_10;
+        //             $expertiseConclusionSi->concl_11 = $request->concl_11;
+        //             $expertiseConclusionSi->concl_12 = $request->concl_12;
+        //             $expertiseConclusionSi->concl_13 = $request->concl_13;
+        //             $expertiseConclusionSi->concl_14 = $request->concl_14;
+        //             $expertiseConclusionSi->concl_15 = $request->concl_15;
+        //             $expertiseConclusionSi->concl_16 = $request->concl_16;
+        //             $expertiseConclusionSi->concl_17 = $request->concl_17;
+        //             $expertiseConclusionSi->concl_18 = $request->concl_18;
+        //             $expertiseConclusionSi->concl_19 = $request->concl_19;
+        //             $expertiseConclusionSi->concl_20 = $request->concl_20;
+        //             $expertiseConclusionSi->concl_21 = $request->concl_21;
+        //             $expertiseConclusionSi->concl_22 = $request->concl_22;
+        //             $expertiseConclusionSi->concl_23 = $request->concl_23;
+        //             $expertiseConclusionSi->concl_24 = $request->concl_24;
+        //             $expertiseConclusionSi->concl_25 = $request->concl_25;
+        //             $expertiseConclusionSi->concl_26 = $request->concl_26;
+        //             $expertiseConclusionSi->concl_27 = $request->concl_27;
+        //             $expertiseConclusionSi->concl_28 = $request->concl_28;
+        //             $expertiseConclusionSi->concl_29 = $request->concl_29;
+        //             $expertiseConclusionSi->concl_30 = $request->concl_30;
+        //             $expertiseConclusionSi->concl_31 = $request->concl_31;
+        //             $expertiseConclusionSi->concl_32 = $request->concl_32;
+        //             $expertiseConclusionSi->concl_33 = $request->concl_33;
+        //             $expertiseConclusionSi->concl_34 = $request->concl_34;
+        //             $expertiseConclusionSi->concl_35 = $request->concl_35;
+        //             $expertiseConclusionSi->concl_36 = $request->concl_36;
+        //             $expertiseConclusionSi->concl_37 = $request->concl_37;
+        //             $expertiseConclusionSi->concl_38 = $request->concl_38;
+        //             $expertiseConclusionSi->concl_39 = $request->concl_39;
+        //             $expertiseConclusionSi->concl_40 = $request->concl_40;
+        //             $expertiseConclusionSi->concl_41 = $request->concl_41;
+        //             $expertiseConclusionSi->concl_42 = $request->concl_42;
+        //             $expertiseConclusionSi->concl_43 = $request->concl_43;
+        //             $expertiseConclusionSi->concl_44 = $request->concl_44;
+        //             $expertiseConclusionSi->concl_45 = $request->concl_45;
+        //             $expertiseConclusionSi->concl_46 = $request->concl_46;
+        //             $expertiseConclusionSi->concl_47 = $request->concl_47;
+        //             $expertiseConclusionSi->concl_48 = $request->concl_48;
+        //             $expertiseConclusionSi->concl_49 = $request->concl_49;
+        //             $expertiseConclusionSi->concl_50 = $request->concl_50;
+        //             $expertiseConclusionSi->concl_51 = $request->concl_51;
+        //             $expertiseConclusionSi->concl_52 = $request->concl_52;
+        //             $expertiseConclusionSi->concl_53 = $request->concl_53;
+        //             $expertiseConclusionSi->concl_54 = $request->concl_54;
+        //             $expertiseConclusionSi->concl_55 = $request->concl_55;
+        //             $expertiseConclusionSi->concl_56 = $request->concl_56;
+        //             $expertiseConclusionSi->concl_57 = $request->concl_57;
+        //             $expertiseConclusionSi->concl_58 = $request->concl_58;
+        //             $expertiseConclusionSi->concl_59 = $request->concl_59;
+
+        //             $expertiseConclusionSi->save();
+        //     }else{
+        //         if (!$expertiseConclusionSi) {
+        //             // Создаем новую запись, если ее еще нет
+        //             $expertiseConclusionSi = new ExpertiseConclutionSi();
+        //             $expertiseConclusionSi->expertise_id = $request->expertise_id;
+        //             $expertiseConclusionSi->user_id = Auth::user()->id; // Предполагается, что у вас есть аутентификация пользователя
+        //             $expertiseConclusionSi->expertise_version = 1; 
+        //         }
+
+        //         // Обновляем поля _concl_1 до _concl_59
+        //         $expertiseConclusionSi->status_concl = $request->status_concl;
+        //         $expertiseConclusionSi->concl_1 = $request->concl_1;
+        //         $expertiseConclusionSi->concl_2 = $request->concl_2;
+        //         $expertiseConclusionSi->concl_3 = $request->concl_3;
+        //         $expertiseConclusionSi->concl_4 = $request->concl_4;
+        //         $expertiseConclusionSi->concl_5 = $request->concl_5;
+        //         $expertiseConclusionSi->concl_6 = $request->concl_6;
+        //         $expertiseConclusionSi->concl_7 = $request->concl_7;
+        //         $expertiseConclusionSi->concl_8 = $request->concl_8;
+        //         $expertiseConclusionSi->concl_9 = $request->concl_9;
+        //         $expertiseConclusionSi->concl_10 = $request->concl_10;
+        //         $expertiseConclusionSi->concl_11 = $request->concl_11;
+        //         $expertiseConclusionSi->concl_12 = $request->concl_12;
+        //         $expertiseConclusionSi->concl_13 = $request->concl_13;
+        //         $expertiseConclusionSi->concl_14 = $request->concl_14;
+        //         $expertiseConclusionSi->concl_15 = $request->concl_15;
+        //         $expertiseConclusionSi->concl_16 = $request->concl_16;
+        //         $expertiseConclusionSi->concl_17 = $request->concl_17;
+        //         $expertiseConclusionSi->concl_18 = $request->concl_18;
+        //         $expertiseConclusionSi->concl_19 = $request->concl_19;
+        //         $expertiseConclusionSi->concl_20 = $request->concl_20;
+        //         $expertiseConclusionSi->concl_21 = $request->concl_21;
+        //         $expertiseConclusionSi->concl_22 = $request->concl_22;
+        //         $expertiseConclusionSi->concl_23 = $request->concl_23;
+        //         $expertiseConclusionSi->concl_24 = $request->concl_24;
+        //         $expertiseConclusionSi->concl_25 = $request->concl_25;
+        //         $expertiseConclusionSi->concl_26 = $request->concl_26;
+        //         $expertiseConclusionSi->concl_27 = $request->concl_27;
+        //         $expertiseConclusionSi->concl_28 = $request->concl_28;
+        //         $expertiseConclusionSi->concl_29 = $request->concl_29;
+        //         $expertiseConclusionSi->concl_30 = $request->concl_30;
+        //         $expertiseConclusionSi->concl_31 = $request->concl_31;
+        //         $expertiseConclusionSi->concl_32 = $request->concl_32;
+        //         $expertiseConclusionSi->concl_33 = $request->concl_33;
+        //         $expertiseConclusionSi->concl_34 = $request->concl_34;
+        //         $expertiseConclusionSi->concl_35 = $request->concl_35;
+        //         $expertiseConclusionSi->concl_36 = $request->concl_36;
+        //         $expertiseConclusionSi->concl_37 = $request->concl_37;
+        //         $expertiseConclusionSi->concl_38 = $request->concl_38;
+        //         $expertiseConclusionSi->concl_39 = $request->concl_39;
+        //         $expertiseConclusionSi->concl_40 = $request->concl_40;
+        //         $expertiseConclusionSi->concl_41 = $request->concl_41;
+        //         $expertiseConclusionSi->concl_42 = $request->concl_42;
+        //         $expertiseConclusionSi->concl_43 = $request->concl_43;
+        //         $expertiseConclusionSi->concl_44 = $request->concl_44;
+        //         $expertiseConclusionSi->concl_45 = $request->concl_45;
+        //         $expertiseConclusionSi->concl_46 = $request->concl_46;
+        //         $expertiseConclusionSi->concl_47 = $request->concl_47;
+        //         $expertiseConclusionSi->concl_48 = $request->concl_48;
+        //         $expertiseConclusionSi->concl_49 = $request->concl_49;
+        //         $expertiseConclusionSi->concl_50 = $request->concl_50;
+        //         $expertiseConclusionSi->concl_51 = $request->concl_51;
+        //         $expertiseConclusionSi->concl_52 = $request->concl_52;
+        //         $expertiseConclusionSi->concl_53 = $request->concl_53;
+        //         $expertiseConclusionSi->concl_54 = $request->concl_54;
+        //         $expertiseConclusionSi->concl_55 = $request->concl_55;
+        //         $expertiseConclusionSi->concl_56 = $request->concl_56;
+        //         $expertiseConclusionSi->concl_57 = $request->concl_57;
+        //         $expertiseConclusionSi->concl_58 = $request->concl_58;
+        //         $expertiseConclusionSi->concl_59 = $request->concl_59;
+
+        //         $expertiseConclusionSi->save();
+        //     }
+        // }else{
+        //     $expertiseConclusionSi = new ExpertiseConclutionSi();
+        //     $expertiseConclusionSi->expertise_id = $request->expertise_id;
+        //     $expertiseConclusionSi->user_id = Auth::user()->id; // Предполагается, что у вас есть аутентификация пользователя
+        //     $expertiseConclusionSi->expertise_version = 1; 
+
+        //     // Обновляем поля _concl_1 до _concl_59
+        //     $expertiseConclusionSi->status_concl = $request->status_concl;
+        //     $expertiseConclusionSi->concl_1 = $request->concl_1;
+        //     $expertiseConclusionSi->concl_2 = $request->concl_2;
+        //     $expertiseConclusionSi->concl_3 = $request->concl_3;
+        //     $expertiseConclusionSi->concl_4 = $request->concl_4;
+        //     $expertiseConclusionSi->concl_5 = $request->concl_5;
+        //     $expertiseConclusionSi->concl_6 = $request->concl_6;
+        //     $expertiseConclusionSi->concl_7 = $request->concl_7;
+        //     $expertiseConclusionSi->concl_8 = $request->concl_8;
+        //     $expertiseConclusionSi->concl_9 = $request->concl_9;
+        //     $expertiseConclusionSi->concl_10 = $request->concl_10;
+        //     $expertiseConclusionSi->concl_11 = $request->concl_11;
+        //     $expertiseConclusionSi->concl_12 = $request->concl_12;
+        //     $expertiseConclusionSi->concl_13 = $request->concl_13;
+        //     $expertiseConclusionSi->concl_14 = $request->concl_14;
+        //     $expertiseConclusionSi->concl_15 = $request->concl_15;
+        //     $expertiseConclusionSi->concl_16 = $request->concl_16;
+        //     $expertiseConclusionSi->concl_17 = $request->concl_17;
+        //     $expertiseConclusionSi->concl_18 = $request->concl_18;
+        //     $expertiseConclusionSi->concl_19 = $request->concl_19;
+        //     $expertiseConclusionSi->concl_20 = $request->concl_20;
+        //     $expertiseConclusionSi->concl_21 = $request->concl_21;
+        //     $expertiseConclusionSi->concl_22 = $request->concl_22;
+        //     $expertiseConclusionSi->concl_23 = $request->concl_23;
+        //     $expertiseConclusionSi->concl_24 = $request->concl_24;
+        //     $expertiseConclusionSi->concl_25 = $request->concl_25;
+        //     $expertiseConclusionSi->concl_26 = $request->concl_26;
+        //     $expertiseConclusionSi->concl_27 = $request->concl_27;
+        //     $expertiseConclusionSi->concl_28 = $request->concl_28;
+        //     $expertiseConclusionSi->concl_29 = $request->concl_29;
+        //     $expertiseConclusionSi->concl_30 = $request->concl_30;
+        //     $expertiseConclusionSi->concl_31 = $request->concl_31;
+        //     $expertiseConclusionSi->concl_32 = $request->concl_32;
+        //     $expertiseConclusionSi->concl_33 = $request->concl_33;
+        //     $expertiseConclusionSi->concl_34 = $request->concl_34;
+        //     $expertiseConclusionSi->concl_35 = $request->concl_35;
+        //     $expertiseConclusionSi->concl_36 = $request->concl_36;
+        //     $expertiseConclusionSi->concl_37 = $request->concl_37;
+        //     $expertiseConclusionSi->concl_38 = $request->concl_38;
+        //     $expertiseConclusionSi->concl_39 = $request->concl_39;
+        //     $expertiseConclusionSi->concl_40 = $request->concl_40;
+        //     $expertiseConclusionSi->concl_41 = $request->concl_41;
+        //     $expertiseConclusionSi->concl_42 = $request->concl_42;
+        //     $expertiseConclusionSi->concl_43 = $request->concl_43;
+        //     $expertiseConclusionSi->concl_44 = $request->concl_44;
+        //     $expertiseConclusionSi->concl_45 = $request->concl_45;
+        //     $expertiseConclusionSi->concl_46 = $request->concl_46;
+        //     $expertiseConclusionSi->concl_47 = $request->concl_47;
+        //     $expertiseConclusionSi->concl_48 = $request->concl_48;
+        //     $expertiseConclusionSi->concl_49 = $request->concl_49;
+        //     $expertiseConclusionSi->concl_50 = $request->concl_50;
+        //     $expertiseConclusionSi->concl_51 = $request->concl_51;
+        //     $expertiseConclusionSi->concl_52 = $request->concl_52;
+        //     $expertiseConclusionSi->concl_53 = $request->concl_53;
+        //     $expertiseConclusionSi->concl_54 = $request->concl_54;
+        //     $expertiseConclusionSi->concl_55 = $request->concl_55;
+        //     $expertiseConclusionSi->concl_56 = $request->concl_56;
+        //     $expertiseConclusionSi->concl_57 = $request->concl_57;
+        //     $expertiseConclusionSi->concl_58 = $request->concl_58;
+        //     $expertiseConclusionSi->concl_59 = $request->concl_59;
+
+        //     $expertiseConclusionSi->save();
+        // }
+
+            
+        //     /* Конец ШАГА 3. */
+        //     $projects = It_Project::where('goverment_id', Auth::user()->government_id)->get();
+        //     return View::make('expertise.create', [
+        //         'projects' => $projects
+        //     ])->with('successMsg', 'Заключение сохранено');
+
+        // }

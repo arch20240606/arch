@@ -79,12 +79,28 @@ if (app()->getLocale() == "ru") {
               <td class="table__status">{{ $expertise->id }}</td>
               <td class="table__status">{{ $type_project_name }}</td>
               {{-- <td class="table__name"><a href="{{ route ('expertise.approve.info', ['id' => $expertise->id]) }}">{{ $expertise->it_project->$names }}</a></td> --}}
-              <td class="table__name"><a href="{{ route('expertise.create_version', ['expertise' => $expertise->id]) }}">{{ $expertise->it_project->$names }}</a></td>
+              <td class="table__name"><a href="{{ route('expertise.version', ['expertise' => $expertise->id]) }}">{{ $expertise->it_project->$names }}</a></td>
               <td class="table__status">{{ $expertise->version }}</td>
               {{-- <td class="table__status">{{ $expertise->num_poject }}</td>
               <td class="table__status">{{ $expertise->company }}</td>
               <td class="table__status">{{ date('d.m.Y H:i:s', strtotime( $expertise->created_at )) }}</td>
               <td class="table__status">{{ date('d.m.Y H:i:s', strtotime( $expertise->updated_at )) }}</td> --}}
+              {{-- <td class="table__status">
+                @if ( $expertise->go_approve == 1 )
+                  <span style="width: 100%; cursor: pointer;" class="status status_yes">Согласовал</span>
+                @else
+                  <span style="width: 100%; cursor: pointer;" class="status status_wait">Ожидание рассмотрения</span>
+                @endif
+              </td>
+              <td class="table__status">
+                @if ( $expertise->send_to_go_signer == 1 )
+                  <span style="width: 100%; cursor: pointer;" class="status status_wait">На подписании</span>
+                @else
+                  <span style="width: 100%; cursor: pointer;" class="status status_wait">Ожидание рассмотрения</span>
+                @endif
+              </td> --}}
+              
+              @if(auth()->check() && (auth()->user()->hasRole('ROLE_GO_EXPERTISE_CONFIRMER') || auth()->user()->hasRole('ROLE_GO_EXPERTISE_SIGNER')))
               <td class="table__status">
                 @if ( $expertise->go_approve == 1 )
                   <span style="width: 100%; cursor: pointer;" class="status status_yes">Согласовал</span>
@@ -99,6 +115,7 @@ if (app()->getLocale() == "ru") {
                   <span style="width: 100%; cursor: pointer;" class="status status_wait">Ожидание рассмотрения</span>
                 @endif
               </td>
+              @endif
 
 
             </tr>

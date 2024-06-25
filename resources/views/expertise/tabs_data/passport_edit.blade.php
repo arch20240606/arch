@@ -162,10 +162,10 @@
         <td><span style="font-size: 20px; color: #FF6A97">*</span></td>
         <td style="padding: 12px 20px 12px 20px;">
           <select id="hosting" name="hosting" required>
-            <option value="server" @if($expertise->hosting == "server") selected @endif>Приобретение серверного оборудования</option>
-            <option value="nit" @if($expertise->hosting == "nit") selected @endif>АО НИТ</option>
-            <option value="kt" @if($expertise->hosting == "kt") selected @endif>АО Казахтелеком</option>
-            <option value="other" @if($expertise->hosting == "other") selected @endif>Другой хостинг</option>
+            <option value="Приобретение серверного оборудования" @if($expertise->hosting == "Приобретение серверного оборудования") selected @endif>Приобретение серверного оборудования</option>
+            <option value="АО НИТ" @if($expertise->hosting == "АО НИТ") selected @endif>АО НИТ</option>
+            <option value="АО Казахтелеком" @if($expertise->hosting == "АО Казахтелеком") selected @endif>АО Казахтелеком</option>
+            <option value="Другой хостинг" @if($expertise->hosting == "Другой хостинг") selected @endif>Другой хостинг</option>
           </select>
         </td>
       </tr>

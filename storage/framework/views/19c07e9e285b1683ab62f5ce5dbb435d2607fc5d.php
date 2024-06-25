@@ -899,6 +899,7 @@
 
   
 
+
   <?php if(auth()->user()->hasRole('ROLE_SI_EXPERTISE_REVIEWER') && $expertise->send_to_si_reviewers == 1): ?>
     <input type="hidden" name="expertise_id" id="expertise_id" value="<?php echo e($expertise->id); ?>">
     <button class="btn" id='sign_si_ecp_button' name="sign_si_ecp_button" onclick="acceptPassportSI()" style="display: block; font-size: 14px; background: #0178BC;">Подписать кнопку</button>

@@ -1,9 +1,4 @@
 <div class="is-menu-navigation" style="grid-template-columns: auto;">
-
-
-
-  
-  
   <div class="is-menu-content" data-id="1" style="display: block;">
     <table class="is-table">
       <tr>
@@ -194,6 +189,8 @@
         </td>
       </tr>
     </table>
-  </div>  
-  </div>
+  </div> 
+  
+   
+  </div> 
 <?php /**PATH C:\Users\user\Documents\НОВЫЙ ПОРТАЛ\www\resources\views/expertise/info/passport.blade.php ENDPATH**/ ?>

@@ -45,6 +45,14 @@ class ExpertiseCountMiddleware
                     $expertisesQuery->where('expertise_role_status.user_id', $user->id);
                 }
 
+            //     $expertisesQuery = Expertise::join('expertise_role_status', 'expertise.id', '=', 'expertise_role_status.expertise_id')
+            // // ->where('expertise.goverment_id', $user->government_id)
+            // ->where('expertise.send_to_uo_confirmer', 1) // Новое условие для send_to_uo_confirmer
+            // ->where('expertise_role_status.user_id', $user->id)
+            // ->where('expertise_role_status.approve', 1) // Новое условие для approve
+            // ->orderBy('expertise.id', 'desc')
+            // ->select('expertise.*'); 
+
                 $expertisesAppCount = $expertisesQuery->count();
             }
 
@@ -163,7 +171,8 @@ class ExpertiseCountMiddleware
                     $outboxCountQuery->orWhere('expertise.send_to_go_signer', 1);
                 }
     
-                $outboxCount = $outboxCountQuery->distinct()->count();
+                // $outboxCount = $outboxCountQuery->distinct()->count();
+                $outboxCount = $outboxCountQuery->count();
 
 
                 $signerOutboxCount = 0;

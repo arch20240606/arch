@@ -12,6 +12,7 @@ use Barryvdh\DomPDF\Facade as PDF;
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\IOFactory;
 use App\Models\Passport;
+use Illuminate\Support\Facades\Route;
 
 
 
@@ -1724,12 +1725,18 @@ class ExpertisesController extends Controller
 
           $tz = TechnicalTask::where('expertise_id', $request->expertise_id)->first();
           $document = ExpertiseDocument::where('expertise_id', $request->expertise_id)->first();
+          $conclusionsSi = ExpertiseConclutionSi::where('expertise_id', $request->expertise_id)->get();
+          $conclusionsUo = ExpertiseConclutionUo::where('expertise_id', $request->expertise_id)->get();
+          $conclusionsGts = ExpertiseConclutionGts::where('expertise_id', $request->expertise_id)->get();
 
           // Возвращаем представление с данными и сообщением об ошибке
           return View::make('expertise.info.index', [
               'expertise' => $expertise,
               'tz' => $tz,
-              'document' => $document
+              'document' => $document,
+              'conclusionsSi' => $conclusionsSi,
+              'conclusionsUo' => $conclusionsUo,
+              'conclusionsGts' => $conclusionsGts
           ])->with('errorMsg', 'Заявка на экспертизу была отклонена, ваш комментарий направлен исполнителю');
 
 
@@ -1737,6 +1744,9 @@ class ExpertisesController extends Controller
         }elseif ( $request->has('discart_si_confirmer') ) {
             // Находим запись в таблице ExpertiseRoleStatus по expertise_id и удаляем ее
             // ExpertiseRoleStatus::where('expertise_id', $request->expertise_id)->delete();
+            ExpertiseRoleStatus::where('expertise_id', $request->expertise_id)
+            ->where('user_id', 2949) // Замените 'signer_id' на правильное название колонки, если оно другое
+            ->delete();
 
             // Обновляем запись в таблице Expertise
             Expertise::find($request->expertise_id)->update([
@@ -1754,12 +1764,18 @@ class ExpertisesController extends Controller
 
             $tz = TechnicalTask::where('expertise_id', $request->expertise_id)->first();
             $document = ExpertiseDocument::where('expertise_id', $request->expertise_id)->first();
+            $conclusionsSi = ExpertiseConclutionSi::where('expertise_id', $request->expertise_id)->get();
+            $conclusionsUo = ExpertiseConclutionUo::where('expertise_id', $request->expertise_id)->get();
+            $conclusionsGts = ExpertiseConclutionGts::where('expertise_id', $request->expertise_id)->get();
 
             // Возвращаем представление с данными и сообщением об ошибке
             return View::make('expertise.info.index', [
                 'expertise' => $expertise,
                 'tz' => $tz,
-                'document' => $document
+                'document' => $document,
+                'conclusionsSi' => $conclusionsSi,
+                'conclusionsUo' => $conclusionsUo,
+                'conclusionsGts' => $conclusionsGts,
             ])->with('errorMsg', 'Заявка на экспертизу была отклонена, ваш комментарий направлен исполнителю');
 
 
@@ -1786,12 +1802,18 @@ class ExpertisesController extends Controller
 
             $tz = TechnicalTask::where('expertise_id', $request->expertise_id)->first();
             $document = ExpertiseDocument::where('expertise_id', $request->expertise_id)->first();
+            $conclusionsSi = ExpertiseConclutionSi::where('expertise_id', $request->expertise_id)->get();
+            $conclusionsUo = ExpertiseConclutionUo::where('expertise_id', $request->expertise_id)->get();
+            $conclusionsGts = ExpertiseConclutionGts::where('expertise_id', $request->expertise_id)->get();
 
             // Возвращаем представление с данными и сообщением об ошибке
             return View::make('expertise.info.index', [
                 'expertise' => $expertise,
                 'tz' => $tz,
-                'document' => $document
+                'document' => $document,
+                'conclusionsSi' => $conclusionsSi,
+                'conclusionsUo' => $conclusionsUo,
+                'conclusionsGts' => $conclusionsGts
             ])->with('errorMsg', 'Заявка на экспертизу была отклонена, ваш комментарий направлен исполнителю');
 
 
@@ -1879,6 +1901,13 @@ class ExpertisesController extends Controller
     $users = User::all();
     $currentGovernmentId = Auth::user()->government_id;
 
+    if ($expertise) {
+        $expertise_id = $expertise->id;
+        $hasTz =  TechnicalTask::where('expertise_id', $expertise_id)->exists();
+    } else {
+        $hasTz = false;
+    }
+
     return View::make('expertise.edit', [
         'expertise' => $expertise,
         'projects' => $projects,
@@ -1886,33 +1915,61 @@ class ExpertisesController extends Controller
         'tz' => $tz,
         'document' => $document,
         'users' => $users,
-        'currentGovernmentId' => $currentGovernmentId
+        'currentGovernmentId' => $currentGovernmentId,
+        'hasTz' => $hasTz
     ]);
 }
 
 
 
 
-public function createVersion($expertiseId){
+// public function createVersion($expertiseId){
     
-    $expertise = Expertise::find($expertiseId);
-    $expertises = $expertise -> expertise_id;
+//     $expertise = Expertise::find($expertiseId);
+//     $expertises = $expertise -> expertise_id;
    
+//     if (!$expertise) {
+//         return redirect()->route('expertise.index')->with('error', 'Expertise not found');
+//     }
+
+//     // dd($expertiseId);
+//     $versions = Expertise::where('id', $expertiseId)->get();
+//     $versionsTwo = ExpertiseVersion::where('expertise_id', $expertiseId)->get();
+    
+//     return view('expertise.create_version', compact('expertise','versionsTwo', 'versions'));
+// }
+
+public function handleVersionRequest($expertiseId){
+    $expertise = Expertise::find($expertiseId);
+    $expertises = $expertise ? $expertise->expertise_id : null;
+
     if (!$expertise) {
         return redirect()->route('expertise.index')->with('error', 'Expertise not found');
     }
 
+    // Получаем текущий маршрут
+    $currentRouteName = Route::currentRouteName();
+    // dd($currentRouteName);
+
     // dd($expertiseId);
-    // $versions = Expertise::where('id', $expertiseId)->get();
+    $versions = Expertise::where('id', $expertiseId)->get();
     $versionsTwo = ExpertiseVersion::where('expertise_id', $expertiseId)->get();
     
-    return view('expertise.create_version', compact('expertise','versionsTwo'));
+    if ($currentRouteName == 'expertise.create_version') {
+        return view('expertise.create_version', compact('expertise', 'versionsTwo', 'versions'));
+    } elseif ($currentRouteName == 'expertise.version') {
+        return view('expertise.version', compact('expertise', 'versionsTwo', 'versions'));
+    } else {
+        return redirect()->route('expertise.index')->with('error', 'Invalid route');
+    }
 }
+
 
 
 
 public function createNewVersion($id){
         $expertise = Expertise::findOrFail($id);
+        // dd($expertise);
 
         $newVersion = null;
 
@@ -1921,6 +1978,10 @@ public function createNewVersion($id){
          
         // Создаем новую версию в таблице expertise_versions
         $newVersion = ExpertiseVersion::create([
+            'user_id' => $expertise->user_id,
+            'goverment_id' => $expertise->goverment_id,
+            'it_project_id' => $expertise->it_project_id,
+            'type_project' => $expertise->type_project,
             'expertise_id' => $expertise->id,
             'version_number' => $lastVersionNumber,
             'abbr' => $expertise->abbr,
@@ -1931,7 +1992,7 @@ public function createNewVersion($id){
             'address_customer' => $expertise->address_customer,
             'list_docs' => $expertise->list_docs,
             'dates_start_end' => $expertise->dates_start_end,
-            'finances' => $expertise->finances,
+            'finanсes' => $expertise->finanсes,
             'is_appointment' => $expertise->is_appointment, 
             'is_target' => $expertise->is_target, 
             'type_ntd' => $expertise->type_ntd,
@@ -1945,9 +2006,11 @@ public function createNewVersion($id){
             'hosting' => $expertise->hosting,
             'selected_is_for_change' => $expertise->selected_is_for_change, 
             'selected_is_for_exit' => $expertise->selected_is_for_exit, 
-            'plan_integrations' => $expertise->plan_integrations,
-            'documents_list' => $expertise->documents_list
+            'paln_integrations' => $expertise->paln_integrations,
+            'documents_list' => $expertise->documents_list,
+            'version' => $expertise->version,
         ]);
+        // dd($newVersion);
 
         return redirect()->route('expertise.edit', ['expertise' => $expertise->id, 'version' => $newVersion->id])
             ->with('success', 'Новая версия успешно создана');
@@ -2214,14 +2277,14 @@ public function approve_confirmers(){
 
 public function approve_info($id, $version_id = null)
 {
-    $expertise = Expertise::findOrFail($id);
-    $current_version = $expertise -> version_expertise;
+    $expertised = Expertise::findOrFail($id);
+    $current_version = $expertised -> version_expertise;
     
     if ((int) $current_version > (int) $version_id) {
         // Выборка из обеих моделей, если версия больше предыдущей
-        $version = ExpertiseVersion::where('expertise_id', $id)->where('version_number', $version_id)->firstOrFail();
+        $expertise = ExpertiseVersion::where('expertise_id', $id)->where('version_number', $version_id)->firstOrFail();
     } else {
-        $version = Expertise::where('id', $id)->where('version_expertise', $version_id)->firstOrFail();
+        $expertise = Expertise::where('id', $id)->where('version_expertise', $version_id)->firstOrFail();
         // Выборка только из модели Expertise, если версия равна 1
     }
 
@@ -2235,7 +2298,7 @@ public function approve_info($id, $version_id = null)
 
     return view('expertise.info.index', [
         'expertise' => $expertise,
-        'version' => $version,
+        'expertised' => $expertised,
         'tz' => $tz,
         'document' => $document,
         'conclusionsSi' => $conclusionsSi,

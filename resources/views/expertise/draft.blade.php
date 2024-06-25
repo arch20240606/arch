@@ -52,10 +52,8 @@ if (app()->getLocale() == "ru") {
           <th>Тип проекта</th>
           <th style="text-align: left;">Наименование</th>
           <th>Версия</th>
-          {{-- <th>Статус Согласующего</th> --}}
-          {{-- <th>Статус Подписывающего</th>  --}}
           <th>Владелец</th> 
-          <th>Статус</th>
+          {{-- <th>Статус</th> --}}
           <th>Действие</th>
         </tr>
         </thead>
@@ -97,7 +95,7 @@ if (app()->getLocale() == "ru") {
                 @endif
               </td> --}}
               <td class="table__status">{{$expertise->gosorg->name_ru}}</td>
-              <td class="table__status">Черновик</td>
+              {{-- <td class="table__status">Черновик</td> --}}
               {{-- <td class="table__status">{{ date('d.m.Y H:i:s', strtotime( $expertise->created_at )) }}</td> --}}
 
               <td class="table__status">

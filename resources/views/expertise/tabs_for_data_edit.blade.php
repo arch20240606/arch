@@ -25,9 +25,18 @@
   @include('expertise.tabs_data.tz_edit')
 </div> --}}
 
-<div class="is-tab-content" data-id="3">
+{{-- <div class="is-tab-content" data-id="3">
   @include('expertise.tabs_data.tz')
-</div>
+</div> --}}
+@if ($hasTz)
+        <div class="is-tab-content" data-id="3">
+            @include('expertise.tabs_data.tz_edit')
+        </div>
+    @else
+        <div class="is-tab-content" data-id="3">
+            @include('expertise.tabs_data.tz')
+        </div>
+    @endif
 
 <div class="is-tab-content" data-id="4">
   @include('expertise.tabs_data.documents_edit')
