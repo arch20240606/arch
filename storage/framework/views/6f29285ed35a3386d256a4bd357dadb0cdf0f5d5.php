@@ -50,7 +50,7 @@
 
   
 
-  <?php if(auth()->check() && (auth()->user()->hasRole('ROLE_GO_EXPERTISE_EDITOR'))): ?>
+  <?php if(auth()->check() && (auth()->user()->hasRole('ROLE_GO_EXPERTISE_EDITOR') || auth()->user()->hasRole('ROLE_GO_EXPERTISE_CONFIRMER') || auth()->user()->hasRole('ROLE_GO_EXPERTISE_SIGNER'))): ?>
       <a class="tabs__link <?php if(Route::is('expertise.goExecutor')): ?> tabs__link_active <?php endif; ?>" href="<?php echo e(route('expertise.goExecutor')); ?>">
           <span class="tabs__num" style="background: #39C07F;"><?php echo e(session('expertiseGoExecutorCount', 0)); ?></span>
           Исходящие

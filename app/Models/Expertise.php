@@ -29,4 +29,9 @@ class Expertise extends Model
     {
         return $this->belongsTo(Government::class, 'goverment_id', 'id');
     }
+
+    public function expertiseRoleStatuses()
+    {
+        return $this->hasMany(ExpertiseRoleStatus::class);
+    }
 }

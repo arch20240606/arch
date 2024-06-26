@@ -79,6 +79,8 @@ class ExpertiseCountMiddleware
                     $expertisesQuery->where(function($query) {
                         $query->where('send_to_uo_reviewer', '1')
                             ->orWhere('accept_uo_reviewer', '1');
+                    })->whereHas('expertiseRoleStatuses', function($query) {
+                        $query->where('UoExecutor', '1');
                     });
                 } elseif ($user->hasRole('ROLE_KIB_EXPERTISE_EXECUTOR')) {
                     $expertisesQuery->where('send_to_kib', '1');
@@ -98,9 +100,7 @@ class ExpertiseCountMiddleware
 
 
                 
-                $expertiseGoExecutorCount = Expertise::where('expertise.send_to_uo_si', '1')
-                ->where('expertise.send_to_uo_gts', '1')
-                ->where('expertise.user_id', Auth::id())
+                $expertiseGoExecutorCount = Expertise::where('expertise.accept_go', '1')
                 ->count();
                 
 

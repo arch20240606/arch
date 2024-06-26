@@ -549,6 +549,10 @@ webSocket.onmessage = function (event) {
   var result = JSON.parse(event.data);
   var token = $("input[name='_token']").val();
   var expertise_id = document.getElementById("expertise_id").value;
+  var addAppBtn = document.getElementById('add-app-btn');
+  var addSignerBtn = document.getElementById('add-signer-btn');
+  var acceptGtsReviewer = document.getElementById('accept_gts_reviewer');
+  var gtsReviewer = document.getElementById('gts_reviewer');
  
 
 if(result.responseObject) {
@@ -571,8 +575,10 @@ if(result.responseObject) {
             successBox.innerHTML = data.options;
             successBox.style.display = "block";
             errorBox.style.display = "none";
-            sign_siCon_ecp_button.style.display="none";
-            accept_si_confirmer_second.style.display = "block";
+            addAppBtn.style.display = "block";
+            addSignerBtn.style.display = "block";
+            acceptGtsReviewer.style.display = "block";
+            gtsReviewer.style.display = "none";
         }
     });
   }
@@ -685,6 +691,8 @@ function acceptGtsConfirmer() {
 
 var errorBox = document.getElementById("error_sign_box");
 var successBox = document.getElementById("success_sign_box");
+var gtsConfirmer = document.getElementById('accept_gts_confirmer');
+
 
 errorBox.style.display = "none";
 successBox.style.display = "none";
@@ -742,8 +750,7 @@ if(result.responseObject) {
             successBox.innerHTML = data.options;
             successBox.style.display = "block";
             errorBox.style.display = "none";
-            sign_siCon_ecp_button.style.display="none";
-            accept_si_confirmer_second.style.display = "block";
+            gtsConfirmer.style.display = "block";
         }
     });
   }
@@ -856,6 +863,8 @@ var successBox = document.getElementById("success_sign_box");
 
 errorBox.style.display = "none";
 successBox.style.display = "none";
+var sendToUoSi = document.getElementById("send_to_uo_si");
+var acceptSigner = document.getElementById("accept_si_signer");
 
 console.log("Нажата кнопка подписания...");
 
@@ -910,8 +919,26 @@ if(result.responseObject) {
             successBox.innerHTML = data.options;
             successBox.style.display = "block";
             errorBox.style.display = "none";
-            sign_siCon_ecp_button.style.display="none";
-            accept_si_confirmer_second.style.display = "block";
+            // sendToUoSi.style.display = "block";
+            // acceptSigner.style.display = "none";
+             // Скроем кнопку "Подписать Эцп"
+             
+             if (acceptSigner) {
+                acceptSigner.style.display = "none";
+             }
+
+            // Показать кнопку "Отправить в УО"
+            if (sendToUoSi) {
+                sendToUoSi.style.display = "block"; 
+            } else {
+                // Если кнопка "Отправить в УО" не была рендерена, создать её
+                var newButton = document.createElement("button");
+                newButton.className = "btn";
+                newButton.id = "send_to_uo_si";
+                newButton.style.cssText = "font-size: 14px; background: #00317B;";
+                newButton.innerHTML = "Отправить в УО";
+                document.body.appendChild(newButton); // измените это на правильное место в вашем DOM
+            }
         }
     });
   }

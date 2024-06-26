@@ -81,7 +81,7 @@ if (app()->getLocale() == "ru") {
               <td class="table__status"><?php echo e($expertise->id); ?></td>
               <td class="table__status"><?php echo e($type_project_name); ?></td>
               
-              <td class="table__name"><a href="<?php echo e(route('expertise.create_version', ['expertise' => $expertise->id])); ?>"><?php echo e($expertise->it_project->$names); ?></a></td>
+              <td class="table__name"><a href="<?php echo e(route('expertise.version', ['expertise' => $expertise->id])); ?>"><?php echo e($expertise->it_project->$names); ?></a></td>
               <td class="table__status"><?php echo e($expertise->version); ?></td>
               
               <td class="table__status">На рассмотрении в СИ</td>

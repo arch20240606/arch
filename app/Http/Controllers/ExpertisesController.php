@@ -718,6 +718,16 @@ class ExpertisesController extends Controller
 
          
         }elseif ($request->has('send_to_confirmers')) {
+            $selectedAddMcriapExecutor = $request->input('add_to_mcriap_executor');
+        
+            $expertiseId = $request->input('expertise_id');
+        
+            // Создание записи в таблице ExpertiseRoleStatus для согласующего
+            $expertiseRoleStatusApprover1 = ExpertiseRoleStatus::create([
+                'user_id' => $selectedAddMcriapExecutor,
+                'expertise_id' => $expertiseId,
+                'Uoexecutor' => ($selectedAddMcriapExecutor != null),
+            ]);
 
             $updateExpertise = Expertise::find($request->expertise_id);
             $updateExpertise->update([
@@ -749,7 +759,7 @@ class ExpertisesController extends Controller
                 $updateExpertise->send_to_si = 0;
                 $updateExpertise->send_to_si_reviewers = 1;
                 $updateExpertise->save();
-                return redirect()->route('expertise.approve_confirmers')->with('successMsg', 'Отправлен к исполнителям!');
+                return redirect()->route('expertise.in_work')->with('successMsg', 'Отправлен к исполнителям!');
             } else {
                 return redirect()->back()->with('errorMsg', 'Экспертиза не найдена');
             }
@@ -812,6 +822,18 @@ class ExpertisesController extends Controller
 
 
         }elseif($request->has('send_to_uo_reviewer')){
+            $selectedMcriapExecutor = $request->input('send_to_mcriap_executor');
+        
+            // $expertiseId = Expertise::first()->id;
+            $expertiseId = $request->input('expertise_id');
+            // dd($expertiseId);
+        
+            // Создание записи в таблице ExpertiseRoleStatus для согласующего
+            $expertiseRoleStatusApprover1 = ExpertiseRoleStatus::create([
+                'user_id' => $selectedMcriapExecutor,
+                'expertise_id' => $expertiseId,
+                'Uoexecutor' => ($selectedMcriapExecutor != null),
+            ]);
             // Обновление данных в таблице Expertise
             $updateExpertise = Expertise::find($request->expertise_id);
             $updateExpertise->update([
@@ -1780,6 +1802,45 @@ class ExpertisesController extends Controller
 
 
         // В остальных случаях    
+        }elseif ( $request->has('discart_gts_confirmer') ) {
+            // Находим запись в таблице ExpertiseRoleStatus по expertise_id и удаляем ее
+            // ExpertiseRoleStatus::where('expertise_id', $request->expertise_id)->delete();
+            ExpertiseRoleStatus::where('expertise_id', $request->expertise_id)
+            ->where('user_id', 2955) // Замените 'signer_id' на правильное название колонки, если оно другое
+            ->delete();
+
+            // Обновляем запись в таблице Expertise
+            Expertise::find($request->expertise_id)->update([
+                'discart_gts_confirmer' => 1,
+                'discart_gts_confirmer_date' => new DateTime(),
+                'accept_gts_reviewers' => 0,
+                'ecp_gts_reviewers' => '',
+                'ecp_name_gts_reviewers' => '',
+                'send_to_gts_reviewers' => 1,
+                'send_to_gts' => 0
+            ]);
+
+            // Получаем необходимые данные для передачи в представление
+            $expertise = Expertise::where('id', $request->expertise_id)->first();
+
+            $tz = TechnicalTask::where('expertise_id', $request->expertise_id)->first();
+            $document = ExpertiseDocument::where('expertise_id', $request->expertise_id)->first();
+            $conclusionsSi = ExpertiseConclutionSi::where('expertise_id', $request->expertise_id)->get();
+            $conclusionsUo = ExpertiseConclutionUo::where('expertise_id', $request->expertise_id)->get();
+            $conclusionsGts = ExpertiseConclutionGts::where('expertise_id', $request->expertise_id)->get();
+
+            // Возвращаем представление с данными и сообщением об ошибке
+            return View::make('expertise.info.index', [
+                'expertise' => $expertise,
+                'tz' => $tz,
+                'document' => $document,
+                'conclusionsSi' => $conclusionsSi,
+                'conclusionsUo' => $conclusionsUo,
+                'conclusionsGts' => $conclusionsGts,
+            ])->with('errorMsg', 'Заявка на экспертизу была отклонена, ваш комментарий направлен исполнителю');
+
+
+        // В остальных случаях    
         }elseif ( $request->has('discart_gos') ) {
               // Находим запись в таблице ExpertiseRoleStatus по expertise_id и удаляем ее
             ExpertiseRoleStatus::where('expertise_id', $request->expertise_id)->delete();
@@ -2511,7 +2572,9 @@ public function in_work() {
             $expertisesQuery->where(function($query) {
                 $query->where('send_to_uo_reviewer', '1')
                     ->orWhere('accept_uo_reviewer', '1');
-            });
+        })->whereHas('expertiseRoleStatuses', function($query) {
+            $query->where('UoExecutor', '1');
+        });
         } elseif ($user->hasRole('ROLE_KIB_EXPERTISE_EXECUTOR')) {
             $expertisesQuery->where('send_to_kib', '1');
         } elseif ($user->hasRole('ROLE_SI_EXPERTISE_CONFIRMER')) {
@@ -2598,19 +2661,12 @@ public function executor(){
 
 public function goExecutor() {
     $govs = Government::all();
-    $expertises = Expertise::
-    where('expertise.send_to_uo_si', '1')
-    ->where('expertise.send_to_uo_gts', '1')
-    ->where('expertise.user_id', Auth::id())
+    $expertises = Expertise::where('expertise.accept_go', '1')
     ->orderBy('expertise.id', 'desc')
     ->paginate(10);
 
     // Подсчитываем количество записей, соответствующих условиям
-    $expertiseCount = Expertise::
-    where('expertise.send_to_uo_si', '1')
-    ->where('expertise.send_to_uo_gts', '1')
-    ->where('expertise.user_id', Auth::id())
-    ->count();
+    $expertiseCount = Expertise::where('expertise.accept_go', '1')->count();
 
     return view('expertise.goExecutor', [
         'govs' => $govs,
