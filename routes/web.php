@@ -174,6 +174,7 @@ Route::group([ 'prefix' => LaravelLocalization::setLocale(), 'middleware' => [ '
     Route::get('expertise/draft', [App\Http\Controllers\ExpertisesController::class, 'draft'])->name('expertise.draft');
     Route::get('expertise/got_job', [App\Http\Controllers\ExpertisesController::class, 'got_job'])->name('expertise.got_job');
     Route::get('expertise/in_work', [App\Http\Controllers\ExpertisesController::class, 'in_work'])->name('expertise.in_work');
+    Route::get('expertise/in_work/inProcess', [App\Http\Controllers\ExpertisesController::class, 'in_work_in_process'])->name('expertise.in_work.inProcess');
     Route::get('expertise/approve_confirmers', [App\Http\Controllers\ExpertisesController::class, 'approve_confirmers'])->name('expertise.approve_confirmers');
     Route::get('expertise/executor', [App\Http\Controllers\ExpertisesController::class, 'executor'])->name('expertise.executor');
     Route::get('expertise/goExecutor', [App\Http\Controllers\ExpertisesController::class, 'goExecutor'])->name('expertise.goExecutor');

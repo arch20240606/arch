@@ -18,21 +18,7 @@
       <option value="СИ">СИ</option>
   @endif
 </select>
-{{-- <select id="conSelect" style="margin-bottom: 24px; padding: 8px; border: 1px solid #ccc; border-radius: 5px; background-color: #f9f9f9; cursor: pointer; width: 200px;">
-  <option selected>Выберите</option>
-  @if(auth()->user()->hasAnyRole(['ROLE_SI_EXPERTISE_REVIEWER', 'ROLE_SI_EXPERTISE_CONFIRMER', 'ROLE_SI_EXPERTISE_SIGNER']))
-      <option value="СИ">СИ</option>
-  @endif
-  @if(auth()->user()->hasAnyRole(['ROLE_GTS_EXPERTISE_REVIEWER', 'ROLE_GTS_EXPERTISE_CONFIRMER', 'ROLE_GTS_EXPERTISE_SIGNER']))
-      <option value="ГТС">ГТС</option>
-      <option value="СИ">СИ</option>
-  @endif
-  @if(auth()->user()->hasAnyRole(['ROLE_UO_EXPERTISE_REVIEWER', 'ROLE_UO_EXPERTISE_CONFИRMER', 'ROLE_UO_EXPERTISE_SIGNER','ROLE_GO_EXPERTISE_EDITOR']))
-      <option value="УО">УО</option>
-      <option value="ГТС">ГТС</option>
-      <option value="СИ">СИ</option>
-  @endif
-</select> --}}
+
 <div>
   @if(auth()->user()->hasAnyRole(['ROLE_SI_EXPERTISE_REVIEWER', 'ROLE_UO_EXPERTISE_REVIEWER', 'ROLE_GTS_EXPERTISE_REVIEWER']))
   <button id="editButton" style="padding: 10px; margin-bottom: 10px;">Редактировать</button>
@@ -1394,7 +1380,7 @@
 
 
 
-{{-- @section('scripts')
+@section('scripts')
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
@@ -1455,7 +1441,9 @@
 
 
 </script>
-@endsection --}}
+@endsection
+
+
 
 
 

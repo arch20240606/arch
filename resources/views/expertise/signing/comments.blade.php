@@ -855,7 +855,68 @@
 
 
 
+{{-- @section('scripts')
 
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var selectElement = document.querySelector('#conSelect');
+    var conclusionsSi = document.querySelectorAll('.conclusion_si');
+    var conclusionsUo = document.querySelectorAll('.conclusion_uo');
+    var conclusionsGts = document.querySelectorAll('.conclusion_gts');
+
+    console.log('selectElement:', selectElement);
+    console.log('conclusionsSi:', conclusionsSi);
+    console.log('conclusionsUo:', conclusionsUo);
+    console.log('conclusionsGts:', conclusionsGts);
+
+    function toggleConclusions(selectedOption) {
+      switch (selectedOption) {
+        case 'СИ':
+          hideAllConclusions();
+          conclusionsSi.forEach(function (element) {
+            element.style.display = 'block';
+          });
+          break;
+        case 'УО':
+          hideAllConclusions();
+          conclusionsUo.forEach(function (element) {
+            element.style.display = 'block';
+          });
+          break;
+        case 'ГТС':
+          hideAllConclusions();
+          conclusionsGts.forEach(function (element) {
+            element.style.display = 'block';
+          });
+          break;
+        default:
+          hideAllConclusions();
+      }
+    }
+
+    function hideAllConclusions() {
+      conclusionsSi.forEach(function (element) {
+        element.style.display = 'none';
+      });
+      conclusionsUo.forEach(function (element) {
+        element.style.display = 'none';
+      });
+      conclusionsGts.forEach(function (element) {
+        element.style.display = 'none';
+      });
+    }
+
+    selectElement.addEventListener('change', function () {
+      toggleConclusions(this.value);
+    });
+
+    // Initially hide all conclusions
+    hideAllConclusions();
+  });
+
+
+</script>
+@endsection --}}
 
 
 {{-- @section('scripts')

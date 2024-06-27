@@ -723,11 +723,14 @@ class ExpertisesController extends Controller
             $expertiseId = $request->input('expertise_id');
         
             // Создание записи в таблице ExpertiseRoleStatus для согласующего
-            $expertiseRoleStatusApprover1 = ExpertiseRoleStatus::create([
-                'user_id' => $selectedAddMcriapExecutor,
-                'expertise_id' => $expertiseId,
-                'Uoexecutor' => ($selectedAddMcriapExecutor != null),
-            ]);
+            if ($selectedAddMcriapExecutor != null) {
+                // Создание записи в таблице ExpertiseRoleStatus для согласующего
+                $expertiseRoleStatusApprover1 = ExpertiseRoleStatus::create([
+                    'user_id' => $selectedAddMcriapExecutor,
+                    'expertise_id' => $expertiseId,
+                    'Uoexecutor' => true,
+                ]);
+            }
 
             $updateExpertise = Expertise::find($request->expertise_id);
             $updateExpertise->update([
@@ -2593,7 +2596,42 @@ public function in_work() {
         $expertisesCount = $expertisesQuery->count();
         $expertises = $expertisesQuery->orderBy('id', 'desc')->paginate(10);
     
-        return view('expertise.in_work', compact('govs', 'expertises', 'expertisesCount'));
+        return view('expertise.in_work.index', compact('govs', 'expertises', 'expertisesCount'));
+    }
+
+
+    public function in_work_in_process() {
+        $user = Auth::user();
+        $govs = Government::all();
+        
+        $expertisesQuery = Expertise::query();
+    
+        if ($user->hasRole('ROLE_UO_EXPERTISE_REVIEWER')) {
+            $expertisesQuery->where(function($query) {
+                $query->where('send_to_uo_reviewer', '0')
+                    ->orWhere('accept_uo_reviewer', '0');
+        })->whereHas('expertiseRoleStatuses', function($query) {
+            $query->where('UoExecutor', '0');
+        });
+        } elseif ($user->hasRole('ROLE_KIB_EXPERTISE_EXECUTOR')) {
+            $expertisesQuery->where('send_to_kib', '1');
+        } elseif ($user->hasRole('ROLE_SI_EXPERTISE_CONFIRMER')) {
+            $expertisesQuery->where('send_to_si', '1')
+            ->where('send_to_si_reviewers', '0')
+            ->where('accept_si_reviewers', '0');
+        } elseif ($user->hasRole('ROLE_GTS_EXPERTISE_CONFIRMER')) {
+            $expertisesQuery->where('send_to_gts', '1');
+        } elseif ($user->hasRole('ROLE_UO_EXPERTISE_DANA')) {
+            $expertisesQuery->where('send_to_uo', '1');
+        } else {
+            // Если у пользователя нет соответствующей роли, не отображаем ничего
+            $expertisesQuery->whereRaw('1=0');
+        }
+    
+        $expertisesCount = $expertisesQuery->count();
+        $expertises = $expertisesQuery->orderBy('id', 'desc')->paginate(10);
+    
+        return view('expertise.in_work.inProcess', compact('govs', 'expertises', 'expertisesCount'));
     }
     
     

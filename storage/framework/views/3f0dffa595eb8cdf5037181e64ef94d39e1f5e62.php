@@ -40,7 +40,11 @@ if (app()->getLocale() == "ru") {
 
 
     <?php echo $__env->make('expertise.menu', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-    <div class="filter-title">Запросы на экспертизу: В работе</div>
+    
+     <div class="filter-title-container" style="display: flex; align-items: center;">
+       <div class="filter-title">Запросы на экспертизу: В работе</div>
+      <a style="display: inline-block; margin-left: auto; padding: 8px 15px; background-color: #4682c2; color: white; text-align: center; text-decoration: none; border-radius: 5px; margin-top: 0;">Запросы на экспертизу: В работе неотписанные</a>
+    </div>
 
 
     <?php if( $expertises->isEmpty() ): ?>

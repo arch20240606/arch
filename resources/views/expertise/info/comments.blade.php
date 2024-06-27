@@ -211,12 +211,13 @@
 
   @if (auth()->user()->hasRole('ROLE_GO_EXPERTISE_SIGNER') && $expertise->send_to_go_signer == 1)
     <input type="hidden" name="expertise_id" id="expertise_id" value="{{ $expertise->id }}">
+    <button class="btn" type="submit" name="discart_gos" id="discart_gos" style="display: block; font-size: 14px; background: #b90404;">Вернуть</a>
     <button class="btn" type="submit" id="create_and_send_to_dana" name="create_and_send_to_dana" style="display: none; font-size: 14px; background: #0178BC;">Отправить в УО</button>
   @endif
 
   @if (auth()->user()->hasRole('ROLE_GO_EXPERTISE_CONFIRMER') && $expertise->send == 1)
     <input type="hidden" name="expertise_id" id="expertise_id" value="{{ $expertise->id }}">
-    <button type="submit" name="discart_gos" id="discart_gos" style="display: block; font-size: 14px; background: #b90404;">Вернуть</a>
+    <button class="btn" type="submit" name="discart_gos" id="discart_gos" style="display: block; font-size: 14px; background: #b90404;">Вернуть</a>
   @endif
 
 

@@ -3,23 +3,21 @@
 
 
 <h2 class="is-content-title">Форма создания комментариев или заключения</h2>
-
 <select id="conSelect" style="margin-bottom: 24px; padding: 8px; border: 1px solid #ccc; border-radius: 5px; background-color: #f9f9f9; cursor: pointer; width: 200px;">
   <option selected>Выберите</option>
   <?php if(auth()->user()->hasAnyRole(['ROLE_SI_EXPERTISE_REVIEWER', 'ROLE_SI_EXPERTISE_CONFIRMER', 'ROLE_SI_EXPERTISE_SIGNER'])): ?>
       <option value="СИ">СИ</option>
   <?php endif; ?>
-  <?php if(auth()->user()->hasAnyRole(['ROLE_GTS_EXPERTISE_REVIEWER', 'ROLE_GTS_EXPERTISE_CONFИRMER', 'ROLE_GTS_EXPERTISE_SIGNER'])): ?>
+  <?php if(auth()->user()->hasAnyRole(['ROLE_GTS_EXPERTISE_REVIEWER', 'ROLE_GTS_EXPERTISE_CONFIRMER', 'ROLE_GTS_EXPERTISE_SIGNER'])): ?>
       <option value="ГТС">ГТС</option>
       <option value="СИ">СИ</option>
   <?php endif; ?>
-  <?php if(auth()->user()->hasAnyRole(['ROLE_UO_EXPERTISE_REVIEWER', 'ROLE_UO_EXPERTISE_CONFИRMER', 'ROLE_UO_EXPERTISE_SIGNER','ROLE_GO_EXPERTISE_EDITOR'])): ?>
+  <?php if(auth()->user()->hasAnyRole(['ROLE_UO_EXPERTISE_REVIEWER', 'ROLE_UO_EXPERTISE_CONFIRMER', 'ROLE_UO_EXPERTISE_SIGNER','ROLE_GO_EXPERTISE_EDITOR'])): ?>
       <option value="УО">УО</option>
       <option value="ГТС">ГТС</option>
       <option value="СИ">СИ</option>
   <?php endif; ?>
 </select>
-
 
 <div>
   <?php if(auth()->user()->hasAnyRole(['ROLE_SI_EXPERTISE_REVIEWER', 'ROLE_UO_EXPERTISE_REVIEWER', 'ROLE_GTS_EXPERTISE_REVIEWER'])): ?>
@@ -300,7 +298,6 @@
         <option value="Не требуется" <?php echo e($concl->concl_24 == 'Не требуется' ? 'selected' : ''); ?>>Не требуется</option>
       </select>
     </div>
-    
   </div>
 </div>
 
@@ -671,7 +668,6 @@
               <hr style="border-top: 2px solid #333; margin: 10px 0;">
               <div style="display: flex; align-items: center;">
                 <p style="margin-right: 20px; color: #666;">Заключение</p>
-                
                 <textarea class="editable" name="concl_58" id="concl_58" readonly style="margin-left: 105px; width: 700px; height: 100px; border: 1px solid #ccc;"><?php echo e($concl->concl_58); ?></textarea>
               </div>
           </div>
@@ -681,7 +677,6 @@
               <hr style="border-top: 2px solid #333; margin: 10px 0;">
               <div style="display: flex; align-items: center;">
                 <p style="margin-right: 20px; color: #666;">Заключение</p>
-                
                 <textarea class="editable" name="concl_59" id="concl_59" readonly style="margin-left: 105px; width: 700px; height: 100px; border: 1px solid #ccc;"><?php echo e($concl->concl_59); ?></textarea>
               </div>
           </div>
@@ -953,7 +948,6 @@
       <option value="Не требуется" <?php echo e($concl->concl_24 == 'Не требуется' ? 'selected' : ''); ?>>Не требуется</option>
     </select>
   </div>
-  
 </div>
 </div>
 
@@ -1324,7 +1318,6 @@
             <hr style="border-top: 2px solid #333; margin: 10px 0;">
             <div style="display: flex; align-items: center;">
               <p style="margin-right: 20px; color: #666;">Заключение</p>
-              
               <textarea class="editable" name="concl_58" id="concl_58" readonly style="margin-left: 105px; width: 700px; height: 100px; border: 1px solid #ccc;"><?php echo e($concl->concl_58); ?></textarea>
             </div>
         </div>
@@ -1334,7 +1327,6 @@
             <hr style="border-top: 2px solid #333; margin: 10px 0;">
             <div style="display: flex; align-items: center;">
               <p style="margin-right: 20px; color: #666;">Заключение</p>
-              
               <textarea class="editable" name="concl_59" id="concl_59" readonly style="margin-left: 105px; width: 700px; height: 100px; border: 1px solid #ccc;"><?php echo e($concl->concl_59); ?></textarea>
             </div>
         </div>
@@ -1346,6 +1338,18 @@
 
 <?php $__currentLoopData = $conclusionsGts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $concl): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 <div class="conclusion_gts" style="display: none;">
+    <div style="padding: 20px; border: 1px solid #ccc; border-radius: 10px; margin-bottom: 20px;">
+      <div style="display: flex; align-items: center;">
+          <p style="margin-right: 20px; color: #666;">Результат ГТС:</p>
+          <select id="status_concl" name="status_concl" style="padding: 8px; border: 1px solid #ccc; border-radius: 5px; background-color: #f9f9f9; cursor: pointer; width: 200px;" disabled>
+              <option value="Выберите статус" <?php echo e($concl->status_concl == 'Выберите статус' ? 'selected' : ''); ?>>Выберите статус</option>
+              <option value="На доработку" <?php echo e($concl->status_concl == 'На доработку' ? 'selected' : ''); ?>>На доработку</option>
+              <option value="Положительно" <?php echo e($concl->status_concl == 'Положительно' ? 'selected' : ''); ?>>Положительно</option>
+              <option value="Отрицательно" <?php echo e($concl->status_concl == 'Отрицательно' ? 'selected' : ''); ?>>Отрицательно</option>
+              <option value="Условно-положительное (данное заключение будет являться положительным при условии устранения представленных замечаний)" <?php echo e($concl->status_concl == 'Условно-положительное (данное заключение будет являться положительным при условии устранения представленных замечаний)' ? 'selected' : ''); ?>>Условно-положительное (данное заключение будет являться положительным при условии устранения представленных замечаний)</option>
+          </select>
+      </div>
+  </div>
 
     <div style="padding: 20px; border: 1px solid #ccc;border-radius: 10px; margin-bottom: 20px;">
         <p><b style="font-size: 18px; color: #333;">Заключение на соответствие требованиям информационной безопасности</b></p>
@@ -1355,9 +1359,9 @@
           <textarea class="editable" name="concl_59" id="concl_59" readonly style="margin-left: 105px; width: 700px; height: 100px; border: 1px solid #ccc;"><?php echo e($concl->concl_59); ?></textarea>
         </div>
     </div>
-
   </div>
 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
 <?php if(auth()->user()->hasRole('ROLE_SI_EXPERTISE_REVIEWER')): ?>
   <div class="buttons-wrapper">
     <button class="btn" type="submit" id="save_si_reviewer" name="save_si_reviewer" style=" font-size: 14px; background: #0178BC; margin-bottom: 10px;">Сохранить заключения</button>
@@ -1371,67 +1375,16 @@
   <button class="btn" type="submit" id="save_uo_reviewer" name="save_uo_reviewer" style=" font-size: 14px; background: #0178BC; margin-bottom: 10px;">Сохранить заключения</button>
 </div>
 <?php endif; ?>
+
 </form>
 
 
 
-<?php $__env->startSection('scripts'); ?>
-
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    var selectElement = document.querySelector('#conSelect');
-    var conclusionsSi = document.querySelectorAll('.conclusion_si');
-    var conclusionsUo = document.querySelectorAll('.conclusion_uo');
-    var conclusionsGts = document.querySelectorAll('.conclusion_gts');
-
-    function toggleConclusions(selectedOption) {
-      switch (selectedOption) {
-        case 'СИ':
-          hideAllConclusions();
-          conclusionsSi.forEach(function (element) {
-            element.style.display = 'block';
-          });
-          break;
-        case 'УО':
-          hideAllConclusions();
-          conclusionsUo.forEach(function (element) {
-            element.style.display = 'block';
-          });
-          break;
-        case 'ГТС':
-          hideAllConclusions();
-          conclusionsGts.forEach(function (element) {
-            element.style.display = 'block';
-          });
-          break;
-        default:
-          hideAllConclusions();
-      }
-    }
-
-    function hideAllConclusions() {
-      conclusionsSi.forEach(function (element) {
-        element.style.display = 'none';
-      });
-      conclusionsUo.forEach(function (element) {
-        element.style.display = 'none';
-      });
-      conclusionsGts.forEach(function (element) {
-        element.style.display = 'none';
-      });
-    }
-
-    selectElement.addEventListener('change', function () {
-      toggleConclusions(this.value);
-    });
-
-    // Initially hide all conclusions
-    hideAllConclusions();
-  });
 
 
-</script>
-<?php $__env->stopSection(); ?>
+
+
+
 
 
 

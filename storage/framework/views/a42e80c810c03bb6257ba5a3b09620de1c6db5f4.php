@@ -773,57 +773,115 @@ function getKeyInfo(storageName, callBack) {
 }
 
 
+// document.addEventListener('DOMContentLoaded', function () {
+//     var selectElement = document.querySelector('#conSelect');
+//     var conclusionsSi = document.querySelectorAll('.conclusion_si');
+//     var conclusionsUo = document.querySelectorAll('.conclusion_uo');
+//     var conclusionsGts = document.querySelectorAll('.conclusion_gts');
 
-document.addEventListener('DOMContentLoaded', function () {
-    var selectElement = document.querySelector('#conSelect');
-    var conclusionsSi = document.querySelectorAll('.conclusion_si');
-    var conclusionsUo = document.querySelectorAll('.conclusion_uo');
-    var conclusionsGts = document.querySelectorAll('.conclusion_gts');
+//     function toggleConclusions(selectedOption) {
+//       switch (selectedOption) {
+//         case 'СИ':
+//           hideAllConclusions();
+//           conclusionsSi.forEach(function (element) {
+//             element.style.display = 'block';
+//           });
+//           break;
+//         case 'УО':
+//           hideAllConclusions();
+//           conclusionsUo.forEach(function (element) {
+//             element.style.display = 'block';
+//           });
+//           break;
+//         case 'ГТС':
+//           hideAllConclusions();
+//           conclusionsGts.forEach(function (element) {
+//             element.style.display = 'block';
+//           });
+//           break;
+//         default:
+//           hideAllConclusions();
+//       }
+//     }
 
-    function toggleConclusions(selectedOption) {
-      switch (selectedOption) {
-        case 'СИ':
-          hideAllConclusions();
-          conclusionsSi.forEach(function (element) {
-            element.style.display = 'block';
-          });
-          break;
-        case 'УО':
-          hideAllConclusions();
-          conclusionsUo.forEach(function (element) {
-            element.style.display = 'block';
-          });
-          break;
-        case 'ГТС':
-          hideAllConclusions();
-          conclusionsGts.forEach(function (element) {
-            element.style.display = 'block';
-          });
-          break;
-        default:
-          hideAllConclusions();
-      }
-    }
+//     function hideAllConclusions() {
+//       conclusionsSi.forEach(function (element) {
+//         element.style.display = 'none';
+//       });
+//       conclusionsUo.forEach(function (element) {
+//         element.style.display = 'none';
+//       });
+//       conclusionsGts.forEach(function (element) {
+//         element.style.display = 'none';
+//       });
+//     }
 
-    function hideAllConclusions() {
-      conclusionsSi.forEach(function (element) {
-        element.style.display = 'none';
-      });
-      conclusionsUo.forEach(function (element) {
-        element.style.display = 'none';
-      });
-      conclusionsGts.forEach(function (element) {
-        element.style.display = 'none';
-      });
-    }
+//     selectElement.addEventListener('change', function () {
+//       toggleConclusions(this.value);
+//     });
 
-    selectElement.addEventListener('change', function () {
-      toggleConclusions(this.value);
-    });
+//     // Initially hide all conclusions
+//     hideAllConclusions();
+//   });
 
-    // Initially hide all conclusions
-    hideAllConclusions();
-  });
+  // document.addEventListener('DOMContentLoaded', function () {
+  //   var selectElement = document.querySelector('#conSelect');
+  //   var conclusionsSi = document.querySelectorAll('.conclusion_si');
+  //   var conclusionsUo = document.querySelectorAll('.conclusion_uo');
+  //   var conclusionsGts = document.querySelectorAll('.conclusion_gts');
+
+  //   console.log('selectElement:', selectElement);
+  //   console.log('conclusionsSi:', conclusionsSi);
+  //   console.log('conclusionsUo:', conclusionsUo);
+  //   console.log('conclusionsGts:', conclusionsGts);
+
+  //   if (!selectElement) {
+  //     console.error('Element with id conSelect not found');
+  //     return;
+  //   }
+
+  //   function toggleConclusions(selectedOption) {
+  //     hideAllConclusions();
+  //     switch (selectedOption) {
+  //       case 'СИ':
+  //         conclusionsSi.forEach(function (element) {
+  //           element.style.display = 'block';
+  //         });
+  //         break;
+  //       case 'УО':
+  //         conclusionsUo.forEach(function (element) {
+  //           element.style.display = 'block';
+  //         });
+  //         break;
+  //       case 'ГТС':
+  //         conclusionsGts.forEach(function (element) {
+  //           element.style.display = 'block';
+  //         });
+  //         break;
+  //     }
+  //   }
+
+    
+
+  //   function hideAllConclusions() {
+  //     conclusionsSi.forEach(function (element) {
+  //       element.style.display = 'none';
+  //     });
+  //     conclusionsUo.forEach(function (element) {
+  //       element.style.display = 'none';
+  //     });
+  //     conclusionsGts.forEach(function (element) {
+  //       element.style.display = 'none';
+  //     });
+  //   }
+
+  //   selectElement.addEventListener('change', function () {
+  //     toggleConclusions(this.value);
+  //   });
+
+  //   // Initially hide all conclusions
+  //   hideAllConclusions();
+  // });
 
 
 
@@ -1485,33 +1543,6 @@ document.getElementById('exportButton').addEventListener('click', function() {
 
 
 
-
-
-// function toggleEdit() {
-//   const editButton = document.getElementById('editButton');
-//   const editables = document.querySelectorAll('.editable');
-
-//   editables.forEach(el => {
-//     if (el.readOnly) {
-//       el.readOnly = false;
-//       el.style.backgroundColor = "#fff"; // Optional: Change background color to indicate editable state
-//     } else {
-//       el.readOnly = true;
-//       el.style.backgroundColor = "#f9f9f9"; // Revert background color
-//     }
-//   });
-
-//   if (editButton.textContent === 'Редактировать') {
-//     // editButton.textContent = 'Сохранить';
-//     document.getElementById('save_si_reviewer').style.display = 'block'; // Показать кнопку сохранения
-//   } else {
-//     editButton.textContent = 'Редактировать';
-//     document.getElementById('save_si_reviewer').click(); // Trigger form submission
-//   }
-// }
-
-// document.getElementById('editButton').addEventListener('click', toggleEdit);
-
 function toggleEdit() {
   const editButton = document.getElementById('editButton');
   const editables = document.querySelectorAll('.editable');
@@ -1549,6 +1580,7 @@ function toggleEdit() {
 
 document.getElementById('editButton').addEventListener('click', toggleEdit);
 
+///////////////////////////////////////////////////////////////////////////////////////
 
 document.addEventListener('DOMContentLoaded', function () {
     const editButton = document.getElementById('editButton');
@@ -1592,65 +1624,6 @@ document.addEventListener('DOMContentLoaded', function () {
     conSelect.addEventListener('change', updateEditButtonState);
 });
 
-
-
-
-
-document.addEventListener('DOMContentLoaded', function () {
-    var selectElement = document.querySelector('#conSelect');
-    var conclusionsSi = document.querySelectorAll('.conclusion_si');
-    var conclusionsUo = document.querySelectorAll('.conclusion_uo');
-    var conclusionsGts = document.querySelectorAll('.conclusion_gts');
-
-    console.log('selectElement:', selectElement);
-    console.log('conclusionsSi:', conclusionsSi);
-    console.log('conclusionsUo:', conclusionsUo);
-    console.log('conclusionsGts:', conclusionsGts);
-
-    function toggleConclusions(selectedOption) {
-      switch (selectedOption) {
-        case 'СИ':
-          hideAllConclusions();
-          conclusionsSi.forEach(function (element) {
-            element.style.display = 'block';
-          });
-          break;
-        case 'УО':
-          hideAllConclusions();
-          conclusionsUo.forEach(function (element) {
-            element.style.display = 'block';
-          });
-          break;
-        case 'ГТС':
-          hideAllConclusions();
-          conclusionsGts.forEach(function (element) {
-            element.style.display = 'block';
-          });
-          break;
-        default:
-          hideAllConclusions();
-      }
-    }
-
-    function hideAllConclusions() {
-      conclusionsSi.forEach(function (element) {
-        element.style.display = 'none';
-      });
-      conclusionsUo.forEach(function (element) {
-        element.style.display = 'none';
-      });
-      conclusionsGts.forEach(function (element) {
-        element.style.display = 'none';
-      });
-    }
-
-    selectElement.addEventListener('change', function () {
-      toggleConclusions(this.value);
-    });
-
-    // Initially hide all conclusions
-    hideAllConclusions();
-  });
 
 </script>
 
