@@ -2565,74 +2565,186 @@ public function draft()
 
 
 
+// public function in_work() {
+//         $user = Auth::user();
+//         $govs = Government::all();
+        
+//         $expertisesQuery = Expertise::query();
+    
+//         if ($user->hasRole('ROLE_UO_EXPERTISE_REVIEWER')) {
+//             $expertisesQuery->where(function($query) {
+//                 $query->where('send_to_uo_reviewer', '1')
+//                     ->orWhere('accept_uo_reviewer', '1');
+//         })->whereHas('expertiseRoleStatuses', function($query) {
+//             $query->where('UoExecutor', '1');
+//         });
+//         } elseif ($user->hasRole('ROLE_KIB_EXPERTISE_EXECUTOR')) {
+//             $expertisesQuery->where('send_to_kib', '1');
+//         } elseif ($user->hasRole('ROLE_SI_EXPERTISE_CONFIRMER')) {
+//             $expertisesQuery->where('send_to_si', '1')
+//             ->where('send_to_si_reviewers', '0')
+//             ->where('accept_si_reviewers', '0');
+//         } elseif ($user->hasRole('ROLE_GTS_EXPERTISE_CONFIRMER')) {
+//             $expertisesQuery->where('send_to_gts', '1');
+//         } elseif ($user->hasRole('ROLE_UO_EXPERTISE_DANA')) {
+//             $expertisesQuery->where('send_to_uo', '1');
+//         } else {
+//             // Если у пользователя нет соответствующей роли, не отображаем ничего
+//             $expertisesQuery->whereRaw('1=0');
+//         }
+    
+//         $expertisesCount = $expertisesQuery->count();
+//         $expertises = $expertisesQuery->orderBy('id', 'desc')->paginate(10);
+    
+//         return view('expertise.in_work.index', compact('govs', 'expertises', 'expertisesCount'));
+//     }
+
+// public function in_work_in_process() {
+//     $user = Auth::user();
+//     $govs = Government::all();
+    
+//     $expertisesQuery = Expertise::query();
+
+//     // if ($user->hasRole('ROLE_UO_EXPERTISE_REVIEWER')) {
+//     //     $expertisesQuery->where(function($query) {
+//     //         $query->where('send_to_uo_reviewer', '1')
+//     //             ->orWhere('accept_uo_reviewer', '1');
+//     //     })->whereHas('expertiseRoleStatuses', function($query) {
+//     //         $query->where('UoExecutor', '1');
+//     //     });
+//     // } 
+//     if ($user->hasRole('ROLE_KIB_EXPERTISE_EXECUTOR')) {
+//         $expertisesQuery->where('send_to_kib', '1');
+//     } elseif ($user->hasRole('ROLE_SI_EXPERTISE_CONFIRMER') || $user->hasRole('ROLE_SI_EXPERTISE_REVIEWER') || $user->hasRole('ROLE_SI_EXPERTISE_SIGNER')) {
+//         $expertisesQuery
+//         // ->where('send_to_si', '1')
+//             ->where('send_to_si_reviewers', '0')
+//             ->where('accept_si_reviewers', '0');
+//     } elseif ($user->hasRole('ROLE_GTS_EXPERTISE_CONFIRMER')) {
+//         $expertisesQuery->where('send_to_gts', '1');
+//     } elseif ($user->hasRole('ROLE_UO_EXPERTISE_DANA') || $user->hasRole('ROLE_UO_EXPERTISE_REVIEWER') || $user->hasRole('ROLE_UO_EXPERTISE_SIGNER')) {
+//         $expertisesQuery->where(function($query) {
+//             $query->where('send_to_uo_reviewer', '0')
+//                 ->orWhere('accept_uo_reviewer', '0');
+//     })->whereHas('expertiseRoleStatuses', function($query) {
+//         $query->where('UoExecutor', '0');
+//     });
+//     } 
+//     // elseif ($user->hasRole('ROLE_SI_EXPERTISE_REVIEWER') || $user->hasRole('ROLE_GTS_EXPERTISE_REVIEWER')) { // Добавляем новую роль
+//     //     $expertisesQuery = Expertise::join('expertise_role_status', 'expertise.id', '=', 'expertise_role_status.expertise_id')
+//     //         ->select('expertise.*')
+//     //         ->where('expertise.send_to_si_reviewers', '1')
+//     //         ->where('expertise_role_status.user_id', Auth::id())
+//     //         ->where('expertise_role_status.executor', 1)
+//     //         ->orWhere(function($query) {
+//     //             $query->where('expertise.send_to_gts_reviewers', '1')
+//     //                   ->where('expertise_role_status.user_id', Auth::id())
+//     //                   ->where('expertise_role_status.executor', 1);
+//     //         })
+//     //         ->distinct() // Удаляем дубликаты
+//     //         ->orderBy('expertise.id', 'desc');
+//     // } 
+//     else {
+//         // Если у пользователя нет соответствующей роли, не отображаем ничего
+//         $expertisesQuery->whereRaw('1=0');
+//     }
+
+//     $expertisesCount = $expertisesQuery->count();
+//     $expertises = $expertisesQuery->paginate(10);
+
+//     return view('expertise.in_work.inProcess', compact('govs', 'expertises', 'expertisesCount'));
+// }
+
+
+public function in_work_in_process() {
+    $user = Auth::user();
+    $govs = Government::all();
+    
+    $expertisesQuery = Expertise::query();
+
+    if ($user->hasRole('ROLE_UO_EXPERTISE_DANA') || $user->hasRole('ROLE_UO_EXPERTISE_REVIEWER') || $user->hasRole('ROLE_UO_EXPERTISE_SIGNER')) {
+        $expertisesQuery->where('send_to_uo_reviewer', '0')
+        ->where('accept_uo_reviewer', '0');
+    } elseif ($user->hasRole('ROLE_SI_EXPERTISE_CONFIRMER') || $user->hasRole('ROLE_SI_EXPERTISE_REVIEWER') || $user->hasRole('ROLE_SI_EXPERTISE_SIGNER')) {
+        $expertisesQuery->where('send_to_si_reviewers', '0')->where('accept_si_reviewers', '0');
+    } elseif ($user->hasRole('ROLE_GTS_EXPERTISE_DANA') || $user->hasRole('ROLE_GTS_EXPERTISE_REVIEWER') || $user->hasRole('ROLE_GTS_EXPERTISE_SIGNER')) {
+        $expertisesQuery->where('send_to_gts_reviewers', '0')->where('accept_gts_reviewers', '0');
+    } else {
+        $expertisesQuery->whereRaw('1=0'); // No records if user has none of the relevant roles
+    }
+
+    $expertisesCount = $expertisesQuery->count();
+    $expertises = $expertisesQuery->paginate(10);
+
+    return view('expertise.in_work.inProcess', compact('govs', 'expertises', 'expertisesCount'));
+}
+
+
+
 public function in_work() {
-        $user = Auth::user();
-        $govs = Government::all();
-        
-        $expertisesQuery = Expertise::query();
+    $user = Auth::user();
+    $govs = Government::all();
     
-        if ($user->hasRole('ROLE_UO_EXPERTISE_REVIEWER')) {
-            $expertisesQuery->where(function($query) {
-                $query->where('send_to_uo_reviewer', '1')
-                    ->orWhere('accept_uo_reviewer', '1');
-        })->whereHas('expertiseRoleStatuses', function($query) {
-            $query->where('UoExecutor', '1');
-        });
-        } elseif ($user->hasRole('ROLE_KIB_EXPERTISE_EXECUTOR')) {
-            $expertisesQuery->where('send_to_kib', '1');
-        } elseif ($user->hasRole('ROLE_SI_EXPERTISE_CONFIRMER')) {
-            $expertisesQuery->where('send_to_si', '1')
-            ->where('send_to_si_reviewers', '0')
-            ->where('accept_si_reviewers', '0');
-        } elseif ($user->hasRole('ROLE_GTS_EXPERTISE_CONFIRMER')) {
-            $expertisesQuery->where('send_to_gts', '1');
-        } elseif ($user->hasRole('ROLE_UO_EXPERTISE_DANA')) {
-            $expertisesQuery->where('send_to_uo', '1');
-        } else {
-            // Если у пользователя нет соответствующей роли, не отображаем ничего
-            $expertisesQuery->whereRaw('1=0');
-        }
-    
-        $expertisesCount = $expertisesQuery->count();
-        $expertises = $expertisesQuery->orderBy('id', 'desc')->paginate(10);
-    
-        return view('expertise.in_work.index', compact('govs', 'expertises', 'expertisesCount'));
+    $expertisesQuery = Expertise::query();
+
+    if ($user->hasRole('ROLE_UO_EXPERTISE_DANA') || $user->hasRole('ROLE_UO_EXPERTISE_REVIEWER') || $user->hasRole('ROLE_UO_EXPERTISE_SIGNER')) {
+        $expertisesQuery->where('send_to_uo_reviewer', '1')
+        ->Orwhere('accept_uo_reviewer', '1');
+    } elseif ($user->hasRole('ROLE_SI_EXPERTISE_CONFIRMER') || $user->hasRole('ROLE_SI_EXPERTISE_REVIEWER') || $user->hasRole('ROLE_SI_EXPERTISE_SIGNER')) {
+        $expertisesQuery->where('send_to_si_reviewers', '1')->Orwhere('accept_si_reviewers', '1');
+    } elseif ($user->hasRole('ROLE_GTS_EXPERTISE_DANA') || $user->hasRole('ROLE_GTS_EXPERTISE_REVIEWER') || $user->hasRole('ROLE_GTS_EXPERTISE_SIGNER')) {
+        $expertisesQuery->where('send_to_gts_reviewers', '1')->where('accept_gts_reviewers', '1');
+    } else {
+        $expertisesQuery->whereRaw('1=0'); // No records if user has none of the relevant roles
     }
 
+    $expertisesCount = $expertisesQuery->count();
+    $expertises = $expertisesQuery->orderBy('id', 'desc')->paginate(10);
 
-    public function in_work_in_process() {
-        $user = Auth::user();
-        $govs = Government::all();
+    return view('expertise.in_work.index', compact('govs', 'expertises', 'expertisesCount'));
+}
+
+
+
+// public function in_work() {
+//         $user = Auth::user();
+//         $govs = Government::all();
         
-        $expertisesQuery = Expertise::query();
+//         $expertisesQuery = Expertise::query();
     
-        if ($user->hasRole('ROLE_UO_EXPERTISE_REVIEWER')) {
-            $expertisesQuery->where(function($query) {
-                $query->where('send_to_uo_reviewer', '0')
-                    ->orWhere('accept_uo_reviewer', '0');
-        })->whereHas('expertiseRoleStatuses', function($query) {
-            $query->where('UoExecutor', '0');
-        });
-        } elseif ($user->hasRole('ROLE_KIB_EXPERTISE_EXECUTOR')) {
-            $expertisesQuery->where('send_to_kib', '1');
-        } elseif ($user->hasRole('ROLE_SI_EXPERTISE_CONFIRMER')) {
-            $expertisesQuery->where('send_to_si', '1')
-            ->where('send_to_si_reviewers', '0')
-            ->where('accept_si_reviewers', '0');
-        } elseif ($user->hasRole('ROLE_GTS_EXPERTISE_CONFIRMER')) {
-            $expertisesQuery->where('send_to_gts', '1');
-        } elseif ($user->hasRole('ROLE_UO_EXPERTISE_DANA')) {
-            $expertisesQuery->where('send_to_uo', '1');
-        } else {
-            // Если у пользователя нет соответствующей роли, не отображаем ничего
-            $expertisesQuery->whereRaw('1=0');
-        }
+//         if ($user->hasRole('ROLE_UO_EXPERTISE_REVIEWER')) {
+//             $expertisesQuery->where(function($query) {
+//                 $query->where('send_to_uo_reviewer', '0')
+//                     ->orWhere('accept_uo_reviewer', '0');
+//         })->whereHas('expertiseRoleStatuses', function($query) {
+//             $query->where('UoExecutor', '0');
+//         });
+//         } elseif ($user->hasRole('ROLE_KIB_EXPERTISE_EXECUTOR')) {
+//             $expertisesQuery->where('send_to_kib', '0');
+//         } elseif ($user->hasRole('ROLE_SI_EXPERTISE_CONFIRMER')) {
+//             $expertisesQuery->where('send_to_si', '0')
+//             ->where('send_to_si_reviewers', '0')
+//             ->where('accept_si_reviewers', '0');
+//         } elseif ($user->hasRole('ROLE_GTS_EXPERTISE_CONFIRMER')) {
+//             $expertisesQuery->where('send_to_gts', '0');
+//         } elseif ($user->hasRole('ROLE_UO_EXPERTISE_DANA')) {
+//             // $expertisesQuery->where('send_to_uo', '0');
+//             $expertisesQuery->where(function($query) {
+//                 $query->where('send_to_uo_reviewer', '1')
+//                     ->orWhere('accept_uo_reviewer', '1');
+//         })->whereHas('expertiseRoleStatuses', function($query) {
+//             $query->where('UoExecutor', '1');
+//         });
+//         } else {
+//             // Если у пользователя нет соответствующей роли, не отображаем ничего
+//             $expertisesQuery->whereRaw('1=0');
+//         }
     
-        $expertisesCount = $expertisesQuery->count();
-        $expertises = $expertisesQuery->orderBy('id', 'desc')->paginate(10);
+//         $expertisesCount = $expertisesQuery->count();
+//         $expertises = $expertisesQuery->orderBy('id', 'desc')->paginate(10);
     
-        return view('expertise.in_work.inProcess', compact('govs', 'expertises', 'expertisesCount'));
-    }
+//         return view('expertise.in_work.index', compact('govs', 'expertises', 'expertisesCount'));
+// }
     
     
 

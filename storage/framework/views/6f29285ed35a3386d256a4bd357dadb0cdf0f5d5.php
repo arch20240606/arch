@@ -2,16 +2,12 @@
 
 
 <nav class="tabs">
-  <?php if(auth()->check() && (auth()->user()->hasRole('ROLE_UO_EXPERTISE_REVIEWER') || auth()->user()->hasRole('ROLE_KIB_EXPERTISE_EXECUTOR') || auth()->user()->hasRole('ROLE_GTS_EXPERTISE_CONFIRMER') || auth()->user()->hasRole('ROLE_UO_EXPERTISE_DANA') || auth()->user()->hasRole('ROLE_SI_EXPERTISE_SIGNER') || auth()->user()->hasRole('ROLE_SI_EXPERTISE_CONFIRMER'))): ?>
+  <?php if(auth()->check() && (auth()->user()->hasRole('ROLE_UO_EXPERTISE_REVIEWER') || auth()->user()->hasRole('ROLE_KIB_EXPERTISE_EXECUTOR') || auth()->user()->hasRole('ROLE_GTS_EXPERTISE_CONFIRMER') || auth()->user()->hasRole('ROLE_UO_EXPERTISE_DANA') || auth()->user()->hasRole('ROLE_SI_EXPERTISE_SIGNER') || auth()->user()->hasRole('ROLE_SI_EXPERTISE_CONFIRMER') || auth()->user()->hasRole('ROLE_SI_EXPERTISE_REVIEWER') || auth()->user()->hasRole('ROLE_GTS_EXPERTISE_REVIEWER'))): ?>
       <a class="tabs__link <?php if(Route::is('expertise.in_work')): ?> tabs__link_active <?php endif; ?>" href="<?php echo e(route('expertise.in_work')); ?>">
           <span class="tabs__num" style="background: #39C07F;"><?php echo e(session('expertiseInWorkCounts', 0)); ?></span>
           В работе 
       </a>
-  <?php elseif(auth()->check() && (auth()->user()->hasRole('ROLE_SI_EXPERTISE_REVIEWER') || auth()->user()->hasRole('ROLE_GTS_EXPERTISE_REVIEWER'))): ?>
-      <a class="tabs__link <?php if(Route::is('expertise.executor')): ?> tabs__link_active <?php endif; ?>" href="<?php echo e(route('expertise.executor')); ?>">
-          <span class="tabs__num" style="background: #39C07F;"><?php echo e(session('executorCount', 0)); ?></span>
-          В работе 
-      </a>
+  
   <?php elseif(auth()->check() && (auth()->user()->hasRole('ROLE_GO_EXPERTISE_EDITOR'))): ?>
       <a class="tabs__link <?php if(Route::is('expertise.draft')): ?> tabs__link_active <?php endif; ?>" href="<?php echo e(route('expertise.draft')); ?>">
           <span class="tabs__num" style="background: #EEC609;"><?php echo e(session('expertiseInWorkCount', 0)); ?></span>
